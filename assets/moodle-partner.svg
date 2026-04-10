@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72">
+  <defs>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5F5F5"/>
+      <stop offset="100%" stop-color="#D9D9D9"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="280" height="54" rx="8" fill="#FFFFFF" stroke="#D9D9D9" stroke-width="1"/>
+  <rect x="140" y="0" width="140" height="54" fill="url(#silverGrad)"/>
+  <rect x="0" y="0" width="280" height="54" rx="8" fill="none" stroke="#D9D9D9" stroke-width="1"/>
+  <path d="M14 18 L34 12 L54 18 L34 24 Z" fill="#353535"/>
+  <path d="M30 24 L30 30 Q34 32 38 30 L38 24" fill="none" stroke="#353535" stroke-width="2"/>
+  <line x1="54" y1="18" x2="54" y2="26" stroke="#353535" stroke-width="1.5"/>
+  <circle cx="54" cy="27" r="1.5" fill="#353535"/>
+  <text x="14" y="46" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="30" fill="#F98012">moodle</text>
+  <text x="152" y="42" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="28" fill="#353535">Partner</text>
+  <text x="140" y="68" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="9" fill="#353535" letter-spacing="1.2">PREMIUM CERTIFIED SERVICES PROVIDER&#8482;</text>
+</svg>

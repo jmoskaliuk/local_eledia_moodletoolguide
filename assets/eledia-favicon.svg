@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="0" y="0" width="64" height="64" fill="#000000" rx="4"/>
+  <circle cx="32" cy="9" r="5" fill="#F98012"/>
+  <circle cx="14" cy="24" r="5" fill="#F98012"/>
+  <circle cx="14" cy="38" r="5" fill="#F98012"/>
+  <circle cx="24" cy="55" r="5" fill="#F98012"/>
+  <text x="34" y="46" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="36" fill="#F98012">e</text>
+</svg>

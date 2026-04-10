@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_toolguide';
-$plugin->version   = 2026040200;
+$plugin->version   = 2026041003;
 $plugin->requires  = 2022112800; // Moodle 4.1+
 $plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '1.0.0';
+$plugin->release   = '1.1.3';

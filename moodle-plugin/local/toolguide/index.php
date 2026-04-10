@@ -34,17 +34,16 @@ $PAGE->set_title(get_string('pagetitle', 'local_toolguide'));
 $PAGE->set_heading(get_string('pagetitle', 'local_toolguide'));
 $PAGE->set_pagelayout('standard');
 
-// Load React and Babel from CDN.
+// Load React (no Babel needed — the bundled JS uses React.createElement directly).
 $PAGE->requires->js(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js'), true);
 $PAGE->requires->js(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js'), true);
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('pagedesc', 'local_toolguide'));
 
-// Container for the React app.
+// Container for the React app. Heading is rendered inside the React app itself.
 echo '<div id="toolguide-root" style="min-height:600px;"></div>';
 
-// Inline the app JS (pre-compiled, no Babel needed at runtime).
+// Load the auto-generated app bundle (synced from Prototyp_ToolGuide.html).
 echo '<script src="' . (new moodle_url('/local/toolguide/amd/src/toolguide.js'))->out() . '"></script>';
 
 echo $OUTPUT->footer();

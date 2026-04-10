@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60">
+  <rect x="0" y="0" width="220" height="60" fill="#000000" rx="4"/>
+  <circle cx="18" cy="14" r="5" fill="#F98012"/>
+  <circle cx="10" cy="30" r="5" fill="#F98012"/>
+  <circle cx="18" cy="46" r="5" fill="#F98012"/>
+  <circle cx="34" cy="22" r="5" fill="#F98012"/>
+  <circle cx="34" cy="38" r="5" fill="#F98012"/>
+  <text x="55" y="42" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="32" fill="#F98012">eLeDia</text>
+</svg>

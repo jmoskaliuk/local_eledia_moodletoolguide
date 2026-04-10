@@ -1,12 +1,21 @@
-/* local_toolguide styles - loaded automatically by Moodle */
+/* local_toolguide styles — loaded automatically by Moodle. */
+/* All rules are scoped to #toolguide-root so they don't leak into the host theme. */
+
+#toolguide-root,
+#toolguide-root *,
+#toolguide-root *::before,
+#toolguide-root *::after {
+    box-sizing: border-box;
+}
+
 #toolguide-root {
     font-family: Inter, system-ui, -apple-system, sans-serif;
-    color: #1e293b;
+    color: #353535;
     min-height: 600px;
 }
 
 #toolguide-root ::selection {
-    background: #f97316;
+    background: #F98012;
     color: white;
 }
 
@@ -16,6 +25,46 @@
 }
 
 #toolguide-root ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #D9D9D9;
     border-radius: 4px;
+}
+
+#toolguide-root button:focus-visible,
+#toolguide-root a:focus-visible,
+#toolguide-root [tabindex]:focus-visible,
+#toolguide-root select:focus-visible,
+#toolguide-root input:focus-visible {
+    outline: 3px solid #F98012;
+    outline-offset: 2px;
+}
+
+/* Reduced motion preference (WCAG 2.3.3). */
+@media (prefers-reduced-motion: reduce) {
+    #toolguide-root *,
+    #toolguide-root *::before,
+    #toolguide-root *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Mobile tweaks. */
+@media (max-width: 640px) {
+    #toolguide-root h1 {
+        font-size: 18px !important;
+    }
+    #toolguide-root nav button {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+    }
+    #toolguide-root table th,
+    #toolguide-root table td {
+        padding: 6px !important;
+        font-size: 11px !important;
+    }
+    #toolguide-root .tg-grid-cards {
+        grid-template-columns: 1fr !important;
+    }
 }
