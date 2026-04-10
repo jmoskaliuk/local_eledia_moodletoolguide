@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodle Tool Guide – Interaktiv</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Inter, system-ui, -apple-system, sans-serif; background: #f8fafc; color: #194866; }
+  ::selection { background: #f98012; color: white; }
+  ::-webkit-scrollbar { height: 8px; width: 8px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible, select:focus-visible, input:focus-visible {
+    outline: 3px solid #f98012; outline-offset: 2px;
+  }
+  /* Mobile tweaks */
+  @media (max-width: 640px) {
+    h1 { font-size: 18px !important; }
+    nav button { padding: 6px 10px !important; font-size: 12px !important; }
+    table th, table td { padding: 6px !important; font-size: 11px !important; }
+    .tg-grid-cards { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+const TOOLS = [
+  { id:"datei", name:"Datei", desc:"Datei hochladen (z.B. Word, PDF, PowerPoint)", complexity:"einfach", complexityText:"Einfach wie ein E-Mail Anhang. Aber machen Dateien f\u00fcr sich alleine Sinn?", bloom:"1/6",setup:"einfach",setupText:"Datei hochladen, fertig.",support:"gering",supportText:"Keine laufende Pflege nötig.", docsUrl:"https://docs.moodle.org/501/de/Datei", longDesc:"Mit der Aktivit\u00e4t \u00abDatei\u00bb stellen Sie Kursteilnehmenden einzelne Dateien zum Download bereit \u2013 PDFs, Word-Dokumente, Pr\u00e4sentationen oder Bilder. Die Datei erscheint direkt auf der Kursseite und kann per Klick ge\u00f6ffnet oder heruntergeladen werden. Dateien eignen sich besonders f\u00fcr Skripte, Arbeitsbl\u00e4tter und erg\u00e4nzende Materialien. Beachten Sie, dass Dateien allein keine Interaktion erm\u00f6glichen. Kombinieren Sie sie mit Foren oder Aufgaben, um den Lernprozess aktiv zu gestalten.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Lehrende laden Dateien zur Information hoch."}, bewerten:{r:"rot",t:"Nein. Stattdessen: Kenntnisse \u00fcber Forum oder Aufgabe erfassen."}, komm:{r:"rot",t:"Nein. Keine direkte Option zur Interaktion oder Kommunikation."}, collab:{r:"rot",t:"Nein. Stattdessen: Foren, Wikis und Glossare nutzen."}, bloomG:{r:"rot",t:"Ist keine Lernaktivit\u00e4t, sondern reine Infovermittlung."}}},
+  { id:"verzeichnis", name:"Verzeichnis", desc:"Eine Reihe von Dateien hochladen", complexity:"einfach", complexityText:"Einfach wie ein E-Mail Anhang. Aber machen Dateien alleine Sinn?", bloom:"1/6",setup:"einfach",setupText:"Ordner anlegen, Dateien einsortieren.",support:"gering",supportText:"Bei Änderungen Dateien ersetzen.", docsUrl:"https://docs.moodle.org/501/de/Verzeichnis", longDesc:"Ein Verzeichnis b\u00fcndelt mehrere Dateien in einem Ordner auf der Kursseite. Teilnehmende k\u00f6nnen den gesamten Ordner oder einzelne Dateien herunterladen. Das ist praktisch, wenn Sie eine Sammlung von Dokumenten zu einem Thema bereitstellen m\u00f6chten. Verzeichnisse halten die Kursseite \u00fcbersichtlich, wenn viele Dateien ben\u00f6tigt werden. Wie bei Einzeldateien ist keine direkte Interaktion m\u00f6glich \u2013 es ist ein reines Bereitstellungs-Tool.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Dateien in Ordner hochladen ist Trainer/innensache."}, bewerten:{r:"rot",t:"Nein. Stattdessen: Kenntnisse \u00fcber Forum oder Aufgabe erfassen."}, komm:{r:"rot",t:"Nein. Keine direkte Option zur Interaktion."}, collab:{r:"orange",t:"Sammeln und Teilen von Dateien m\u00f6glich. Erfordert Rollenanpassung."}, bloomG:{r:"rot",t:"Ist keine Lernaktivit\u00e4t, sondern reine Infovermittlung."}}},
+  { id:"textseite", name:"Textseite", desc:"Eine Seite mit Texten in Moodle erstellen", complexity:"einfach", complexityText:"Einfach. Text formatieren, Bilder und Videos erg\u00e4nzen.", bloom:"2/6",setup:"einfach",setupText:"Im Editor schreiben – wie ein Word-Dokument.",support:"gering",supportText:"Selten zu aktualisieren.", docsUrl:"https://docs.moodle.org/501/de/Textseite", longDesc:"Eine Textseite erm\u00f6glicht es, Inhalte direkt in Moodle zu erstellen \u2013 mit formatiertem Text, Bildern, Videos und Links. Im Gegensatz zur Datei m\u00fcssen Teilnehmende nichts herunterladen, sondern lesen alles direkt im Browser. Textseiten eignen sich f\u00fcr Einleitungen, Anleitungen oder kurze Informationseinheiten. Sie k\u00f6nnen multimedial angereichert werden und sind sofort sichtbar. F\u00fcr umfangreichere Inhalte empfiehlt sich die Aktivit\u00e4t \u00abBuch\u00bb.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Nur Lehrende erstellen diese Seiten."}, bewerten:{r:"rot",t:"Nein. Stattdessen: Kenntnisse \u00fcber Forum oder Aufgabe erfassen."}, komm:{r:"rot",t:"Nein. Keine direkte Option zur Interaktion."}, collab:{r:"orange",t:"Gemeinsames Erstellen m\u00f6glich. Erfordert Rollenanpassung."}, bloomG:{r:"rot",t:"Ist keine Lernaktivit\u00e4t, sondern reine Infovermittlung."}}},
+  { id:"buch", name:"Buch", desc:"Eine Reihe von Textseiten in Moodle erstellen", complexity:"einfach", complexityText:"Einfach. Text formatieren, Bilder und Videos erg\u00e4nzen.", bloom:"2/6",setup:"mittel",setupText:"Kapitelstruktur planen, dann befüllen.",support:"gering",supportText:"Selten zu aktualisieren.", docsUrl:"https://docs.moodle.org/501/de/Buch", longDesc:"Ein Buch besteht aus mehreren Textseiten mit Kapiteln und Unterkapiteln. Es eignet sich hervorragend f\u00fcr l\u00e4ngere, strukturierte Inhalte wie Skripte oder Leitf\u00e4den. Teilnehmende k\u00f6nnen zwischen den Seiten bl\u00e4ttern und das gesamte Buch ausdrucken. Das Buch bietet eine \u00fcbersichtliche Navigation \u00fcber ein Inhaltsverzeichnis. Es ist ein reines Lese-Material und enth\u00e4lt keine interaktiven Elemente.", goals:{ info:{r:"gr\u00fcn",t:"Gutes Tool zur Vermittlung von Informationen. Drucken m\u00f6glich."}, bewerten:{r:"rot",t:"Nein. Stattdessen: Lektion, Forum oder Aufgabe nutzen."}, komm:{r:"rot",t:"Nein. Keine direkte Option zur Interaktion."}, collab:{r:"orange",t:"Gemeinsames Erstellen m\u00f6glich. Erfordert Rollenanpassung."}, bloomG:{r:"rot",t:"Ist keine Lernaktivit\u00e4t, sondern reine Infovermittlung."}}},
+  { id:"url", name:"URL", desc:"Link zu einer Webseite", complexity:"einfach", complexityText:"Einfach. Web-Adresse finden und einf\u00fcgen.", bloom:"2/6",setup:"einfach",setupText:"Link einfügen.",support:"gering",supportText:"Prüfen, ob Ziel-Link noch aktiv ist.", docsUrl:"https://docs.moodle.org/501/de/URL/Link", longDesc:"Mit der Ressource URL verlinken Sie externe Webseiten direkt von der Kursseite. Das k\u00f6nnen Artikel, Videos, Online-Tools oder andere Lernressourcen sein. Teilnehmende gelangen per Klick zur verlinkten Seite. URLs eignen sich ideal, um externe Inhalte nahtlos in Ihren Kurs einzubinden. Die didaktischen M\u00f6glichkeiten h\u00e4ngen vom verlinkten Inhalt ab \u2013 von einfacher Information bis hin zu komplexen Lernszenarien.", goals:{ info:{r:"gr\u00fcn",t:"Komfortable M\u00f6glichkeit, externe Infos bereitzustellen."}, bewerten:{r:"orange",t:"Nicht direkt. Verlinkung auf externe Pr\u00fcfungstools."}, komm:{r:"orange",t:"Nicht direkt. Verlinkung auf externe Kommunikationstools."}, collab:{r:"orange",t:"Nicht direkt. Verlinkung auf externe Kooperationswerkzeuge."}, bloomG:{r:"gr\u00fcn",t:"6/6 m\u00f6glich. Abh\u00e4ngig vom Inhalt der verlinkten Seite."}}},
+  { id:"wiki", name:"Wiki", desc:"Gemeinsam in der Gruppe Texte erstellen", complexity:"mittel", complexityText:"Erfordert Auseinandersetzung mit Wikiprinzip.", bloom:"6/6",setup:"mittel",setupText:"Erstanlage einfach, Aufbau planen.",support:"hoch",supportText:"Beiträge moderieren, Versionen prüfen.", docsUrl:"https://docs.moodle.org/501/de/Wiki", longDesc:"Das Wiki erm\u00f6glicht kooperatives Schreiben: Teilnehmende erstellen und bearbeiten gemeinsam Textseiten mit Verlinkungen. Es funktioniert nach dem Wikipedia-Prinzip \u2013 jeder kann Inhalte beitragen und \u00e4ndern. Die Versionshistorie dokumentiert alle \u00c4nderungen transparent. Wikis eignen sich f\u00fcr Gruppenreferate, Wissenssammlungen oder Projektdokumentationen. Der Einstieg erfordert etwas Einarbeitung, bietet dann aber gro\u00dfe Flexibilit\u00e4t.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Als Info-Seite nutzen. Bearbeiten durch alle im Kurs."}, bewerten:{r:"gr\u00fcn",t:"Flexibel einsetzbar, z.B. Bewertung der erstellten Wiki-Inhalte."}, komm:{r:"orange",t:"Teilweise f\u00fcr Diskussionen geeignet. Kommentare zu Wiki-Inhalten."}, collab:{r:"gr\u00fcn",t:"Ja. Teilnehmende k\u00f6nnen kooperativ arbeiten und diskutieren."}, bloomG:{r:"gr\u00fcn",t:"6/6 m\u00f6glich. Abh\u00e4ngig vom Einsatzszenario."}}},
+  { id:"glossar", name:"Glossar", desc:"Informationen pr\u00e4sentieren und gemeinsam erstellen", complexity:"einfach", complexityText:"Einfach. Kann flexibel eingestellt werden.", bloom:"4/6",setup:"einfach",setupText:"Anlegen, Felder wählen.",support:"mittel",supportText:"Einträge sichten, ggf. freischalten.", docsUrl:"https://docs.moodle.org/501/de/Glossar", longDesc:"Im Glossar k\u00f6nnen Lehrende und Teilnehmende Fachbegriffe mit Definitionen sammeln. Eintr\u00e4ge werden automatisch im gesamten Kurs verlinkt, wenn der Begriff auftaucht. Teilnehmende k\u00f6nnen eigene Eintr\u00e4ge verfassen und die anderer kommentieren. Das Glossar eignet sich f\u00fcr Begriffssammlungen, FAQ-Listen oder als gemeinsam erstelltes Nachschlagewerk. Eintr\u00e4ge k\u00f6nnen bewertet werden, was es auch als Lernaktivit\u00e4t nutzbar macht.", goals:{ info:{r:"gr\u00fcn",t:"Glossar f\u00fcr Begriffsdefinitionen."}, bewerten:{r:"gr\u00fcn",t:"Glossareintr\u00e4ge erstellen lassen und dann bewerten."}, komm:{r:"orange",t:"Teilweise. Eintr\u00e4ge k\u00f6nnen kommentiert werden."}, collab:{r:"orange",t:"Autor/in kann bearbeiten. Teilnehmende kommentieren."}, bloomG:{r:"gr\u00fcn",t:"6/6 m\u00f6glich. Abh\u00e4ngig vom Einsatzszenario."}}},
+  { id:"datenbank", name:"Datenbank", desc:"Materialien sammeln, teilen & suchen", complexity:"komplex", complexityText:"Schwierig anzulegen. Vorher Aufbau planen!", bloom:"5/6",setup:"komplex",setupText:"Felder im Detail planen und definieren.",support:"mittel",supportText:"Einträge moderieren, Sammlung pflegen.", docsUrl:"https://docs.moodle.org/501/de/Datenbank", longDesc:"Die Datenbank-Aktivit\u00e4t erm\u00f6glicht es, strukturierte Eintr\u00e4ge mit frei definierbaren Feldern zu sammeln. Teilnehmende k\u00f6nnen Texte, Bilder, Dateien und Links in einem einheitlichen Format eintragen. Alle Eintr\u00e4ge sind durchsuchbar und k\u00f6nnen kommentiert und bewertet werden. Die Datenbank eignet sich f\u00fcr Materialsammlungen, Steckbriefe oder Projektportfolios. Die Einrichtung erfordert Planung, bietet daf\u00fcr aber sehr flexible Einsatzm\u00f6glichkeiten.", goals:{ info:{r:"orange",t:"Lehrende k\u00f6nnen Material pr\u00e4sentieren. Besser: TN tragen Daten ein."}, bewerten:{r:"gr\u00fcn",t:"Ja. Inhalte k\u00f6nnen bewertet werden. Flexibel einsetzbar."}, komm:{r:"orange",t:"Teilweise. Eintr\u00e4ge k\u00f6nnen kommentiert werden."}, collab:{r:"orange",t:"Autor/in kann bearbeiten. Teilnehmende kommentieren."}, bloomG:{r:"gr\u00fcn",t:"6/6 m\u00f6glich. Abh\u00e4ngig vom Einsatzszenario."}}},
+  { id:"umfrage", name:"Umfrage", desc:"Befragung mit vordefinierten Fragen", complexity:"einfach", complexityText:"Einfach. Aus 3 Typen w\u00e4hlen.", bloom:"2/6",setup:"einfach",setupText:"Vorlage wählen, fertig.",support:"gering",supportText:"Keine Pflege – Auswertung am Ende.", docsUrl:"https://docs.moodle.org/501/de/Umfrage", longDesc:"Die Umfrage bietet drei vordefinierte, wissenschaftlich validierte Frageb\u00f6gen zur Evaluation von Lernumgebungen. Sie erfasst, wie Teilnehmende das Lernklima und den Unterricht wahrnehmen. Die Ergebnisse helfen Lehrenden, ihren Kurs zu verbessern. Im Gegensatz zum Feedback k\u00f6nnen die Fragen nicht ver\u00e4ndert werden. Die Umfrage eignet sich besonders zur Reflexion des Lernprozesses und zur Kursoptimierung.", goals:{ info:{r:"rot",t:"Nein. Die Umfrage ist ungeeignet zur Informationsverteilung."}, bewerten:{r:"rot",t:"Eher nicht. Besser zur Evaluation des Kurses."}, komm:{r:"rot",t:"Nein. Nur Einweg-Kommunikation: TN an Lehrende."}, collab:{r:"rot",t:"Nein. Rein individuelle Aktivit\u00e4t."}, bloomG:{r:"orange",t:"Hilft Teilnehmenden Lernprozess zu reflektieren."}}},
+  { id:"feedback", name:"Feedback", desc:"Erstelle selbst Evaluationsfrageb\u00f6gen", complexity:"einfach", complexityText:"Einfach in Bedienung. Zeitaufwand f\u00fcr Fragen.", bloom:"3/6",setup:"mittel",setupText:"Fragen formulieren kostet Zeit.",support:"gering",supportText:"Auswertung am Ende.", docsUrl:"https://docs.moodle.org/501/de/Feedback", longDesc:"Mit der Feedback-Aktivit\u00e4t erstellen Sie eigene Frageb\u00f6gen mit frei definierbaren Fragen. Sie k\u00f6nnen Multiple-Choice, Textfelder, Bewertungsskalen und mehr einsetzen. Die Antworten k\u00f6nnen anonym oder namentlich erfasst werden. Feedback eignet sich hervorragend f\u00fcr Kursevaluationen, Erwartungsabfragen oder Stimmungsbilder. Im Gegensatz zur Umfrage haben Sie volle Kontrolle \u00fcber die Fragestellungen.", goals:{ info:{r:"rot",t:"Nein. Nicht zur Informationsverteilung vorgesehen."}, bewerten:{r:"rot",t:"Nein. Evaluationen generieren Feedback f\u00fcr Lehrende."}, komm:{r:"rot",t:"Nein. Nur Einweg-Kommunikation."}, collab:{r:"rot",t:"Nein. Rein individuelle Aktivit\u00e4t."}, bloomG:{r:"orange",t:"Kann kreativ gestaltet werden."}}},
+  { id:"abstimmung", name:"Abstimmung", desc:"Teilnehmende stimmen \u00fcber eine Frage ab", complexity:"einfach", complexityText:"Einfach. Frage(n) und Antworten anlegen.", bloom:"1/6",setup:"einfach",setupText:"Frage und Optionen eintippen.",support:"gering",supportText:"Keine Pflege nötig.", docsUrl:"https://docs.moodle.org/501/de/Abstimmung", longDesc:"Die Abstimmung stellt eine einzelne Frage mit vorgegebenen Antwortm\u00f6glichkeiten. Teilnehmende w\u00e4hlen eine Option, die Ergebnisse werden als Balkendiagramm angezeigt. Sie eignet sich f\u00fcr schnelle Meinungsbilder, Terminabsprachen oder Gruppeneinteilungen. Die Einrichtung dauert nur wenige Minuten. F\u00fcr komplexere Befragungen mit mehreren Fragen nutzen Sie besser die Feedback-Aktivit\u00e4t.", goals:{ info:{r:"rot",t:"Nein. Haupts\u00e4chlich zur schnellen Abfrage zu einem Thema."}, bewerten:{r:"gr\u00fcn",t:"Als Schnellabfrage einer Fragestellung verwenden."}, komm:{r:"rot",t:"Nein. Besser Forum oder Chat nutzen."}, collab:{r:"rot",t:"Nein. Besser Forum, Glossar oder Wiki nutzen."}, bloomG:{r:"orange",t:"Erlaubt einfache Abfrage von Wissen und Verst\u00e4ndnis."}}},
+  { id:"test", name:"Test", desc:"Testfragen mit automatischer Bewertung", complexity:"mittel", complexityText:"Zeitaufwand beim Erstellen. Auswertung automatisch.", bloom:"4/6",setup:"komplex",setupText:"Fragenpool aufbauen, Konfiguration durchdenken.",support:"mittel",supportText:"Ergebnisse sichten, Probleme klären.", docsUrl:"https://docs.moodle.org/501/de/Test", longDesc:"Der Test ist das zentrale Pr\u00fcfungswerkzeug in Moodle mit \u00fcber 15 Fragetypen \u2013 von Multiple-Choice \u00fcber L\u00fcckentext bis Zuordnung. Die Auswertung erfolgt automatisch mit sofortigem Feedback an die Teilnehmenden. Tests k\u00f6nnen zeitgesteuert, mit Zufallsfragen und mehreren Versuchen konfiguriert werden. Sie eignen sich f\u00fcr Selbsttests, \u00dcbungen und formale Pr\u00fcfungen gleicherma\u00dfen. Der Fragenpool erm\u00f6glicht die Wiederverwendung von Fragen \u00fcber Kurse hinweg.", goals:{ info:{r:"rot",t:"Zielt auf Bewertung, nicht Verteilung von Informationen."}, bewerten:{r:"gr\u00fcn",t:"Ja. F\u00fcr Fragen mit eindeutiger Antwort. Automatisch."}, komm:{r:"rot",t:"Nein. Besser Forum oder Chat nutzen."}, collab:{r:"rot",t:"Nein. Besser Forum oder Wiki nutzen."}, bloomG:{r:"gr\u00fcn",t:"Durch kreativen Umgang vielf\u00e4ltig einsetzbar."}}},
+  { id:"lektion", name:"Lektion", desc:"Informationen und Testfragen seitenweise aufbauen", complexity:"mittel", complexityText:"Erfordert Planung, dann effektive Lernaktivit\u00e4t.", bloom:"4/6",setup:"komplex",setupText:"Verzweigungslogik sorgfältig planen.",support:"gering",supportText:"Nach Aufbau weitgehend selbstläufig.", docsUrl:"https://docs.moodle.org/501/de/Lektion", longDesc:"Die Lektion pr\u00e4sentiert Inhalte auf einzelnen Seiten und verkn\u00fcpft sie mit Testfragen. Je nach Antwort werden Teilnehmende zu verschiedenen Seiten weitergeleitet \u2013 ein verzweigter Lernpfad entsteht. So k\u00f6nnen Sie adaptives Lernen umsetzen, bei dem der Weg vom Wissensstand abh\u00e4ngt. Lektionen eignen sich f\u00fcr gef\u00fchrte Lerneinheiten mit integrierten Verst\u00e4ndnispr\u00fcfungen. Die Erstellung erfordert Planung, ergibt aber eine sehr effektive Lernaktivit\u00e4t.", goals:{ info:{r:"gr\u00fcn",t:"Gut geeignet f\u00fcr gef\u00fchrte Informationspr\u00e4sentation."}, bewerten:{r:"gr\u00fcn",t:"Ja, erlaubt Bewertung durch integrierte Testfragen."}, komm:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, collab:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, bloomG:{r:"gr\u00fcn",t:"Durch kreativen Umgang vielf\u00e4ltig einsetzbar."}}},
+  { id:"aufgabe", name:"Aufgabe", desc:"Aufgabenstellung mit individueller Bewertung", complexity:"einfach", complexityText:"Einfach. Auswahl aus vier Aufgabentypen.", bloom:"6/6",setup:"einfach",setupText:"Abgabetyp und Frist festlegen.",support:"hoch",supportText:"Bewertung und Feedback pro Abgabe.", docsUrl:"https://docs.moodle.org/501/de/Aufgabe", longDesc:"Die Aufgabe ist das vielseitigste Bewertungswerkzeug in Moodle. Teilnehmende reichen Texte, Dateien oder Medien ein, die Sie individuell mit Note und Kommentar bewerten. Vier Abgabetypen stehen zur Verf\u00fcgung: Dateiabgabe, Onlinetext, Audio-/Videoaufnahme. Abgabefristen, Verl\u00e4ngerungen und Gruppenabgaben sind konfigurierbar. Die Aufgabe eignet sich f\u00fcr Essays, Projektarbeiten, Pr\u00e4sentationen und jede Form individueller Leistungsnachweise.", goals:{ info:{r:"rot",t:"Nein. Kann aber Inhalte f\u00fcr Aufgabenstellung enthalten."}, bewerten:{r:"gr\u00fcn",t:"Ja. Individuelle Bewertung mit Note und Kommentar."}, komm:{r:"rot",t:"Wenig Interaktion. Au\u00dfer: wiederholte Abgabe mit Feedback."}, collab:{r:"orange",t:"Gruppenmitglied gibt stellvertretend L\u00f6sung ab."}, bloomG:{r:"gr\u00fcn",t:"Abh\u00e4ngig von Aufgabenformulierung und Beurteilungsform."}}},
+  { id:"beurteilung", name:"Gegenseitige Beurteilung", desc:"Aufgabe mit Peer-Feedback", complexity:"komplex", complexityText:"Erfordert sorgf\u00e4ltige Planung.", bloom:"5/6",setup:"komplex",setupText:"Phasen, Kriterien und Bewertungsraster planen.",support:"hoch",supportText:"Phasen aktiv begleiten und steuern.", docsUrl:"https://docs.moodle.org/501/de/Gegenseitige_Beurteilung", longDesc:"Die Gegenseitige Beurteilung (Workshop) kombiniert Aufgabenabgabe mit Peer-Review. Teilnehmende reichen zun\u00e4chst eigene Arbeiten ein und bewerten anschlie\u00dfend die Einreichungen anderer nach vorgegebenen Kriterien. Dieser Prozess f\u00f6rdert kritisches Denken und Reflexion. Die Endbewertung setzt sich aus Peer- und Trainer-Bewertung zusammen. Die Einrichtung ist anspruchsvoll, bietet aber ein p\u00e4dagogisch sehr wertvolles Lernszenario.", goals:{ info:{r:"rot",t:"Nein. Ein anderes Tool verwenden."}, bewerten:{r:"gr\u00fcn",t:"Ja. Peer-Bewertung. TN beurteilen L\u00f6sungen anderer."}, komm:{r:"rot",t:"Nein. Erlaubt nur Feedback, keine Kommunikation."}, collab:{r:"rot",t:"Nein. F\u00fcr Gruppenaufgaben Forum oder Wiki nutzen."}, bloomG:{r:"gr\u00fcn",t:"Abh\u00e4ngig von Aufgabenformulierung und Beurteilungsform."}}},
+  { id:"lernpaket", name:"Lernpaket", desc:"Lerninhalte im Format SCORM einbinden", complexity:"komplex", complexityText:"Erfordert Software oder Kauf von Inhalten.", bloom:"4/6",setup:"komplex",setupText:"SCORM-Inhalte mit externer Software erstellen.",support:"gering",supportText:"Nach Einbinden weitgehend selbstläufig.", docsUrl:"https://docs.moodle.org/501/de/Lernpaket", longDesc:"Lernpakete binden extern erstellte SCORM- oder AICC-Inhalte in Moodle ein. Diese interaktiven Lernmodule werden mit Autorentools wie Articulate, Captivate oder iSpring erstellt. Der Lernfortschritt und Ergebnisse werden automatisch an Moodle zur\u00fcckgemeldet. Lernpakete eignen sich f\u00fcr multimediale, interaktive Selbstlerneinheiten. Die Einbindung ist einfach, die Erstellung der Inhalte erfordert jedoch spezielle Software.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Gut geeignet f\u00fcr Informationsvermittlung."}, bewerten:{r:"gr\u00fcn",t:"Ja, Bewertungen k\u00f6nnen integriert sein."}, komm:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, collab:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, bloomG:{r:"gr\u00fcn",t:"Durch kreativen Umgang vielf\u00e4ltig einsetzbar."}}},
+  { id:"chat", name:"Chat", desc:"Echtzeit Text-Chat mit Teilnehmenden", complexity:"einfach", complexityText:"Einfach. Erfordert Moderation, kleine Gruppen.", bloom:"3/6",setup:"einfach",setupText:"Aktivität anlegen, Termin festlegen.",support:"hoch",supportText:"Live moderieren während der Sitzung.", docsUrl:"https://docs.moodle.org/501/de/Chat", longDesc:"Der Chat erm\u00f6glicht synchrone Textgespr\u00e4che in Echtzeit zwischen Kursteilnehmenden. Er eignet sich f\u00fcr Sprechstunden, Gruppendiskussionen oder spontanen Austausch in kleinen Gruppen. Chatverl\u00e4ufe werden protokolliert und k\u00f6nnen sp\u00e4ter eingesehen werden. Eine Moderation ist empfehlenswert, um den Gespr\u00e4chsverlauf zu steuern. F\u00fcr gr\u00f6\u00dfere Gruppen oder asynchrone Kommunikation ist das Forum besser geeignet.", goals:{ info:{r:"orange",t:"Erfordert Anwesenheit zum Zeitpunkt des Chats."}, bewerten:{r:"orange",t:"Chatbeitr\u00e4ge k\u00f6nnen wie m\u00fcndliche Mitarbeit bewertet werden."}, komm:{r:"gr\u00fcn",t:"Ja. Diskussionen in kleinen Gruppen oder Fragestunden."}, collab:{r:"gr\u00fcn",t:"Ja. Teilnehmende k\u00f6nnen zusammen arbeiten und diskutieren."}, bloomG:{r:"gr\u00fcn",t:"Kann mit kleinen Gruppen kreativ genutzt werden."}}},
+  { id:"forum", name:"Forum", desc:"F\u00fcr vielf\u00e4ltige Lernstrategien verwendbar", complexity:"einfach", complexityText:"Einfach. Titel und Beschreibung gen\u00fcgen.", bloom:"5/6",setup:"einfach",setupText:"Forumtyp wählen, Titel vergeben.",support:"hoch",supportText:"Beiträge moderieren und beantworten.", docsUrl:"https://docs.moodle.org/501/de/Forum", longDesc:"Das Forum ist das vielseitigste Kommunikationswerkzeug in Moodle. Es erm\u00f6glicht zeitversetzte Diskussionen, in denen Teilnehmende Beitr\u00e4ge verfassen, aufeinander antworten und Dateien anh\u00e4ngen. Verschiedene Forentypen stehen zur Verf\u00fcgung \u2013 vom Nachrichtenforum bis zur offenen Diskussion. Beitr\u00e4ge k\u00f6nnen per E-Mail-Benachrichtigung verfolgt und sogar bewertet werden. Foren eignen sich f\u00fcr Ank\u00fcndigungen, Peer-Learning, Reflexion und kooperatives Arbeiten.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Nachrichtenforum und Mail-Benachrichtigung."}, bewerten:{r:"orange",t:"Jein. Beitr\u00e4ge k\u00f6nnen f\u00fcr einen Zeitraum bewertet werden."}, komm:{r:"gr\u00fcn",t:"Ja. Zeitversetzte Kommunikation. Kursgruppen nutzbar."}, collab:{r:"gr\u00fcn",t:"Ja. TN tauschen sich beim Erstellen von Inhalten aus."}, bloomG:{r:"gr\u00fcn",t:"Kann auch mit gro\u00dfen Gruppen kreativ genutzt werden."}}},
+  { id:"extern", name:"Externes Tool", desc:"Externe Lernaktivit\u00e4t verbinden (LTI)", complexity:"komplex", complexityText:"Erfordert Zugangsdaten zu externen Anbietern.", bloom:"4/6",setup:"komplex",setupText:"Zugangsdaten/LTI-Konfig vom Anbieter nötig.",support:"gering",supportText:"Funktion gelegentlich prüfen.", docsUrl:"https://docs.moodle.org/501/de/Externes_Tool", longDesc:"Das Externe Tool verbindet Moodle \u00fcber den LTI-Standard mit externen Lernplattformen und Diensten. So k\u00f6nnen Teilnehmende direkt aus Moodle heraus auf externe Tools zugreifen \u2013 ohne separaten Login. Bewertungen k\u00f6nnen automatisch nach Moodle zur\u00fcck\u00fcbertragen werden. Typische Einsatzgebiete sind Simulationen, Labore, Verlagsinhalte oder spezialisierte Lerntools. Die Einrichtung erfordert technische Konfiguration und Zugangsdaten vom Anbieter.", goals:{ info:{r:"orange",t:"Abh\u00e4ngig vom verbundenen Tool."}, bewerten:{r:"orange",t:"Bewertungen k\u00f6nnen nach Moodle \u00fcbertragen werden."}, komm:{r:"orange",t:"Abh\u00e4ngig vom verbundenen Tool."}, collab:{r:"orange",t:"Abh\u00e4ngig vom verbundenen Tool."}, bloomG:{r:"orange",t:"H\u00e4ngt vom verbundenen Tool ab."}}},
+  { id:"h5p", name:"H5P", desc:"Werkzeuge f\u00fcr interaktive Inhalte", complexity:"einfach", complexityText:"Einfache Bedienung durch Formulare.", bloom:"5/6",setup:"mittel",setupText:"Inhaltstyp wählen, im Editor befüllen.",support:"gering",supportText:"Keine Pflege im laufenden Betrieb.", docsUrl:"https://docs.moodle.org/501/de/H5P-Aktivit%C3%A4t", longDesc:"H5P bietet \u00fcber 40 interaktive Inhaltstypen direkt in Moodle \u2013 von interaktiven Videos \u00fcber Zeitstrahlen bis zu Drag-and-Drop-Aufgaben. Die Erstellung erfolgt \u00fcber intuitive Formulare ohne Programmierkenntnisse. Bewertungen werden automatisch erfasst und an das Moodle-Bewertungssystem \u00fcbergeben. H5P-Inhalte sind responsiv und funktionieren auf allen Ger\u00e4ten. Es ist eines der vielseitigsten Werkzeuge f\u00fcr interaktive und ansprechende Lernerfahrungen.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Gute Visualisierung von Informationen."}, bewerten:{r:"gr\u00fcn",t:"Ja. Automatische Bewertung."}, komm:{r:"rot",t:"Nein. Keine Kommunikation m\u00f6glich."}, collab:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, bloomG:{r:"gr\u00fcn",t:"Vielf\u00e4ltige Unterst\u00fctzung von Lernszenarien."}}},
+  { id:"bbb", name:"BigBlueButton", desc:"Videokonferenz, Whiteboard, Chat", complexity:"einfach", complexityText:"Einfache Bedienung.", bloom:"5/6",setup:"einfach",setupText:"Termin anlegen, Raum konfigurieren.",support:"hoch",supportText:"Live moderieren, Aufzeichnungen verwalten.", docsUrl:"https://docs.moodle.org/501/de/BigBlueButton", longDesc:"BigBlueButton ist ein vollwertiges Videokonferenzsystem, das direkt in Moodle integriert ist. Es bietet Live-Video, Bildschirmfreigabe, interaktives Whiteboard, Umfragen und Breakout-R\u00e4ume. Sitzungen k\u00f6nnen aufgezeichnet und sp\u00e4ter im Kurs bereitgestellt werden. BigBlueButton eignet sich f\u00fcr Vorlesungen, Seminare, Sprechstunden und Gruppenarbeit. Die Bedienung ist einfach \u2013 ein Klick gen\u00fcgt, um einer Konferenz beizutreten.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Vortr\u00e4ge und Pr\u00e4sentationen werden live gehalten."}, bewerten:{r:"orange",t:"Begrenzt: Geeignet f\u00fcr Einzel-/Kleingruppenpr\u00fcfungen."}, komm:{r:"gr\u00fcn",t:"Ja. Gespr\u00e4che, Videocalls, Chats m\u00f6glich."}, collab:{r:"gr\u00fcn",t:"Ja, mittels Whiteboard und gemeinsamen Notizen."}, bloomG:{r:"gr\u00fcn",t:"Vielf\u00e4ltige Unterst\u00fctzung von Lernszenarien."}}},
+];
+
+// Tool icon data: SVG + background color per Moodle category
+const TOOL_ICONS = {
+  datei:      {bg:"#eb6a8c", svg:`<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  verzeichnis:{bg:"#eb6a8c", svg:`<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v11z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  textseite:  {bg:"#eb6a8c", svg:`<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  buch:       {bg:"#eb6a8c", svg:`<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 7h8M8 11h5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>`},
+  url:        {bg:"#eb6a8c", svg:`<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  lernpaket:  {bg:"#eb6a8c", svg:`<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  wiki:       {bg:"#5cb381", svg:`<path d="M12 20h9" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  glossar:    {bg:"#5cb381", svg:`<rect x="3" y="2" width="18" height="20" rx="3" stroke="white" stroke-width="1.8" fill="none"/><path d="M8 6h2" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M12 6.25a3.5 3.5 0 0 1 3.5 3.5v.5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="12" cy="16" r="0.5" fill="white" stroke="white" stroke-width="1"/>`},
+  datenbank:  {bg:"#5cb381", svg:`<ellipse cx="12" cy="5" rx="9" ry="3" stroke="white" stroke-width="1.8" fill="none"/><path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" stroke="white" stroke-width="1.8" fill="none"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="white" stroke-width="1.8" fill="none"/>`},
+  forum:      {bg:"#5b9fd6", svg:`<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 9h8M8 13h5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>`},
+  chat:       {bg:"#5b9fd6", svg:`<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  bbb:        {bg:"#5b9fd6", svg:`<rect x="2" y="3" width="20" height="14" rx="2" stroke="white" stroke-width="1.8" fill="none"/><path d="M8 21h8M12 17v4" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="12" cy="10" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>`},
+  test:       {bg:"#9b6fc3", svg:`<path d="M9 11l3 3L22 4" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  aufgabe:    {bg:"#9b6fc3", svg:`<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 15l2 2 4-4" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  lektion:    {bg:"#9b6fc3", svg:`<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2V3z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7V3z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  beurteilung:{bg:"#9b6fc3", svg:`<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="white" stroke-width="1.8" fill="none"/><path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>`},
+  abstimmung: {bg:"#9b6fc3", svg:`<rect x="4" y="14" width="4" height="7" rx="1" stroke="white" stroke-width="1.8" fill="none"/><rect x="10" y="8" width="4" height="13" rx="1" stroke="white" stroke-width="1.8" fill="none"/><rect x="16" y="3" width="4" height="18" rx="1" stroke="white" stroke-width="1.8" fill="none"/>`},
+  h5p:        {bg:"#1ba5d4", svg:`<circle cx="12" cy="12" r="9" stroke="white" stroke-width="1.8" fill="none"/><polygon points="10,8 16,12 10,16" fill="white"/>`},
+  extern:     {bg:"#1ba5d4", svg:`<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3h6v6" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+  umfrage:    {bg:"#8e9bab", svg:`<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="8" y="2" width="8" height="4" rx="1" stroke="white" stroke-width="1.8" fill="none"/><path d="M8 12h4M8 16h6" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>`},
+  feedback:   {bg:"#8e9bab", svg:`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
+};
+
+// SVG path data for goal icons (white stroke on colored bg, or colored stroke standalone)
+const GOAL_SVG = {
+  info: `<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2V3z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7V3z"/>`,
+  bewerten: `<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>`,
+  komm: `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"/>`,
+  collab: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  bloomG: `<polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>`,
+};
+
+// ============================================================================
+// i18n
+// ============================================================================
+const I18N = {
+  de: {
+    title: "Moodle Tool Guide",
+    subtitle: "Finde das passende Werkzeug für dein didaktisches Ziel",
+    nav_matrix: "Matrix",
+    nav_cards: "Karten",
+    nav_wizard: "Assistent",
+    search_placeholder: "Tool suchen…",
+    compare_btn: "Vergleichen",
+    filter_setup_all: "Aufwand Einrichtung: alle",
+    filter_support_all: "Aufwand Betreuung: alle",
+    filter_goal_default: "Gut geeignet für …",
+    filter_bloom_all: "🎓 Bloom: Alle Stufen",
+    filter_bloom_from: "ab Stufe",
+    setup: "Einrichtung",
+    setup_help: "Wie viel Aufwand kostet es, diese Aktivität EINMALIG anzulegen und zu konfigurieren?",
+    support: "Betreuung",
+    support_help: "Wie viel laufender Aufwand entsteht WÄHREND der Nutzung – moderieren, bewerten, antworten?",
+    setup_einfach: "Einfach",
+    setup_mittel: "Mittel",
+    setup_komplex: "Komplex",
+    support_gering: "Gering",
+    support_mittel: "Mittel",
+    support_hoch: "Hoch",
+    activity: "Aktivität",
+    bloom_short: "Bloom",
+    bloom_help: "Welche kognitiven Lernzielstufen nach Bloom's Taxonomie deckt diese Aktivität typischerweise ab? 1=Wiedergeben, 6=Erschaffen.",
+    suit_good: "Gut geeignet",
+    suit_partial: "Teilweise geeignet",
+    suit_bad: "Ungeeignet",
+    empty_title: "Keine passenden Aktivitäten gefunden",
+    empty_text: "Zu der gewählten Kombination gibt es in Moodle keine passende Aktivität. Lockere einen oder mehrere Filter, um Vorschläge zu erhalten – oder probiere den Assistenten für eine geführte Auswahl.",
+    empty_reset: "Filter zurücksetzen",
+    wizard_step1: "Ziel",
+    wizard_step2: "Aufwand",
+    wizard_step3: "Bloom",
+    wizard_step4: "Ergebnis",
+    wizard_q1: "Was möchtest du erreichen?",
+    wizard_q2: "Wie viel Aufwand für die Einrichtung darf es sein?",
+    wizard_q3: "Welche Bloom-Stufe mindestens?",
+    wizard_results: "passende Tools gefunden",
+    wizard_back: "Zurück",
+    wizard_restart: "Neu starten",
+    wizard_skip: "Egal",
+    wizard_skip_desc: "Spielt keine Rolle",
+    overview: "Überblick",
+    suitability_header: "Eignung nach didaktischem Ziel",
+    docs_btn: "Moodle Docs",
+    community_btn: "Mehr Infos und Ideen in der eledia.community",
+    in_compare: "✓ Im Vergleich",
+    add_compare: "+ Vergleichen",
+    description: "Beschreibung",
+    repo_btn: "Quellcode auf GitHub",
+    footer: "Basierend auf dem Moodle Tool Guide · eLeDia · Idee: Joyce Seitzinger",
+    bloom_levels: ["Wiedergeben", "Verstehen", "Anwenden", "Analysieren", "Bewerten", "Erschaffen"],
+    bloom_descs: [
+      "Fakten und grundlegende Konzepte abrufen.",
+      "Ideen oder Konzepte in eigenen Worten wiedergeben.",
+      "Informationen in neuen Situationen nutzen.",
+      "Verbindungen zwischen Ideen herstellen.",
+      "Basierend auf den Lernmaterialien einen Standpunkt rechtfertigen.",
+      "Eine neue oder originelle Arbeit entwickeln."
+    ],
+    goals: {
+      info: { label: "Information & Transfer", q: "Ist es geeignet zur Weitergabe von Informationen?" },
+      bewerten: { label: "Bewerten", q: "Ermöglicht es, den Kenntnisstand zu erfassen?" },
+      komm: { label: "Kommunikation & Interaktion", q: "Kann es zur Kommunikation genutzt werden?" },
+      collab: { label: "Gemeinsam Inhalte erstellen", q: "Können Inhalte kooperativ erstellt werden?" },
+      bloomG: { label: "Bloom's Lernziele", q: "Welche Lernziele werden unterstützt?" }
+    }
+  },
+  en: {
+    title: "Moodle Tool Guide",
+    subtitle: "Find the right tool for your didactic goal",
+    nav_matrix: "Matrix",
+    nav_cards: "Cards",
+    nav_wizard: "Wizard",
+    search_placeholder: "Search tool…",
+    compare_btn: "Compare",
+    filter_setup_all: "Setup effort: all",
+    filter_support_all: "Support effort: all",
+    filter_goal_default: "Well suited for …",
+    filter_bloom_all: "🎓 Bloom: all levels",
+    filter_bloom_from: "from level",
+    setup: "Setup",
+    setup_help: "How much effort does it take to ONE-TIME create and configure this activity?",
+    support: "Support",
+    support_help: "How much ongoing effort is needed DURING use – moderating, grading, replying?",
+    setup_einfach: "Easy",
+    setup_mittel: "Medium",
+    setup_komplex: "Complex",
+    support_gering: "Low",
+    support_mittel: "Medium",
+    support_hoch: "High",
+    activity: "Activity",
+    bloom_short: "Bloom",
+    bloom_help: "Which cognitive learning levels of Bloom's Taxonomy does this activity typically support? 1=Remember, 6=Create.",
+    suit_good: "Well suited",
+    suit_partial: "Partially suited",
+    suit_bad: "Not suited",
+    empty_title: "No matching activities found",
+    empty_text: "There is no Moodle activity that matches the selected combination. Loosen one or more filters to see suggestions – or try the Wizard for a guided selection.",
+    empty_reset: "Reset filters",
+    wizard_step1: "Goal",
+    wizard_step2: "Effort",
+    wizard_step3: "Bloom",
+    wizard_step4: "Result",
+    wizard_q1: "What do you want to achieve?",
+    wizard_q2: "How much setup effort is acceptable?",
+    wizard_q3: "Which Bloom level at minimum?",
+    wizard_results: "matching tools found",
+    wizard_back: "Back",
+    wizard_restart: "Start over",
+    wizard_skip: "Any",
+    wizard_skip_desc: "Doesn't matter",
+    overview: "Overview",
+    suitability_header: "Suitability by didactic goal",
+    docs_btn: "Moodle Docs",
+    community_btn: "More ideas at eledia.community",
+    in_compare: "✓ In comparison",
+    add_compare: "+ Compare",
+    description: "Description",
+    repo_btn: "Source on GitHub",
+    footer: "Based on the Moodle Tool Guide · eLeDia · Idea: Joyce Seitzinger",
+    bloom_levels: ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"],
+    bloom_descs: [
+      "Recall facts and basic concepts.",
+      "Explain ideas or concepts in your own words.",
+      "Use information in new situations.",
+      "Draw connections among ideas.",
+      "Justify a stand or decision based on the material.",
+      "Produce new or original work."
+    ],
+    goals: {
+      info: { label: "Information & Transfer", q: "Is it suitable for delivering information?" },
+      bewerten: { label: "Assessment", q: "Does it allow measuring knowledge?" },
+      komm: { label: "Communication & Interaction", q: "Can it be used for communication?" },
+      collab: { label: "Collaborative Creation", q: "Can content be created cooperatively?" },
+      bloomG: { label: "Bloom's Learning Goals", q: "Which learning goals are supported?" }
+    }
+  },
+  fr: {
+    title: "Guide des outils Moodle",
+    subtitle: "Trouvez l'outil adapté à votre objectif didactique",
+    nav_matrix: "Matrice",
+    nav_cards: "Cartes",
+    nav_wizard: "Assistant",
+    search_placeholder: "Rechercher un outil…",
+    compare_btn: "Comparer",
+    filter_setup_all: "Effort de mise en place : tous",
+    filter_support_all: "Effort d'animation : tous",
+    filter_goal_default: "Bien adapté pour …",
+    filter_bloom_all: "🎓 Bloom : tous les niveaux",
+    filter_bloom_from: "à partir du niveau",
+    setup: "Mise en place",
+    setup_help: "Quel effort faut-il pour créer et configurer cette activité UNE FOIS ?",
+    support: "Animation",
+    support_help: "Quel effort continu est nécessaire PENDANT l'utilisation – modérer, évaluer, répondre ?",
+    setup_einfach: "Facile",
+    setup_mittel: "Moyen",
+    setup_komplex: "Complexe",
+    support_gering: "Faible",
+    support_mittel: "Moyen",
+    support_hoch: "Élevé",
+    activity: "Activité",
+    bloom_short: "Bloom",
+    bloom_help: "Quels niveaux cognitifs de la taxonomie de Bloom cette activité couvre-t-elle ? 1=Se souvenir, 6=Créer.",
+    suit_good: "Bien adapté",
+    suit_partial: "Partiellement adapté",
+    suit_bad: "Inadapté",
+    empty_title: "Aucune activité correspondante",
+    empty_text: "Il n'existe pas d'activité Moodle correspondant à cette combinaison. Assouplissez un ou plusieurs filtres pour voir des suggestions – ou essayez l'Assistant pour une sélection guidée.",
+    empty_reset: "Réinitialiser les filtres",
+    wizard_step1: "Objectif",
+    wizard_step2: "Effort",
+    wizard_step3: "Bloom",
+    wizard_step4: "Résultat",
+    wizard_q1: "Que voulez-vous accomplir ?",
+    wizard_q2: "Quel effort de mise en place est acceptable ?",
+    wizard_q3: "Quel niveau de Bloom au minimum ?",
+    wizard_results: "outils correspondants trouvés",
+    wizard_back: "Retour",
+    wizard_restart: "Recommencer",
+    wizard_skip: "Peu importe",
+    wizard_skip_desc: "Aucune importance",
+    overview: "Aperçu",
+    suitability_header: "Adéquation par objectif didactique",
+    docs_btn: "Docs Moodle",
+    community_btn: "Plus d'idées sur eledia.community",
+    in_compare: "✓ Dans la comparaison",
+    add_compare: "+ Comparer",
+    description: "Description",
+    repo_btn: "Code source sur GitHub",
+    footer: "Basé sur le Moodle Tool Guide · eLeDia · Idée : Joyce Seitzinger",
+    bloom_levels: ["Se souvenir", "Comprendre", "Appliquer", "Analyser", "Évaluer", "Créer"],
+    bloom_descs: [
+      "Rappeler des faits et des concepts de base.",
+      "Expliquer des idées ou des concepts en ses propres mots.",
+      "Utiliser l'information dans de nouvelles situations.",
+      "Établir des liens entre les idées.",
+      "Justifier une position en s'appuyant sur le matériel.",
+      "Produire un travail nouveau ou original."
+    ],
+    goals: {
+      info: { label: "Information & Transfert", q: "Convient-il à la diffusion d'informations ?" },
+      bewerten: { label: "Évaluer", q: "Permet-il de mesurer les connaissances ?" },
+      komm: { label: "Communication & Interaction", q: "Peut-il être utilisé pour communiquer ?" },
+      collab: { label: "Création collaborative", q: "Le contenu peut-il être créé en coopération ?" },
+      bloomG: { label: "Objectifs de Bloom", q: "Quels objectifs d'apprentissage sont soutenus ?" }
+    }
+  },
+  es: {
+    title: "Guía de herramientas Moodle",
+    subtitle: "Encuentra la herramienta adecuada para tu objetivo didáctico",
+    nav_matrix: "Matriz",
+    nav_cards: "Tarjetas",
+    nav_wizard: "Asistente",
+    search_placeholder: "Buscar herramienta…",
+    compare_btn: "Comparar",
+    filter_setup_all: "Esfuerzo de configuración: todos",
+    filter_support_all: "Esfuerzo de tutoría: todos",
+    filter_goal_default: "Bien adaptado para …",
+    filter_bloom_all: "🎓 Bloom: todos los niveles",
+    filter_bloom_from: "desde el nivel",
+    setup: "Configuración",
+    setup_help: "¿Cuánto esfuerzo cuesta crear y configurar esta actividad UNA VEZ?",
+    support: "Tutoría",
+    support_help: "¿Cuánto esfuerzo continuo se necesita DURANTE el uso – moderar, evaluar, responder?",
+    setup_einfach: "Fácil",
+    setup_mittel: "Medio",
+    setup_komplex: "Complejo",
+    support_gering: "Bajo",
+    support_mittel: "Medio",
+    support_hoch: "Alto",
+    activity: "Actividad",
+    bloom_short: "Bloom",
+    bloom_help: "¿Qué niveles cognitivos de la Taxonomía de Bloom cubre esta actividad? 1=Recordar, 6=Crear.",
+    suit_good: "Bien adaptado",
+    suit_partial: "Parcialmente adaptado",
+    suit_bad: "No adaptado",
+    empty_title: "No se encontraron actividades",
+    empty_text: "No hay ninguna actividad de Moodle que coincida con esta combinación. Relaja uno o varios filtros para ver sugerencias – o prueba el Asistente para una selección guiada.",
+    empty_reset: "Restablecer filtros",
+    wizard_step1: "Objetivo",
+    wizard_step2: "Esfuerzo",
+    wizard_step3: "Bloom",
+    wizard_step4: "Resultado",
+    wizard_q1: "¿Qué quieres lograr?",
+    wizard_q2: "¿Cuánto esfuerzo de configuración es aceptable?",
+    wizard_q3: "¿Qué nivel de Bloom como mínimo?",
+    wizard_results: "herramientas encontradas",
+    wizard_back: "Atrás",
+    wizard_restart: "Reiniciar",
+    wizard_skip: "Cualquiera",
+    wizard_skip_desc: "No importa",
+    overview: "Resumen",
+    suitability_header: "Idoneidad por objetivo didáctico",
+    docs_btn: "Documentación Moodle",
+    community_btn: "Más ideas en eledia.community",
+    in_compare: "✓ En comparación",
+    add_compare: "+ Comparar",
+    description: "Descripción",
+    repo_btn: "Código fuente en GitHub",
+    footer: "Basado en el Moodle Tool Guide · eLeDia · Idea: Joyce Seitzinger",
+    bloom_levels: ["Recordar", "Comprender", "Aplicar", "Analizar", "Evaluar", "Crear"],
+    bloom_descs: [
+      "Recordar hechos y conceptos básicos.",
+      "Explicar ideas o conceptos con tus propias palabras.",
+      "Usar información en nuevas situaciones.",
+      "Establecer conexiones entre ideas.",
+      "Justificar una postura basándose en el material.",
+      "Producir un trabajo nuevo u original."
+    ],
+    goals: {
+      info: { label: "Información y transferencia", q: "¿Es adecuado para transmitir información?" },
+      bewerten: { label: "Evaluar", q: "¿Permite medir conocimientos?" },
+      komm: { label: "Comunicación e interacción", q: "¿Puede usarse para comunicarse?" },
+      collab: { label: "Crear en colaboración", q: "¿Se puede crear contenido cooperativamente?" },
+      bloomG: { label: "Objetivos de Bloom", q: "¿Qué objetivos de aprendizaje se apoyan?" }
+    }
+  }
+};
+
+const REPO_URL = "https://github.com/jmoskaliuk/local_eledia_moodletoolguide";
+
+// Helper function to render text – component must call this with current lang
+const t = (lang, key) => I18N[lang][key] || key;
+const tg = (lang, key) => I18N[lang].goals[key] || {label:key, q:""};
+
+// ============================================================================
+// Visual helpers
+// ============================================================================
+
+// eLeDia palette accent colors for ratings
+const rc = r => r==="grün"?"#6a9c3a":r==="orange"?"#5a96a6":r==="rot"?"#d4885a":"#999";
+// background tints
+const rb = r => r==="grün"?"#d1e0c1":r==="orange"?"#a9cbd5":"#ffecdb";
+const rl = (r, lang) => r==="grün"?t(lang,"suit_good"):r==="orange"?t(lang,"suit_partial"):t(lang,"suit_bad");
+
+// setup/support effort labels
+const setupLabel = (s, lang) => s==="einfach"?t(lang,"setup_einfach"):s==="mittel"?t(lang,"setup_mittel"):t(lang,"setup_komplex");
+const supportLabel = (s, lang) => s==="gering"?t(lang,"support_gering"):s==="mittel"?t(lang,"support_mittel"):t(lang,"support_hoch");
+// effort badge colors (eLeDia palette: low=green, medium=blue, high=warm)
+const effortColor = level => level==="einfach"||level==="gering"?"#669933":level==="mittel"?"#194866":"#f98012";
+const effortBg = level => level==="einfach"||level==="gering"?"#e8f0dc":level==="mittel"?"#dbe7ee":"#fde6cc";
+const effortDots = level => level==="einfach"||level==="gering"?"●○○":level==="mittel"?"●●○":"●●●";
+
+function ToolIcon({toolId, size=32}) {
+  const icon = TOOL_ICONS[toolId];
+  if (!icon) return null;
+  const r = Math.round(size * 0.2);
+  return React.createElement("span",{
+    "aria-hidden":"true",
+    style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:size,height:size,borderRadius:r,background:icon.bg,flexShrink:0},
+    dangerouslySetInnerHTML:{__html:`<svg viewBox="0 0 24 24" width="${size*0.6}" height="${size*0.6}">${icon.svg}</svg>`}
+  });
+}
+
+function GoalIcon({goalKey, color, size=20, title=""}) {
+  return React.createElement("span",{
+    title:title,
+    "aria-hidden": title ? null : "true",
+    style:{display:"inline-block",width:size,height:size,pointerEvents:title?"auto":"none"},
+    dangerouslySetInnerHTML:{__html:`<svg style="pointer-events:none" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${GOAL_SVG[goalKey]||""}</svg>`}
+  });
+}
+
+// Thumbs icons for matrix cells: up / sideways / down
+const THUMBS = {
+  grün:    `<path d="M7 11v8a1 1 0 0 0 1 1h2.5l4-1V11l-3-7h-1a1 1 0 0 0-1 1v3l-2.5 3z" fill="currentColor"/><path d="M14.5 19h3.6a2 2 0 0 0 2-1.7l1.4-7A2 2 0 0 0 19.5 8h-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>`,
+  orange:  `<path d="M3 11v2a2 2 0 0 0 2 2h3v3a2 2 0 0 0 2 2l4-7V4H6.5a2 2 0 0 0-2 1.7L3 11z" fill="currentColor" transform="rotate(-90 12 12)"/>`,
+  rot:     `<path d="M7 13V5a1 1 0 0 1 1-1h2.5l4 1v9l-3 7h-1a1 1 0 0 1-1-1v-3l-2.5-3z" fill="currentColor"/><path d="M14.5 5h3.6a2 2 0 0 1 2 1.7l1.4 7A2 2 0 0 1 19.5 16h-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>`
+};
+
+function ThumbIcon({rating, size=22, title=""}) {
+  const color = rc(rating);
+  return React.createElement("span", {
+    title: title,
+    role: "img",
+    "aria-label": title,
+    style: {display:"inline-flex",alignItems:"center",justifyContent:"center",width:size+10,height:size+10,borderRadius:8,background:rb(rating),color:color,cursor:"help"},
+    dangerouslySetInnerHTML: {__html:`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="pointer-events:none">${THUMBS[rating]||THUMBS.rot}</svg>`}
+  });
+}
+
+function BloomHats({bloom, lang, size=14}) {
+  const n = parseInt(bloom) || 0;
+  const levels = I18N[lang].bloom_levels;
+  const descs = I18N[lang].bloom_descs;
+  return React.createElement("span", {
+    role:"img","aria-label":"Bloom "+n+"/6",
+    style:{display:"inline-flex",gap:2,alignItems:"center"},
+  },
+    Array.from({length:6},(_,i) => React.createElement("span",{
+      key:i,
+      title: i < n ? (i+1)+". "+levels[i]+" – "+descs[i] : (i+1)+". "+levels[i],
+      style:{fontSize:size, opacity: i < n ? 1 : 0.25, filter: i < n ? "none" : "grayscale(1)", cursor:"help"}
+    },"\u{1F393}"))
+  );
+}
+
+// effort badge component
+function EffortBadge({level, kind, lang}) {
+  const label = kind==="setup" ? setupLabel(level, lang) : supportLabel(level, lang);
+  const help = kind==="setup" ? t(lang,"setup_help") : t(lang,"support_help");
+  return React.createElement("span", {
+    title: help+" – "+label,
+    style: {display:"inline-flex",alignItems:"center",gap:4,padding:"3px 8px",borderRadius:12,fontSize:11,fontWeight:600,background:effortBg(level),color:effortColor(level),cursor:"help"}
+  },
+    React.createElement("span",{"aria-hidden":"true",style:{fontSize:9,letterSpacing:1}},effortDots(level)),
+    label
+  );
+}
+
+// ============================================================================
+// Components
+// ============================================================================
+function ToolCard({tool, onSelect, onCompare, isC, lang}) {
+  const goals = ["info","bewerten","komm","collab","bloomG"];
+  return React.createElement("div", {
+    onClick:()=>onSelect(tool),
+    role:"button",
+    tabIndex:0,
+    onKeyDown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(tool);}},
+    "aria-label":tool.name,
+    style:{background:"white",borderRadius:12,padding:18,cursor:"pointer",boxShadow:"0 1px 3px rgba(0,0,0,0.08)",border:isC?"2px solid #f98012":"2px solid transparent",transition:"all 0.2s"},
+    onMouseEnter:e=>{e.currentTarget.style.boxShadow="0 4px 12px rgba(0,0,0,0.12)";e.currentTarget.style.transform="translateY(-2px)"},
+    onMouseLeave:e=>{e.currentTarget.style.boxShadow="0 1px 3px rgba(0,0,0,0.08)";e.currentTarget.style.transform="none"}
+  },
+    React.createElement("div",{style:{display:"flex",gap:12,alignItems:"flex-start",marginBottom:12}},
+      React.createElement(ToolIcon,{toolId:tool.id,size:42}),
+      React.createElement("div",{style:{flex:1,minWidth:0}},
+        React.createElement("h3",{style:{margin:0,fontSize:17,color:"#194866",fontWeight:700}},tool.name),
+        React.createElement("p",{style:{margin:"2px 0 0",fontSize:12,color:"#64748b",lineHeight:1.3}},tool.desc)
+      )
+    ),
+    React.createElement("div",{style:{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}},
+      React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang}),
+      React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang})
+    ),
+    React.createElement("div",{style:{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap",alignItems:"center"}},
+      goals.map(gk=>React.createElement("span",{key:gk,title:tg(lang,gk).label+": "+rl(tool.goals[gk].r,lang),style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:30,height:30,borderRadius:8,background:rb(tool.goals[gk].r),cursor:"help"}},
+        React.createElement(GoalIcon,{goalKey:gk,color:rc(tool.goals[gk].r),size:16})
+      ))
+    ),
+    React.createElement("div",{style:{marginBottom:10}},React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:25})),
+    React.createElement("p",{style:{fontSize:11,color:"#64748b",lineHeight:1.4,margin:"0 0 10px",borderTop:"1px solid #e2e8f0",paddingTop:8,fontStyle:"italic"}},tool.complexityText),
+    React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",alignItems:"center"}},
+      React.createElement("button",{onClick:e=>{e.stopPropagation();onCompare(tool.id)},style:{fontSize:11,padding:"4px 10px",borderRadius:6,border:isC?"1px solid #f98012":"1px solid #d1d5db",background:isC?"#fff7ed":"white",color:isC?"#f98012":"#64748b",cursor:"pointer"}},isC?t(lang,"in_compare"):t(lang,"add_compare"))
+    )
+  );
+}
+
+function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
+  let filtered = tools.filter(t=>{
+    if(filters.setup&&t.setup!==filters.setup) return false;
+    if(filters.support&&t.support!==filters.support) return false;
+    if(filters.goal&&filters.onlyGreen&&t.goals[filters.goal]?.r!=="grün") return false;
+    if(filters.bloomMin&&parseInt(t.bloom)<filters.bloomMin) return false;
+    return true;
+  });
+  if(filtered.length===0) {
+    return React.createElement("div",{role:"status","aria-live":"polite",style:{maxWidth:600,margin:"40px auto",padding:32,background:"#fff7ed",border:"2px dashed #f98012",borderRadius:12,textAlign:"center"}},
+      React.createElement("div",{style:{fontSize:48,marginBottom:8},"aria-hidden":"true"},"🔍"),
+      React.createElement("h3",{style:{margin:"0 0 8px",color:"#194866",fontSize:18}},t(lang,"empty_title")),
+      React.createElement("p",{style:{margin:"0 0 16px",color:"#475569",fontSize:14,lineHeight:1.5}},t(lang,"empty_text")),
+      React.createElement("button",{onClick:onResetFilters,style:{padding:"8px 16px",borderRadius:8,border:"none",background:"#f98012",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"empty_reset"))
+    );
+  }
+  const goalKeys = ["info","bewerten","komm","collab","bloomG"];
+  return React.createElement("div",{style:{overflowX:"auto",borderRadius:12,boxShadow:"0 1px 3px rgba(0,0,0,0.05)"}},
+    React.createElement("table",{style:{width:"100%",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":"Moodle Tool Guide Matrix"},
+      React.createElement("thead",null,
+        React.createElement("tr",null,
+          React.createElement("th",{scope:"col",style:{position:"sticky",left:0,background:"#194866",color:"white",padding:"12px 14px",textAlign:"left",zIndex:2,minWidth:130}},t(lang,"activity")),
+          React.createElement("th",{scope:"col",title:t(lang,"setup_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
+            React.createElement("div",{style:{fontSize:11,opacity:0.7}},"\u2699"),React.createElement("div",{style:{fontSize:12,marginTop:2}},t(lang,"setup"))
+          ),
+          React.createElement("th",{scope:"col",title:t(lang,"support_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
+            React.createElement("div",{style:{fontSize:11,opacity:0.7}},"\u2764"),React.createElement("div",{style:{fontSize:12,marginTop:2}},t(lang,"support"))
+          ),
+          goalKeys.map((gk,i)=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).q,style:{background:"#194866",color:"white",padding:"12px 10px",textAlign:"center",minWidth:80,cursor:"help",borderRadius:i===goalKeys.length-1?"0 8px 0 0":0}},
+            React.createElement("div",{style:{display:"flex",justifyContent:"center"}},React.createElement(GoalIcon,{goalKey:gk,color:"white",size:18})),
+            React.createElement("div",{style:{fontSize:11,marginTop:4,maxWidth:90,margin:"4px auto 0"}},tg(lang,gk).label)
+          ))
+        )
+      ),
+      React.createElement("tbody",null,
+        filtered.map((tool,idx)=>React.createElement("tr",{key:tool.id,onClick:()=>onSelect(tool),tabIndex:0,
+          onKeyDown:e=>{if(e.key==="Enter"){onSelect(tool);}},
+          style:{cursor:"pointer",background:idx%2===0?"white":"#f8fafc"},
+          onMouseEnter:e=>e.currentTarget.style.background="#eff6ff",onMouseLeave:e=>e.currentTarget.style.background=idx%2===0?"white":"#f8fafc"},
+          React.createElement("td",{style:{position:"sticky",left:0,background:"inherit",padding:"10px 14px",fontWeight:600,borderBottom:"1px solid #e2e8f0",zIndex:1}},
+            React.createElement("div",{style:{display:"flex",alignItems:"center",gap:8}},React.createElement(ToolIcon,{toolId:tool.id,size:28}),React.createElement("span",{style:{color:"#194866"}},tool.name))
+          ),
+          React.createElement("td",{style:{padding:8,textAlign:"center",borderBottom:"1px solid #e2e8f0"}},
+            React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang})
+          ),
+          React.createElement("td",{style:{padding:8,textAlign:"center",borderBottom:"1px solid #e2e8f0"}},
+            React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang})
+          ),
+          goalKeys.map(gk=>{
+            const r = tool.goals[gk].r;
+            const tooltipText = tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t;
+            if (gk==="bloomG") {
+              return React.createElement("td",{key:gk,style:{padding:8,textAlign:"center",borderBottom:"1px solid #e2e8f0"}},
+                React.createElement("div",{title:tooltipText,style:{display:"flex",flexDirection:"column",alignItems:"center",gap:2,cursor:"help"}},
+                  React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:13}),
+                  React.createElement("span",{style:{fontSize:9,color:rc(r),fontWeight:600,marginTop:2}},rl(r,lang))
+                )
+              );
+            }
+            return React.createElement("td",{key:gk,style:{padding:8,textAlign:"center",borderBottom:"1px solid #e2e8f0"}},
+              React.createElement(ThumbIcon,{rating:r,size:22,title:tooltipText})
+            );
+          })
+        ))
+      )
+    )
+  );
+}
+
+function DetailModal({tool,onClose,lang}) {
+  if(!tool) return null;
+  const goalKeys = ["info","bewerten","komm","collab","bloomG"];
+  React.useEffect(()=>{
+    const h = e => { if(e.key==="Escape") onClose(); };
+    document.addEventListener("keydown",h);
+    return () => document.removeEventListener("keydown",h);
+  },[onClose]);
+  return React.createElement("div",{role:"dialog","aria-modal":"true","aria-label":tool.name,style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",zIndex:100,display:"flex",justifyContent:"center",alignItems:"center",padding:20},onClick:onClose},
+    React.createElement("div",{style:{background:"white",borderRadius:16,maxWidth:700,width:"100%",maxHeight:"90vh",overflow:"auto",padding:24},onClick:e=>e.stopPropagation()},
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20,gap:12}},
+        React.createElement("div",{style:{display:"flex",gap:14,alignItems:"center",flex:1,minWidth:0}},
+          React.createElement(ToolIcon,{toolId:tool.id,size:48}),
+          React.createElement("div",{style:{minWidth:0}},
+            React.createElement("h2",{style:{margin:0,fontSize:22,color:"#194866"}},tool.name),
+            React.createElement("p",{style:{margin:"4px 0 0",color:"#64748b",fontSize:14}},tool.desc)
+          )
+        ),
+        React.createElement("button",{onClick:onClose,"aria-label":"Schließen",style:{background:"none",border:"none",fontSize:28,cursor:"pointer",color:"#94a3b8",padding:4,lineHeight:1}},"\u00D7")
+      ),
+      React.createElement("div",{style:{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap"}},
+        React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang}),
+        React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang}),
+        React.createElement("span",{style:{background:"#f1f5f9",padding:"4px 12px",borderRadius:20,fontSize:12,display:"inline-flex",alignItems:"center",gap:6}},"Bloom: ",React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:14}))
+      ),
+      tool.longDesc?React.createElement("div",{style:{margin:"0 0 20px",padding:14,background:"#f8fafc",borderRadius:10,borderLeft:"4px solid #194866"}},
+        React.createElement("h3",{style:{fontSize:14,margin:"0 0 6px",color:"#194866",textTransform:"uppercase",letterSpacing:0.5}},t(lang,"overview")),
+        React.createElement("p",{style:{margin:0,fontSize:13,color:"#475569",lineHeight:1.6}},tool.longDesc)
+      ):null,
+      React.createElement("h3",{style:{fontSize:14,margin:"0 0 12px",color:"#194866",textTransform:"uppercase",letterSpacing:0.5}},t(lang,"suitability_header")),
+      goalKeys.map(gk=>React.createElement("div",{key:gk,style:{marginBottom:10,padding:12,background:rb(tool.goals[gk].r),borderRadius:10,borderLeft:"4px solid "+rc(tool.goals[gk].r)}},
+        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4,gap:8}},
+          React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6,fontWeight:600,fontSize:13,color:"#194866"}},React.createElement(GoalIcon,{goalKey:gk,color:rc(tool.goals[gk].r),size:18}),tg(lang,gk).label),
+          React.createElement("span",{style:{fontSize:11,color:rc(tool.goals[gk].r),fontWeight:600,whiteSpace:"nowrap"}},rl(tool.goals[gk].r,lang))
+        ),
+        React.createElement("p",{style:{margin:0,fontSize:12,color:"#475569",lineHeight:1.5}},tool.goals[gk].t)
+      )),
+      React.createElement("div",{style:{display:"flex",gap:10,flexWrap:"wrap",marginTop:20}},
+        tool.docsUrl?React.createElement("a",{href:tool.docsUrl,target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#dbe7ee",color:"#194866",textDecoration:"none",border:"1px solid #b8d0dd",fontWeight:500}},"\uD83D\uDCDA "+t(lang,"docs_btn")):null,
+        React.createElement("a",{href:"https://community.eledia.de",target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#fde6cc",color:"#f98012",textDecoration:"none",border:"1px solid #fbcfa1",fontWeight:500}},"\uD83D\uDCA1 "+t(lang,"community_btn"))
+      )
+    )
+  );
+}
+
+function CompareView({toolIds,tools,onClose,lang}) {
+  const items = toolIds.map(id=>tools.find(t2=>t2.id===id)).filter(Boolean);
+  if(items.length<2) return null;
+  const goalKeys = ["info","bewerten","komm","collab","bloomG"];
+  return React.createElement("div",{role:"dialog","aria-modal":"true",style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",zIndex:100,display:"flex",justifyContent:"center",alignItems:"center",padding:20},onClick:onClose},
+    React.createElement("div",{style:{background:"white",borderRadius:16,maxWidth:900,width:"100%",maxHeight:"90vh",overflow:"auto",padding:24},onClick:e=>e.stopPropagation()},
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:20}},
+        React.createElement("h2",{style:{margin:0,fontSize:20,color:"#194866"}},t(lang,"compare_btn")),
+        React.createElement("button",{onClick:onClose,"aria-label":"Schließen",style:{background:"none",border:"none",fontSize:24,cursor:"pointer",color:"#94a3b8"}},"\u00D7")
+      ),
+      React.createElement("div",{style:{overflowX:"auto"}},
+      React.createElement("table",{style:{width:"100%",borderCollapse:"collapse",fontSize:13}},
+        React.createElement("thead",null,React.createElement("tr",null,
+          React.createElement("th",{scope:"col",style:{textAlign:"left",padding:10,borderBottom:"2px solid #e2e8f0",width:"22%"}}),
+          items.map(t2=>React.createElement("th",{scope:"col",key:t2.id,style:{textAlign:"center",padding:10,borderBottom:"2px solid #e2e8f0",fontSize:14}},React.createElement("div",{style:{display:"flex",flexDirection:"column",alignItems:"center",gap:6}},React.createElement(ToolIcon,{toolId:t2.id,size:32}),React.createElement("span",{style:{color:"#194866"}},t2.name))))
+        )),
+        React.createElement("tbody",null,
+          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #f1f5f9",color:"#64748b"}},t(lang,"description")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #f1f5f9",color:"#475569",fontSize:12}},t2.desc))),
+          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #f1f5f9",color:"#64748b"}},t(lang,"setup")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #f1f5f9"}},React.createElement(EffortBadge,{level:t2.setup,kind:"setup",lang:lang})))),
+          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #f1f5f9",color:"#64748b"}},t(lang,"support")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #f1f5f9"}},React.createElement(EffortBadge,{level:t2.support,kind:"support",lang:lang})))),
+          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #f1f5f9",color:"#64748b"}},"Bloom"),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #f1f5f9"}},React.createElement(BloomHats,{bloom:t2.bloom,lang:lang,size:14})))),
+          goalKeys.map(gk=>{
+            return React.createElement("tr",{key:gk},
+              React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #f1f5f9",color:"#64748b"}},React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6}},React.createElement(GoalIcon,{goalKey:gk,color:"#475569",size:16}),tg(lang,gk).label)),
+              items.map(t2=>{
+                return React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #f1f5f9"}},
+                  React.createElement(ThumbIcon,{rating:t2.goals[gk].r,size:20,title:rl(t2.goals[gk].r,lang)+" – "+t2.goals[gk].t})
+                );
+              })
+            );
+          })
+        )
+      )
+      )
+    )
+  );
+}
+
+function WizardView({tools,onSelect,lang}) {
+  const [step,setStep]=React.useState(0);
+  const [goal,setGoal]=React.useState(null);
+  const [setup,setSetup]=React.useState(null);
+  const [bloomMin,setBloomMin]=React.useState(0);
+
+  const results = React.useMemo(()=>{
+    if(step<3) return [];
+    return tools.filter(t2=>{
+      if(goal&&t2.goals[goal]?.r==="rot") return false;
+      if(setup&&t2.setup!==setup) return false;
+      if(bloomMin>0&&parseInt(t2.bloom)<bloomMin) return false;
+      return true;
+    }).sort((a,b)=>{
+      if(!goal) return 0;
+      const o={"grün":0,"orange":1,"rot":2};
+      return (o[a.goals[goal].r]||0)-(o[b.goals[goal].r]||0);
+    });
+  },[step,goal,setup,bloomMin,tools]);
+
+  const sty=active=>({padding:"6px 14px",borderRadius:20,fontSize:12,fontWeight:active?600:400,background:active?"#194866":"#f1f5f9",color:active?"white":"#64748b",border:"none"});
+  const optBtn=(sel,onClick,children)=>React.createElement("button",{onClick,style:{padding:"14px 18px",borderRadius:12,border:sel?"2px solid #f98012":"2px solid #e2e8f0",background:sel?"#fff7ed":"white",cursor:"pointer",textAlign:"left",fontSize:14,transition:"all 0.15s",width:"100%"}},children);
+
+  const goBack = () => { if(step>0) setStep(step-1); };
+
+  return React.createElement("div",{style:{maxWidth:600,margin:"0 auto"}},
+    React.createElement("div",{style:{display:"flex",gap:6,marginBottom:24,justifyContent:"center",flexWrap:"wrap"}},
+      [t(lang,"wizard_step1"),t(lang,"wizard_step2"),t(lang,"wizard_step3"),t(lang,"wizard_step4")].map((s,i)=>React.createElement("span",{key:i,style:sty(i===step)},i+1+". "+s))
+    ),
+    step>0&&React.createElement("button",{onClick:goBack,style:{display:"inline-flex",alignItems:"center",gap:6,marginBottom:16,padding:"6px 12px",borderRadius:8,border:"1px solid #d1d5db",background:"white",cursor:"pointer",fontSize:13,color:"#475569"}},"\u2190 ",t(lang,"wizard_back")),
+    step===0&&React.createElement("div",null,
+      React.createElement("h3",{style:{textAlign:"center",marginBottom:20,color:"#194866"}},t(lang,"wizard_q1")),
+      React.createElement("div",{style:{display:"grid",gap:10}},
+        ["info","bewerten","komm","collab"].map(gk=>optBtn(goal===gk,()=>{setGoal(gk);setStep(1)},
+          React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10}},React.createElement(GoalIcon,{goalKey:gk,color:goal===gk?"#f98012":"#475569",size:22}),React.createElement("div",null,React.createElement("strong",{style:{color:"#194866"}},tg(lang,gk).label),React.createElement("br"),React.createElement("span",{style:{fontSize:12,color:"#64748b"}},tg(lang,gk).q)))
+        ))
+      )
+    ),
+    step===1&&React.createElement("div",null,
+      React.createElement("h3",{style:{textAlign:"center",marginBottom:20,color:"#194866"}},t(lang,"wizard_q2")),
+      React.createElement("div",{style:{display:"grid",gap:10}},
+        ["einfach","mittel","komplex"].map(c=>optBtn(setup===c,()=>{setSetup(c);setStep(2)},
+          React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10}},
+            React.createElement("span",{style:{fontSize:9,letterSpacing:1,color:effortColor(c)}},effortDots(c)),
+            React.createElement("strong",{style:{color:"#194866"}},setupLabel(c,lang))
+          )
+        )),
+        optBtn(false,()=>{setSetup(null);setStep(2)},React.createElement("strong",{style:{color:"#64748b"}},t(lang,"wizard_skip")+" – "+t(lang,"wizard_skip_desc")))
+      )
+    ),
+    step===2&&React.createElement("div",null,
+      React.createElement("h3",{style:{textAlign:"center",marginBottom:20,color:"#194866"}},t(lang,"wizard_q3")),
+      React.createElement("div",{style:{display:"flex",flexDirection:"column",alignItems:"center",gap:6}},
+        I18N[lang].bloom_levels.map((name,i)=>{
+          const lvl=i+1, w=140+(5-i)*30;
+          return React.createElement("button",{key:i,onClick:()=>{setBloomMin(lvl);setStep(3)},
+            title:I18N[lang].bloom_descs[i],
+            style:{width:w,padding:"10px 0",borderRadius:6,border:bloomMin===lvl?"2px solid #f98012":"2px solid #e2e8f0",background:bloomMin===lvl?"#fff7ed":"hsl("+(200+i*25)+", 60%, "+(95-i*5)+"%)",cursor:"pointer",fontSize:13,fontWeight:500}
+          },lvl+". "+name);
+        }),
+        React.createElement("button",{onClick:()=>{setBloomMin(0);setStep(3)},style:{marginTop:8,padding:"8px 20px",borderRadius:6,border:"1px solid #d1d5db",background:"white",cursor:"pointer",fontSize:13}},t(lang,"wizard_skip"))
+      )
+    ),
+    step===3&&React.createElement("div",null,
+      React.createElement("h3",{style:{textAlign:"center",marginBottom:4,color:"#194866"}},results.length+" "+t(lang,"wizard_results")),
+      React.createElement("p",{style:{textAlign:"center",color:"#64748b",fontSize:13,marginBottom:20}},
+        (goal?tg(lang,goal).label:"")+(setup?" \u00B7 "+setupLabel(setup,lang):"")+(bloomMin>0?" \u00B7 ab Bloom "+bloomMin:"")
+      ),
+      results.length===0 ? React.createElement("div",{role:"status","aria-live":"polite",style:{padding:24,background:"#fff7ed",border:"2px dashed #f98012",borderRadius:12,textAlign:"center"}},
+        React.createElement("p",{style:{margin:0,color:"#475569",fontSize:14}},t(lang,"empty_text"))
+      ) :
+      React.createElement("div",{style:{display:"grid",gap:10}},
+        results.map(t2=>React.createElement("div",{key:t2.id,onClick:()=>onSelect(t2),tabIndex:0,style:{display:"flex",alignItems:"center",gap:14,padding:14,background:"white",borderRadius:10,border:"1px solid #e2e8f0",cursor:"pointer"},
+          onMouseEnter:e=>e.currentTarget.style.borderColor="#f98012",onMouseLeave:e=>e.currentTarget.style.borderColor="#e2e8f0"},
+          React.createElement(ToolIcon,{toolId:t2.id,size:32}),
+          React.createElement("div",{style:{flex:1,minWidth:0}},
+            React.createElement("strong",{style:{color:"#194866"}},t2.name)," ",
+            React.createElement("div",{style:{fontSize:12,color:"#64748b",marginTop:2}},goal?t2.goals[goal].t:t2.desc)
+          ),
+          React.createElement(ThumbIcon,{rating:goal?t2.goals[goal].r:"grün",size:18,title:goal?rl(t2.goals[goal].r,lang):""})
+        ))
+      ),
+      React.createElement("div",{style:{display:"flex",gap:8,justifyContent:"center",marginTop:20}},
+        React.createElement("button",{onClick:goBack,style:{padding:"8px 16px",borderRadius:8,border:"1px solid #d1d5db",background:"white",cursor:"pointer",fontSize:13}},"\u2190 "+t(lang,"wizard_back")),
+        React.createElement("button",{onClick:()=>{setStep(0);setGoal(null);setSetup(null);setBloomMin(0)},
+          style:{padding:"8px 16px",borderRadius:8,border:"1px solid #d1d5db",background:"white",cursor:"pointer",fontSize:13}},"\u21A9 "+t(lang,"wizard_restart"))
+      )
+    )
+  );
+}
+
+function App() {
+  const [view,setView]=React.useState("matrix");
+  const [selectedTool,setSelectedTool]=React.useState(null);
+  const [compareIds,setCompareIds]=React.useState([]);
+  const [showCompare,setShowCompare]=React.useState(false);
+  const [search,setSearch]=React.useState("");
+  const [lang,setLang]=React.useState("de");
+  const [filters,setFilters]=React.useState({setup:null,support:null,bloomMin:0,goal:null,onlyGreen:false});
+
+  const resetFilters = () => setFilters({setup:null,support:null,bloomMin:0,goal:null,onlyGreen:false});
+  const toggleCompare = id => setCompareIds(p=>p.includes(id)?p.filter(x=>x!==id):p.length>=4?p:[...p,id]);
+  const filteredTools = TOOLS.filter(t2=>!search||t2.name.toLowerCase().includes(search.toLowerCase())||t2.desc.toLowerCase().includes(search.toLowerCase()));
+
+  const navBtn = (v,label) => React.createElement("button",{onClick:()=>setView(v),"aria-pressed":view===v,style:{padding:"8px 16px",borderRadius:8,border:"none",background:view===v?"#194866":"transparent",color:view===v?"white":"#64748b",cursor:"pointer",fontSize:14,fontWeight:view===v?600:400}},label);
+
+  const langBtn = (code, label) => React.createElement("button",{key:code,onClick:()=>setLang(code),"aria-pressed":lang===code,style:{padding:"4px 10px",borderRadius:6,border:"none",background:lang===code?"#f98012":"transparent",color:lang===code?"white":"#cbd5e1",cursor:"pointer",fontSize:12,fontWeight:lang===code?700:400}},label);
+
+  return React.createElement("div",{style:{fontFamily:"Inter, system-ui, -apple-system, sans-serif",background:"#f8fafc",minHeight:"100vh"}},
+    React.createElement("a",{href:"#main",style:{position:"absolute",left:"-9999px",top:0,padding:8,background:"#194866",color:"white",zIndex:200},onFocus:e=>e.currentTarget.style.left="0",onBlur:e=>e.currentTarget.style.left="-9999px"},"Zum Inhalt springen"),
+    React.createElement("header",{style:{background:"linear-gradient(135deg, #194866 0%, #2a5f7f 100%)",color:"white",padding:"20px 24px"}},
+      React.createElement("div",{style:{maxWidth:1200,margin:"0 auto"}},
+        React.createElement("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,flexWrap:"wrap"}},
+          React.createElement("div",null,
+            React.createElement("div",{style:{display:"flex",alignItems:"center",gap:12,marginBottom:4,flexWrap:"wrap"}},
+              React.createElement("span",{style:{fontSize:26},"aria-hidden":"true"},"\u{1F393}"),
+              React.createElement("h1",{style:{margin:0,fontSize:22,fontWeight:700}},t(lang,"title")),
+              React.createElement("span",{style:{background:"#f98012",color:"white",fontSize:11,padding:"2px 10px",borderRadius:10,fontWeight:600}},"Moodle 5")
+            ),
+            React.createElement("p",{style:{margin:0,fontSize:13,opacity:0.85}},t(lang,"subtitle"))
+          ),
+          React.createElement("div",{role:"group","aria-label":"Sprache",style:{display:"flex",gap:2,background:"rgba(0,0,0,0.2)",padding:3,borderRadius:8}},
+            langBtn("de","DE"), langBtn("en","EN"), langBtn("fr","FR"), langBtn("es","ES")
+          )
+        )
+      )
+    ),
+    React.createElement("nav",{"aria-label":"Ansichten",style:{background:"white",borderBottom:"1px solid #e2e8f0",padding:"8px 24px",position:"sticky",top:0,zIndex:50}},
+      React.createElement("div",{style:{maxWidth:1200,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}},
+        React.createElement("div",{style:{display:"flex",gap:4,flexWrap:"wrap"}},
+          navBtn("matrix","\u{1F4CA} "+t(lang,"nav_matrix")),
+          navBtn("cards","\u{1F0CF} "+t(lang,"nav_cards")),
+          navBtn("wizard","\u{1F9D9} "+t(lang,"nav_wizard"))
+        ),
+        React.createElement("div",{style:{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}},
+          view!=="wizard"&&React.createElement("input",{value:search,onChange:e=>setSearch(e.target.value),placeholder:t(lang,"search_placeholder"),"aria-label":"Suche",style:{padding:"6px 12px",borderRadius:8,border:"1px solid #d1d5db",fontSize:13,width:160}}),
+          compareIds.length>=2&&React.createElement("button",{onClick:()=>setShowCompare(true),style:{padding:"6px 14px",borderRadius:8,background:"#f98012",color:"white",border:"none",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"compare_btn")+" ("+compareIds.length+")")
+        )
+      )
+    ),
+    view!=="wizard"&&React.createElement("div",{style:{maxWidth:1200,margin:"0 auto",padding:"12px 24px",display:"flex",gap:8,flexWrap:"wrap"}},
+      React.createElement("select",{value:filters.setup||"","aria-label":t(lang,"setup"),onChange:e=>setFilters(f=>({...f,setup:e.target.value||null})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #d1d5db",fontSize:12}},
+        React.createElement("option",{value:""},"\u2699 "+t(lang,"filter_setup_all")),
+        React.createElement("option",{value:"einfach"},"●○○ "+t(lang,"setup_einfach")),
+        React.createElement("option",{value:"mittel"},"●●○ "+t(lang,"setup_mittel")),
+        React.createElement("option",{value:"komplex"},"●●● "+t(lang,"setup_komplex"))
+      ),
+      React.createElement("select",{value:filters.support||"","aria-label":t(lang,"support"),onChange:e=>setFilters(f=>({...f,support:e.target.value||null})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #d1d5db",fontSize:12}},
+        React.createElement("option",{value:""},"\u2764 "+t(lang,"filter_support_all")),
+        React.createElement("option",{value:"gering"},"●○○ "+t(lang,"support_gering")),
+        React.createElement("option",{value:"mittel"},"●●○ "+t(lang,"support_mittel")),
+        React.createElement("option",{value:"hoch"},"●●● "+t(lang,"support_hoch"))
+      ),
+      React.createElement("select",{value:filters.goal||"","aria-label":t(lang,"filter_goal_default"),onChange:e=>setFilters(f=>({...f,goal:e.target.value||null,onlyGreen:!!e.target.value})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #d1d5db",fontSize:12}},
+        React.createElement("option",{value:""},t(lang,"filter_goal_default")),
+        ["info","bewerten","komm","collab"].map(gk=>React.createElement("option",{key:gk,value:gk},"\u2714 "+tg(lang,gk).label))
+      ),
+      React.createElement("select",{value:filters.bloomMin||"","aria-label":"Bloom",onChange:e=>setFilters(f=>({...f,bloomMin:parseInt(e.target.value)||0})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #d1d5db",fontSize:12}},
+        React.createElement("option",{value:""},t(lang,"filter_bloom_all")),
+        I18N[lang].bloom_levels.map((name,i)=>React.createElement("option",{key:i,value:i+1},t(lang,"filter_bloom_from")+" "+(i+1)+": "+name))
+      )
+    ),
+    React.createElement("main",{id:"main",style:{maxWidth:1200,margin:"0 auto",padding:"16px 24px 40px"}},
+      view==="matrix"&&React.createElement(MatrixView,{tools:filteredTools,onSelect:setSelectedTool,filters:filters,onResetFilters:resetFilters,lang:lang}),
+      view==="cards"&&(filteredTools.filter(t2=>{
+        if(filters.setup&&t2.setup!==filters.setup) return false;
+        if(filters.support&&t2.support!==filters.support) return false;
+        if(filters.goal&&filters.onlyGreen&&t2.goals[filters.goal]?.r!=="grün") return false;
+        if(filters.bloomMin&&parseInt(t2.bloom)<filters.bloomMin) return false;
+        return true;
+      }).length===0 ?
+        React.createElement("div",{role:"status","aria-live":"polite",style:{maxWidth:600,margin:"40px auto",padding:32,background:"#fff7ed",border:"2px dashed #f98012",borderRadius:12,textAlign:"center"}},
+          React.createElement("div",{style:{fontSize:48,marginBottom:8},"aria-hidden":"true"},"🔍"),
+          React.createElement("h3",{style:{margin:"0 0 8px",color:"#194866",fontSize:18}},t(lang,"empty_title")),
+          React.createElement("p",{style:{margin:"0 0 16px",color:"#475569",fontSize:14,lineHeight:1.5}},t(lang,"empty_text")),
+          React.createElement("button",{onClick:resetFilters,style:{padding:"8px 16px",borderRadius:8,border:"none",background:"#f98012",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"empty_reset"))
+        ) :
+        React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(280px, 1fr))",gap:14}},
+          filteredTools.filter(t2=>{
+            if(filters.setup&&t2.setup!==filters.setup) return false;
+            if(filters.support&&t2.support!==filters.support) return false;
+            if(filters.goal&&filters.onlyGreen&&t2.goals[filters.goal]?.r!=="grün") return false;
+            if(filters.bloomMin&&parseInt(t2.bloom)<filters.bloomMin) return false;
+            return true;
+          }).map(t2=>React.createElement(ToolCard,{key:t2.id,tool:t2,onSelect:setSelectedTool,onCompare:toggleCompare,isC:compareIds.includes(t2.id),lang:lang}))
+        )
+      ),
+      view==="wizard"&&React.createElement(WizardView,{tools:TOOLS,onSelect:setSelectedTool,lang:lang})
+    ),
+    selectedTool&&React.createElement(DetailModal,{tool:selectedTool,onClose:()=>setSelectedTool(null),lang:lang}),
+    showCompare&&React.createElement(CompareView,{toolIds:compareIds,tools:TOOLS,onClose:()=>setShowCompare(false),lang:lang}),
+    React.createElement("footer",{style:{background:"#194866",color:"#cbd5e1",padding:"16px 24px",textAlign:"center",fontSize:12}},
+      React.createElement("div",{style:{maxWidth:1200,margin:"0 auto",display:"flex",justifyContent:"center",alignItems:"center",gap:16,flexWrap:"wrap"}},
+        React.createElement("span",null,t(lang,"footer")),
+        React.createElement("a",{href:REPO_URL,target:"_blank",rel:"noopener",style:{display:"inline-flex",alignItems:"center",gap:6,padding:"4px 12px",borderRadius:6,background:"rgba(255,255,255,0.1)",color:"white",textDecoration:"none",fontSize:11,fontWeight:500}},
+          React.createElement("span",{"aria-hidden":"true"},"\u{1F4BB}"),
+          t(lang,"repo_btn")
+        )
+      )
+    )
+  );
+}
+
+ReactDOM.render(React.createElement(App), document.getElementById("root"));
+
+</script>
+</body>
+</html>
