@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactique
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Les données des outils sont actuellement codées en dur dans le bundle JavaScri
 Non. Le plugin est 100 % autonome (à l'exception du CDN React optionnel) et ne communique avec aucun serveur externe.
 
 == Journal des modifications ==
+
+= 1.1.11 =
+* Nouveau look de l'en-tête : le dégradé bleu est remplacé par un beige clair chaleureux (#FFECDB) avec un texte bleu foncé, et la sous-navigation est désormais grise (#F3F5F8) au lieu de blanche — plus de bande blanche pleine largeur en haut sur les écrans larges. Meilleurs contrastes au zoom et en mode contraste élevé.
 
 = 1.1.10 =
 * Isolation des thèmes corrigée : les listes déroulantes de filtres (Adapté à / Bloom) et les liens du pied de page n'héritent plus des styles du thème WordPress. Le plugin intègre désormais une réinitialisation CSS limitée à son conteneur, pour que le Tool Guide s'affiche à l'identique dans n'importe quel thème actif.
