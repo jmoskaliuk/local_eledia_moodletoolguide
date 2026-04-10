@@ -183,6 +183,8 @@ const I18N = {
   ,
     credit_original: "Original-Konzept"
   ,
+    credit_translation: "Basiert auf einer Übersetzung von"
+  ,
     credit_license: "Lizenz"
   ,
     credit_eledia: "Angepasst von den Moodle-Expert*innen von eLeDia | eLearning im Dialog. Mehr Moodle-Wissen auf"
@@ -282,6 +284,8 @@ const I18N = {
     wizard_q4: "Minimum Bloom level?"
   ,
     credit_original: "Original concept"
+  ,
+    credit_translation: "Based on a translation by"
   ,
     credit_license: "License"
   ,
@@ -383,6 +387,8 @@ const I18N = {
   ,
     credit_original: "Concept original"
   ,
+    credit_translation: "Basé sur une traduction de"
+  ,
     credit_license: "Licence"
   ,
     credit_eledia: "Adapté par les expert·e·s Moodle de eLeDia | eLearning im Dialog. Plus de savoir Moodle sur"
@@ -482,6 +488,8 @@ const I18N = {
     wizard_q4: "¿Nivel Bloom mínimo?"
   ,
     credit_original: "Concepto original"
+  ,
+    credit_translation: "Basado en una traducción de"
   ,
     credit_license: "Licencia"
   ,
@@ -761,10 +769,10 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
         React.createElement("tr",null,
           React.createElement("th",{scope:"col",style:{position:"sticky",left:0,background:"#194866",color:"white",padding:"12px 14px",textAlign:"left",zIndex:2,minWidth:130}},t(lang,"activity")),
           React.createElement("th",{scope:"col",title:t(lang,"setup_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
-            React.createElement("div",{style:{fontSize:14,opacity:0.85},"aria-hidden":"true"},"\u2699"),React.createElement("div",{style:{fontSize:12,marginTop:2}},t(lang,"setup"))
+            React.createElement("div",{style:{display:"flex",justifyContent:"center",opacity:0.9},"aria-hidden":"true"},React.createElement(IconMonitorCog,{size:16,color:"white"})),React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"setup"))
           ),
           React.createElement("th",{scope:"col",title:t(lang,"support_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
-            React.createElement("div",{style:{fontSize:14,opacity:0.85},"aria-hidden":"true"},"\u{1F4AC}"),React.createElement("div",{style:{fontSize:12,marginTop:2}},t(lang,"support"))
+            React.createElement("div",{style:{display:"flex",justifyContent:"center",opacity:0.9},"aria-hidden":"true"},React.createElement(IconUsers,{size:16,color:"white"})),React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"support"))
           ),
           goalKeys.map((gk,i)=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).q,style:{background:"#194866",color:"white",padding:"12px 10px",textAlign:"center",minWidth:80,cursor:"help",borderRadius:i===goalKeys.length-1?"0 8px 0 0":0}},
             React.createElement("div",{style:{display:"flex",justifyContent:"center"}},React.createElement(GoalIcon,{goalKey:gk,color:"white",size:18})),
@@ -945,6 +953,7 @@ function WizardView({tools,onSelect,lang}) {
       React.createElement("div",{style:{display:"grid",gap:10}},
         ["einfach","mittel","komplex"].map(c=>optBtn(setup===c,()=>{setSetup(c);setStep(2)},
           React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10}},
+            React.createElement(IconMonitorCog,{size:18,color:effortColor(c)}),
             React.createElement("span",{style:{fontSize:11,letterSpacing:1.5,color:effortColor(c)}},effortDots(c)),
             React.createElement("strong",{style:{color:"#194866"}},setupLabel(c,lang))
           )
@@ -961,6 +970,7 @@ function WizardView({tools,onSelect,lang}) {
       React.createElement("div",{style:{display:"grid",gap:10}},
         ["gering","mittel","hoch"].map(c=>optBtn(support===c,()=>{setSupport(c);setStep(3)},
           React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10}},
+            React.createElement(IconUsers,{size:18,color:effortColor(c)}),
             React.createElement("span",{style:{fontSize:11,letterSpacing:1.5,color:effortColor(c)}},effortDots(c)),
             React.createElement("strong",{style:{color:"#194866"}},supportLabel(c,lang))
           )
@@ -1066,39 +1076,77 @@ function IconGitHub({size=22, lang}) {
   );
 }
 
-function IconCC({size=18, lang}) {
+
+function IconMonitorCog({size=18, color="currentColor"}) {
+  return React.createElement("svg",{xmlns:"http://www.w3.org/2000/svg",width:size,height:size,viewBox:"0 0 24 24",fill:"none",stroke:color,strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round","aria-hidden":"true"},
+    React.createElement("path",{d:"M12 17v4"}),
+    React.createElement("path",{d:"m15.2 4.9-.9-.4"}),
+    React.createElement("path",{d:"m15.2 7.1-.9.4"}),
+    React.createElement("path",{d:"m16.9 3.2-.4-.9"}),
+    React.createElement("path",{d:"m16.9 8.8-.4.9"}),
+    React.createElement("path",{d:"m19.5 2.3-.4.9"}),
+    React.createElement("path",{d:"m19.5 9.7-.4-.9"}),
+    React.createElement("path",{d:"m21.7 4.5-.9.4"}),
+    React.createElement("path",{d:"m21.7 7.5-.9-.4"}),
+    React.createElement("path",{d:"M22 13v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"}),
+    React.createElement("path",{d:"M8 21h8"}),
+    React.createElement("circle",{cx:"18",cy:"6",r:"3"})
+  );
+}
+function IconUsers({size=18, color="currentColor"}) {
+  return React.createElement("svg",{xmlns:"http://www.w3.org/2000/svg",width:size,height:size,viewBox:"0 0 24 24",fill:"none",stroke:color,strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round","aria-hidden":"true"},
+    React.createElement("path",{d:"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"}),
+    React.createElement("circle",{cx:"9",cy:"7",r:"4"}),
+    React.createElement("path",{d:"M22 21v-2a4 4 0 0 0-3-3.87"}),
+    React.createElement("path",{d:"M16 3.13a4 4 0 0 1 0 7.75"})
+  );
+}
+
+function IconCC({size=22, lang}) {
   return React.createElement("img",{
     src:CC_BYNCSA_DATA,
     alt:t(lang,"alt_cc_byncsa"),
-    style:{height:size,width:"auto",display:"inline-block",filter:"brightness(0) invert(1)"}
+    style:{height:size,width:"auto",display:"inline-block",background:"white",padding:"2px 4px",borderRadius:3}
   });
 }
 
 function Footer({lang}) {
+  const linkSty = {color:"#FCBC82",textDecoration:"underline"};
   return React.createElement("footer",{
     role:"contentinfo",
-    style:{background:"#194866",color:"#D9D9D9",padding:"14px 24px",fontSize:11,lineHeight:1.5}
+    style:{background:"#194866",color:"#D9D9D9",padding:"14px 24px",fontSize:11,lineHeight:1.55}
   },
     React.createElement("div",{
       style:{maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:20,flexWrap:"wrap"}
     },
       // LEFT: credits + license icon + github icon
-      React.createElement("div",{style:{flex:"1 1 420px",minWidth:260}},
+      React.createElement("div",{style:{flex:"1 1 460px",minWidth:260}},
         React.createElement("p",{style:{margin:"0 0 4px"}},
           React.createElement("strong",{style:{color:"white"}},"Moodle Tool Guide"),
-          " · ",t(lang,"credit_original"),
-          " ",React.createElement("a",{href:"https://moodletoolguide.net/",target:"_blank",rel:"noopener",style:{color:"#FCBC82",textDecoration:"underline"}},"Joyce Seitzinger, Gavin Henrick & Nicolas Martignoni")
+          " · ",t(lang,"credit_original")," ",
+          React.createElement("a",{href:"https://www.joyceseitzinger.com/",target:"_blank",rel:"noopener",style:linkSty},"Joyce Seitzinger"),
+          ", ",
+          React.createElement("a",{href:"https://www.brickfield.ie/about_us/",target:"_blank",rel:"noopener",style:linkSty},"Gavin Henrick"),
+          " & ",
+          React.createElement("a",{href:"https://blog.martignoni.net/a-propos/",target:"_blank",rel:"noopener",style:linkSty},"Nicolas Martignoni"),
+          " (",
+          React.createElement("a",{href:"https://moodletoolguide.net/",target:"_blank",rel:"noopener",style:linkSty},"moodletoolguide.net"),
+          ")"
+        ),
+        React.createElement("p",{style:{margin:"0 0 4px"}},
+          t(lang,"credit_translation")," ",
+          React.createElement("a",{href:"https://www.linkedin.com/in/ralfhilgenstock/",target:"_blank",rel:"noopener",style:linkSty},"Ralf Hilgenstock")
         ),
         React.createElement("p",{style:{margin:"0 0 6px"}},
           t(lang,"credit_eledia")," ",
-          React.createElement("a",{href:"https://eledia.academy/",target:"_blank",rel:"noopener",style:{color:"#FCBC82",textDecoration:"underline",fontWeight:600}},"eledia.academy")
+          React.createElement("a",{href:"https://eledia.academy/",target:"_blank",rel:"noopener",style:{...linkSty,fontWeight:600}},"eledia.academy")
         ),
         React.createElement("div",{style:{display:"flex",alignItems:"center",gap:14}},
           React.createElement("a",{
             href:"https://creativecommons.org/licenses/by-nc-sa/4.0/",target:"_blank",rel:"noopener",
             title:"CC BY-NC-SA 4.0",
             style:{display:"inline-flex",alignItems:"center",color:"#FFFFFF",textDecoration:"none"}
-          }, React.createElement(IconCC,{size:22,lang:lang})),
+          }, React.createElement(IconCC,{size:24,lang:lang})),
           React.createElement("a",{
             href:REPO_URL,target:"_blank",rel:"noopener",
             title:t(lang,"alt_github"),
@@ -1106,7 +1154,7 @@ function Footer({lang}) {
           }, React.createElement(IconGitHub,{size:18,lang:lang}))
         )
       ),
-      // RIGHT: logos (eLeDia + Moodle Partner)
+      // RIGHT: logos
       React.createElement("div",{
         style:{display:"flex",alignItems:"center",gap:18,flexShrink:0}
       },
@@ -1158,10 +1206,10 @@ function App() {
             React.createElement("p",{style:{margin:0,fontSize:13,opacity:0.85}},t(lang,"subtitle"))
           ),
           React.createElement("div",{style:{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}},
-            React.createElement("div",{role:"group","aria-label":t(lang,"a11y_font_larger"),style:{display:"flex",gap:2,background:"rgba(0,0,0,0.2)",padding:3,borderRadius:8}},
-              React.createElement("button",{onClick:()=>setFontScale(s=>Math.max(0.85,s-0.1)),title:t(lang,"a11y_font_smaller"),"aria-label":t(lang,"a11y_font_smaller"),style:{padding:"4px 9px",borderRadius:6,border:"none",background:"transparent",color:"#cbd5e1",cursor:"pointer",fontSize:12,fontWeight:600}},"A−"),
-              React.createElement("button",{onClick:()=>setFontScale(1),title:t(lang,"a11y_font_reset"),"aria-label":t(lang,"a11y_font_reset"),"aria-pressed":fontScale===1,style:{padding:"4px 9px",borderRadius:6,border:"none",background:fontScale===1?"#f98012":"transparent",color:fontScale===1?"white":"#cbd5e1",cursor:"pointer",fontSize:12,fontWeight:600}},"A"),
-              React.createElement("button",{onClick:()=>setFontScale(s=>Math.min(1.4,s+0.1)),title:t(lang,"a11y_font_larger"),"aria-label":t(lang,"a11y_font_larger"),style:{padding:"4px 9px",borderRadius:6,border:"none",background:"transparent",color:"#cbd5e1",cursor:"pointer",fontSize:14,fontWeight:600}},"A+")
+            React.createElement("div",{role:"group","aria-label":"Schriftgröße",style:{display:"flex",gap:2,background:"rgba(0,0,0,0.2)",padding:3,borderRadius:8}},
+              React.createElement("button",{onClick:()=>setFontScale(s=>Math.max(0.85,Math.round((s-0.1)*100)/100)),title:t(lang,"a11y_font_smaller"),"aria-label":t(lang,"a11y_font_smaller"),"aria-pressed":fontScale<0.999,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale<0.999?"#f98012":"transparent",color:fontScale<0.999?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:fontScale<0.999?700:400}},"A−"),
+              React.createElement("button",{onClick:()=>setFontScale(1),title:t(lang,"a11y_font_reset"),"aria-label":t(lang,"a11y_font_reset"),"aria-pressed":Math.abs(fontScale-1)<0.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:Math.abs(fontScale-1)<0.001?"#f98012":"transparent",color:Math.abs(fontScale-1)<0.001?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:Math.abs(fontScale-1)<0.001?700:400}},"A"),
+              React.createElement("button",{onClick:()=>setFontScale(s=>Math.min(1.4,Math.round((s+0.1)*100)/100)),title:t(lang,"a11y_font_larger"),"aria-label":t(lang,"a11y_font_larger"),"aria-pressed":fontScale>1.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale>1.001?"#f98012":"transparent",color:fontScale>1.001?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:fontScale>1.001?700:400}},"A+")
             ),
             React.createElement("div",{role:"group","aria-label":"Sprache",style:{display:"flex",gap:2,background:"rgba(0,0,0,0.2)",padding:3,borderRadius:8}},
               langBtn("de","DE"), langBtn("en","EN"), langBtn("fr","FR"), langBtn("es","ES")
