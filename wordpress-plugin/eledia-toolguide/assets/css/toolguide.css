@@ -1,5 +1,17 @@
 /* eLeDia Moodle Tool Guide — component-scoped styles */
 
+/* -------------------------------------------------------------------------
+ * WP theme isolation
+ *
+ * WordPress themes (Twenty Twenty-*, Astra, OceanWP, GeneratePress, Kadence,
+ * Avada, Divi …) add aggressive global styles to links, buttons, form
+ * elements and headings — often with !important — which override the
+ * inline styles the React app sets. To keep the Tool Guide looking the same
+ * inside any WP theme, we reset the relevant properties INSIDE our root
+ * component and force the inline style to win by using `all: revert` +
+ * `!important` on the base layers.
+ * ------------------------------------------------------------------------- */
+
 .eledia-toolguide-root,
 .eledia-toolguide-root *,
 .eledia-toolguide-root *::before,
@@ -10,8 +22,175 @@
 .eledia-toolguide-root {
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     color: #353535;
+    line-height: 1.5;
     /* Break out of narrow WP post content width — optional. */
     max-width: 100%;
+}
+
+/* Base text / paragraph resets — WP themes often add margins, font-size
+   rules and text-transform to <p>, <span>, <strong>, <em>. */
+.eledia-toolguide-root p,
+.eledia-toolguide-root span,
+.eledia-toolguide-root strong,
+.eledia-toolguide-root em,
+.eledia-toolguide-root small,
+.eledia-toolguide-root label,
+.eledia-toolguide-root li {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    color: inherit;
+}
+
+.eledia-toolguide-root h1,
+.eledia-toolguide-root h2,
+.eledia-toolguide-root h3,
+.eledia-toolguide-root h4,
+.eledia-toolguide-root h5,
+.eledia-toolguide-root h6 {
+    font-family: inherit !important;
+    line-height: 1.25 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+}
+
+/* Links — the single biggest offender. WP themes force underline,
+   uppercase, their own brand color and even hover backgrounds on every
+   <a>. Inside our component, links must honour the inline `style` set
+   by React (footer links get #FCBC82, chip links inherit, etc.). */
+.eledia-toolguide-root a,
+.eledia-toolguide-root a:link,
+.eledia-toolguide-root a:visited,
+.eledia-toolguide-root a:hover,
+.eledia-toolguide-root a:focus,
+.eledia-toolguide-root a:active {
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    font-family: inherit !important;
+    font-weight: inherit;
+    font-size: inherit !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    border: 0 !important;
+    border-radius: 0;
+    padding: 0 !important;
+    margin: 0;
+    outline: none;
+}
+
+/* Footer link style: the React inline style sets color + underline on
+   links via style={linkSty}. WP themes sometimes override with
+   !important — re-assert it here by matching the exact container. */
+.eledia-toolguide-root footer a,
+.eledia-toolguide-root footer a:link,
+.eledia-toolguide-root footer a:visited,
+.eledia-toolguide-root footer a:hover,
+.eledia-toolguide-root footer a:active {
+    color: #FCBC82 !important;
+    text-decoration: underline !important;
+}
+
+/* Icon links (CC, GitHub) inside the footer flex-row — no underline. */
+.eledia-toolguide-root footer a[title="CC BY-NC-SA 4.0"],
+.eledia-toolguide-root footer a[title*="GitHub"],
+.eledia-toolguide-root footer a[title*="github"] {
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+}
+
+/* Form controls — WP themes frequently make <select>, <input>, <button>
+   full-width and override padding, border, background. Reset them. */
+.eledia-toolguide-root select,
+.eledia-toolguide-root input,
+.eledia-toolguide-root button,
+.eledia-toolguide-root textarea {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    width: auto;
+    max-width: 100%;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    -webkit-appearance: auto;
+    appearance: auto;
+}
+
+/* Specifically the filter <select>s: they must stay compact (inline
+   style sets padding/border-radius/border). Make sure no theme forces
+   display:block or width:100%. */
+.eledia-toolguide-root select {
+    display: inline-block !important;
+    width: auto !important;
+    background-color: #FFFFFF !important;
+    background-image: none;
+    color: #353535 !important;
+    cursor: pointer;
+}
+
+/* Buttons — prevent theme hover backgrounds / transforms. */
+.eledia-toolguide-root button {
+    background-image: none;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.eledia-toolguide-root button:hover {
+    transform: none !important;
+}
+
+/* Tables — some themes set border-collapse, striped backgrounds. */
+.eledia-toolguide-root table {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    width: 100%;
+    border: 0;
+}
+
+.eledia-toolguide-root th,
+.eledia-toolguide-root td {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    border: 0;
+    background: transparent;
+}
+
+.eledia-toolguide-root tr,
+.eledia-toolguide-root tr:nth-child(even),
+.eledia-toolguide-root tr:nth-child(odd) {
+    background: transparent !important;
+}
+
+/* Images inside the component (logos, icons) — WP themes sometimes add
+   borders, shadows, max-width:none conflicts. */
+.eledia-toolguide-root img,
+.eledia-toolguide-root svg {
+    max-width: 100%;
+    height: auto;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+/* Lists — WP post content styles often add list-style + padding. */
+.eledia-toolguide-root ul,
+.eledia-toolguide-root ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .eledia-toolguide-root ::selection {

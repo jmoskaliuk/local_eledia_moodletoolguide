@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactica
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.9
+Stable tag: 1.1.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,10 @@ Los datos de las herramientas están actualmente codificados en el bundle JavaSc
 No. El plugin es 100 % autónomo (excepto el CDN de React opcional) y no se comunica con servidores externos.
 
 == Registro de cambios ==
+
+= 1.1.10 =
+* Aislamiento del tema corregido: los menús desplegables de filtro (Adecuado para / Bloom) y los enlaces del pie de página ya no heredan los estilos del tema de WordPress. El plugin incluye ahora un reinicio CSS limitado a su contenedor, para que el Tool Guide se vea igual en cualquier tema activo.
+* Eliminados los emojis de libro y bombilla de los botones «Documentación Moodle» y «eledia.community» en la vista de detalle — aspecto más limpio.
 
 = 1.1.9 =
 * Los tres iconos de valoración de la matriz actualizados a Lucide v1.8.0: thumbs-up, thumbs-down y circle-slash tienen una nueva forma redibujada.

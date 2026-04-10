@@ -892,8 +892,8 @@ function DetailModal({tool,onClose,lang}) {
         React.createElement("p",{style:{margin:0,fontSize:12,color:"#353535",lineHeight:1.5}},tool.goals[gk].t)
       )),
       React.createElement("div",{style:{display:"flex",gap:10,flexWrap:"wrap",marginTop:20}},
-        tool.docsUrl?React.createElement("a",{href:tool.docsUrl,target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#A9CBD5",color:"#194866",textDecoration:"none",border:"1px solid #A9CBD5",fontWeight:500}},"\uD83D\uDCDA "+t(lang,"docs_btn")):null,
-        React.createElement("a",{href:"https://community.eledia.de",target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#FFECDB",color:"#f98012",textDecoration:"none",border:"1px solid #FCBC82",fontWeight:500}},"\uD83D\uDCA1 "+t(lang,"community_btn"))
+        tool.docsUrl?React.createElement("a",{href:tool.docsUrl,target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#A9CBD5",color:"#194866",textDecoration:"none",border:"1px solid #A9CBD5",fontWeight:500}},t(lang,"docs_btn")):null,
+        React.createElement("a",{href:"https://community.eledia.de",target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#FFECDB",color:"#f98012",textDecoration:"none",border:"1px solid #FCBC82",fontWeight:500}},t(lang,"community_btn"))
       )
     )
   );
