@@ -588,11 +588,11 @@ function GoalIcon({goalKey, color, size=20, title=""}) {
   });
 }
 
-// Thumbs icons for matrix cells: up / sideways / down
+// Thumbs icons for matrix cells: up / sideways / down — Lucide-consistent stroke style
 const THUMBS = {
-  grün:    `<path d="M7 11v8a1 1 0 0 0 1 1h2.5l4-1V11l-3-7h-1a1 1 0 0 0-1 1v3l-2.5 3z" fill="currentColor"/><path d="M14.5 19h3.6a2 2 0 0 0 2-1.7l1.4-7A2 2 0 0 0 19.5 8h-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>`,
-  orange:  `<path d="M3 11v2a2 2 0 0 0 2 2h3v3a2 2 0 0 0 2 2l4-7V4H6.5a2 2 0 0 0-2 1.7L3 11z" fill="currentColor" transform="rotate(-90 12 12)"/>`,
-  rot:     `<path d="M7 13V5a1 1 0 0 1 1-1h2.5l4 1v9l-3 7h-1a1 1 0 0 1-1-1v-3l-2.5-3z" fill="currentColor"/><path d="M14.5 5h3.6a2 2 0 0 1 2 1.7l1.4 7A2 2 0 0 1 19.5 16h-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>`
+  grün:    `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L15 2a3.13 3.13 0 0 1 3 3.88Z"/></g>`,
+  orange:  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="10,6 4,12 10,18"/><polyline points="14,6 20,12 14,18"/></g>`,
+  rot:     `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H17a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L9 22a3.13 3.13 0 0 1-3-3.88Z"/></g>`
 };
 
 
@@ -716,14 +716,14 @@ function EffortBadge({level, kind, lang, display}) {
     }, React.createElement("span",{"aria-hidden":"true"},effortDots(level)));
   }
   if (display === "labeled") {
-    // cards: "Einrichtung: Einfach" with dots
+    // cards: only label + dots ("Einrichtung ●○○"), value is in title
     return React.createElement("span", {
-      title: help,
+      title: help+" – "+value,
+      "aria-label": colLabel+": "+value,
       style:{display:"inline-flex",alignItems:"center",gap:6,padding:"4px 10px",borderRadius:12,fontSize:11,fontWeight:600,background:effortBg(level),color:effortColor(level),cursor:"help"}
     },
       React.createElement("span",{"aria-hidden":"true",style:{fontSize:10,letterSpacing:1.5}},effortDots(level)),
-      React.createElement("span",{style:{fontWeight:500,opacity:0.85}},colLabel+":"),
-      React.createElement("span",null,value)
+      React.createElement("span",null,colLabel)
     );
   }
   // default "value": dots + value
@@ -1133,6 +1133,30 @@ function IconUsers({size=18, color="currentColor"}) {
     React.createElement("path",{d:"M16 3.13a4 4 0 0 1 0 7.75"})
   );
 }
+function IconLayoutGrid({size=18, color="currentColor"}) {
+  return React.createElement("svg",{xmlns:"http://www.w3.org/2000/svg",width:size,height:size,viewBox:"0 0 24 24",fill:"none",stroke:color,strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round","aria-hidden":"true"},
+    React.createElement("rect",{width:"7",height:"7",x:"3",y:"3",rx:"1"}),
+    React.createElement("rect",{width:"7",height:"7",x:"14",y:"3",rx:"1"}),
+    React.createElement("rect",{width:"7",height:"7",x:"14",y:"14",rx:"1"}),
+    React.createElement("rect",{width:"7",height:"7",x:"3",y:"14",rx:"1"})
+  );
+}
+function IconStickyNote({size=18, color="currentColor"}) {
+  return React.createElement("svg",{xmlns:"http://www.w3.org/2000/svg",width:size,height:size,viewBox:"0 0 24 24",fill:"none",stroke:color,strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round","aria-hidden":"true"},
+    React.createElement("path",{d:"M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11l5-5V5a2 2 0 0 0-2-2z"}),
+    React.createElement("path",{d:"M15 3v4a2 2 0 0 0 2 2h4"})
+  );
+}
+function IconBotMessageSquare({size=18, color="currentColor"}) {
+  return React.createElement("svg",{xmlns:"http://www.w3.org/2000/svg",width:size,height:size,viewBox:"0 0 24 24",fill:"none",stroke:color,strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round","aria-hidden":"true"},
+    React.createElement("path",{d:"M12 6V2H8"}),
+    React.createElement("path",{d:"m8 18-4 4V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Z"}),
+    React.createElement("path",{d:"M2 12h2"}),
+    React.createElement("path",{d:"M9 11v2"}),
+    React.createElement("path",{d:"M15 11v2"}),
+    React.createElement("path",{d:"M20 12h2"})
+  );
+}
 
 function IconCC({size=24, lang}) {
   return React.createElement("img",{
@@ -1220,7 +1244,7 @@ function App() {
   const toggleCompare = id => setCompareIds(p=>p.includes(id)?p.filter(x=>x!==id):p.length>=4?p:[...p,id]);
   const filteredTools = TOOLS.filter(t2=>!search||t2.name.toLowerCase().includes(search.toLowerCase())||t2.desc.toLowerCase().includes(search.toLowerCase()));
 
-  const navBtn = (v,label) => React.createElement("button",{onClick:()=>setView(v),"aria-current":view===v?"page":undefined,style:{padding:"8px 16px",borderRadius:8,border:"none",background:view===v?"#194866":"transparent",color:view===v?"white":"#707070",cursor:"pointer",fontSize:14,fontWeight:view===v?600:400}},label);
+  const navBtn = (v,label,Icon) => React.createElement("button",{onClick:()=>setView(v),"aria-current":view===v?"page":undefined,style:{padding:"8px 16px",borderRadius:8,border:"none",background:view===v?"#194866":"transparent",color:view===v?"white":"#707070",cursor:"pointer",fontSize:14,fontWeight:view===v?600:400,display:"inline-flex",alignItems:"center",gap:8}},Icon?React.createElement(Icon,{size:18,color:view===v?"white":"#707070"}):null,label);
 
   const langBtn = (code, label) => React.createElement("button",{key:code,onClick:()=>setLang(code),"aria-pressed":lang===code,style:{padding:"4px 10px",borderRadius:6,border:"none",background:lang===code?"#b85a00":"transparent",color:lang===code?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:lang===code?700:400}},label);
 
@@ -1253,9 +1277,9 @@ function App() {
     React.createElement("nav",{"aria-label":"Ansichten",style:{background:"white",borderBottom:"1px solid #E9E9E9",padding:"8px 24px",position:"sticky",top:0,zIndex:50}},
       React.createElement("div",{style:{maxWidth:1200,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}},
         React.createElement("div",{style:{display:"flex",gap:4,flexWrap:"wrap"}},
-          navBtn("matrix","\u{1F4CA} "+t(lang,"nav_matrix")),
-          navBtn("cards","\u{1F0CF} "+t(lang,"nav_cards")),
-          navBtn("wizard","\u{1F9D9} "+t(lang,"nav_wizard"))
+          navBtn("matrix",t(lang,"nav_matrix"),IconLayoutGrid),
+          navBtn("cards",t(lang,"nav_cards"),IconStickyNote),
+          navBtn("wizard",t(lang,"nav_wizard"),IconBotMessageSquare)
         ),
         React.createElement("div",{style:{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}},
           view!=="wizard"&&React.createElement("input",{value:search,onChange:e=>setSearch(e.target.value),placeholder:t(lang,"search_placeholder"),"aria-label":"Suche",style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:13,width:160}}),
@@ -1264,17 +1288,23 @@ function App() {
       )
     ),
     view!=="wizard"&&React.createElement("div",{style:{maxWidth:1200,margin:"0 auto",padding:"12px 24px",display:"flex",gap:8,flexWrap:"wrap"}},
-      React.createElement("select",{value:filters.setup||"","aria-label":t(lang,"setup"),onChange:e=>setFilters(f=>({...f,setup:e.target.value||null})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
-        React.createElement("option",{value:""},"\u2699 "+t(lang,"filter_setup_all")),
-        React.createElement("option",{value:"einfach"},"●○○ "+t(lang,"setup_einfach")),
-        React.createElement("option",{value:"mittel"},"●●○ "+t(lang,"setup_mittel")),
-        React.createElement("option",{value:"komplex"},"●●● "+t(lang,"setup_komplex"))
+      React.createElement("label",{style:{display:"inline-flex",alignItems:"center",gap:6,padding:"6px 10px",borderRadius:8,border:"1px solid #E9E9E9",background:"white",fontSize:12,color:"#353535"}},
+        React.createElement(IconMonitorCog,{size:14,color:"#194866"}),
+        React.createElement("select",{value:filters.setup||"","aria-label":t(lang,"setup"),onChange:e=>setFilters(f=>({...f,setup:e.target.value||null})),style:{border:"none",outline:"none",background:"transparent",fontSize:12,color:"#353535",cursor:"pointer",padding:0}},
+          React.createElement("option",{value:""},t(lang,"filter_setup_all")),
+          React.createElement("option",{value:"einfach"},"●○○ "+t(lang,"setup_einfach")),
+          React.createElement("option",{value:"mittel"},"●●○ "+t(lang,"setup_mittel")),
+          React.createElement("option",{value:"komplex"},"●●● "+t(lang,"setup_komplex"))
+        )
       ),
-      React.createElement("select",{value:filters.support||"","aria-label":t(lang,"support"),onChange:e=>setFilters(f=>({...f,support:e.target.value||null})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
-        React.createElement("option",{value:""},"\u{1F4AC} "+t(lang,"filter_support_all")),
-        React.createElement("option",{value:"gering"},"●○○ "+t(lang,"support_gering")),
-        React.createElement("option",{value:"mittel"},"●●○ "+t(lang,"support_mittel")),
-        React.createElement("option",{value:"hoch"},"●●● "+t(lang,"support_hoch"))
+      React.createElement("label",{style:{display:"inline-flex",alignItems:"center",gap:6,padding:"6px 10px",borderRadius:8,border:"1px solid #E9E9E9",background:"white",fontSize:12,color:"#353535"}},
+        React.createElement(IconUsers,{size:14,color:"#194866"}),
+        React.createElement("select",{value:filters.support||"","aria-label":t(lang,"support"),onChange:e=>setFilters(f=>({...f,support:e.target.value||null})),style:{border:"none",outline:"none",background:"transparent",fontSize:12,color:"#353535",cursor:"pointer",padding:0}},
+          React.createElement("option",{value:""},t(lang,"filter_support_all")),
+          React.createElement("option",{value:"gering"},"●○○ "+t(lang,"support_gering")),
+          React.createElement("option",{value:"mittel"},"●●○ "+t(lang,"support_mittel")),
+          React.createElement("option",{value:"hoch"},"●●● "+t(lang,"support_hoch"))
+        )
       ),
       React.createElement("select",{value:filters.goal||"","aria-label":t(lang,"filter_goal_default"),onChange:e=>setFilters(f=>({...f,goal:e.target.value||null,onlyGreen:!!e.target.value})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
         React.createElement("option",{value:""},t(lang,"filter_goal_default")),
@@ -1309,9 +1339,9 @@ function App() {
             return true;
           }).map(t2=>React.createElement(ToolCard,{key:t2.id,tool:t2,onSelect:setSelectedTool,onCompare:toggleCompare,isC:compareIds.includes(t2.id),lang:lang}))
         )
-      ),
+      )),
       view==="wizard"&&React.createElement("section",{"aria-labelledby":"view-wizard-title"},React.createElement("h2",{id:"view-wizard-title",className:"sr-only"},t(lang,"nav_wizard")),React.createElement(WizardView,{tools:TOOLS,onSelect:setSelectedTool,lang:lang}))
-    )),
+    ),
     selectedTool&&React.createElement(DetailModal,{tool:selectedTool,onClose:()=>setSelectedTool(null),lang:lang}),
     showCompare&&React.createElement(CompareView,{toolIds:compareIds,tools:TOOLS,onClose:()=>setShowCompare(false),lang:lang}),
     React.createElement(Footer,{lang:lang})
