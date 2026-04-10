@@ -159,6 +159,8 @@ const I18N = {
   ,
     credit_translation: "Basiert auf einer Übersetzung von"
   ,
+    dialog_close: "Schließen"
+  ,
     credit_license: "Lizenz"
   ,
     credit_eledia: "Angepasst von den Moodle-Expert*innen von eLeDia | eLearning im Dialog. Mehr Moodle-Wissen auf"
@@ -260,6 +262,8 @@ const I18N = {
     credit_original: "Original concept"
   ,
     credit_translation: "Based on a translation by"
+  ,
+    dialog_close: "Close"
   ,
     credit_license: "License"
   ,
@@ -363,6 +367,8 @@ const I18N = {
   ,
     credit_translation: "Basé sur une traduction de"
   ,
+    dialog_close: "Fermer"
+  ,
     credit_license: "Licence"
   ,
     credit_eledia: "Adapté par les expert·e·s Moodle de eLeDia | eLearning im Dialog. Plus de savoir Moodle sur"
@@ -464,6 +470,8 @@ const I18N = {
     credit_original: "Concepto original"
   ,
     credit_translation: "Basado en una traducción de"
+  ,
+    dialog_close: "Cerrar"
   ,
     credit_license: "Licencia"
   ,
@@ -586,6 +594,53 @@ const THUMBS = {
   orange:  `<path d="M3 11v2a2 2 0 0 0 2 2h3v3a2 2 0 0 0 2 2l4-7V4H6.5a2 2 0 0 0-2 1.7L3 11z" fill="currentColor" transform="rotate(-90 12 12)"/>`,
   rot:     `<path d="M7 13V5a1 1 0 0 1 1-1h2.5l4 1v9l-3 7h-1a1 1 0 0 1-1-1v-3l-2.5-3z" fill="currentColor"/><path d="M14.5 5h3.6a2 2 0 0 1 2 1.7l1.4 7A2 2 0 0 1 19.5 16h-5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>`
 };
+
+
+// Accessibility: focus trap + initial focus + return focus for modal dialogs
+function useFocusTrap(active) {
+  const containerRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!active) return;
+    const previouslyFocused = document.activeElement;
+    const container = containerRef.current;
+    if (!container) return;
+    // Initial focus: first focusable in dialog, else container itself
+    const getFocusable = () => Array.from(container.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )).filter(el => !el.disabled && el.offsetParent !== null);
+    const focusables = getFocusable();
+    if (focusables.length > 0) {
+      focusables[0].focus();
+    } else {
+      container.setAttribute("tabindex","-1");
+      container.focus();
+    }
+    // Trap Tab cycles
+    const handleKeyDown = (e) => {
+      if (e.key !== "Tab") return;
+      const fs = getFocusable();
+      if (fs.length === 0) { e.preventDefault(); return; }
+      const first = fs[0];
+      const last = fs[fs.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    container.addEventListener("keydown", handleKeyDown);
+    return () => {
+      container.removeEventListener("keydown", handleKeyDown);
+      // Return focus to previously focused element
+      if (previouslyFocused && previouslyFocused.focus) {
+        try { previouslyFocused.focus(); } catch (e) {}
+      }
+    };
+  }, [active]);
+  return containerRef;
+}
 
 function ThumbIcon({rating, size=22, title=""}) {
   const color = rc(rating);
@@ -733,11 +788,12 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
       React.createElement("div",{style:{fontSize:48,marginBottom:8},"aria-hidden":"true"},"🔍"),
       React.createElement("h3",{style:{margin:"0 0 8px",color:"#194866",fontSize:18}},t(lang,"empty_title")),
       React.createElement("p",{style:{margin:"0 0 16px",color:"#353535",fontSize:14,lineHeight:1.5}},t(lang,"empty_text")),
-      React.createElement("button",{onClick:onResetFilters,style:{padding:"8px 16px",borderRadius:8,border:"none",background:"#f98012",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"empty_reset"))
+      React.createElement("button",{onClick:onResetFilters,style:{padding:"8px 16px",borderRadius:8,border:"none",background:"#b85a00",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"empty_reset"))
     );
   }
   const goalKeys = ["info","bewerten","komm","collab","bloomG"];
   return React.createElement("div",{style:{overflowX:"auto",borderRadius:12,boxShadow:"0 1px 3px rgba(0,0,0,0.05)"}},
+    React.createElement("div",{role:"status","aria-live":"polite",className:"sr-only"},filtered.length+" "+t(lang,"wizard_results")),
     React.createElement("table",{style:{width:"100%",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":"Moodle Tool Guide Matrix"},
       React.createElement("thead",null,
         React.createElement("tr",null,
@@ -755,8 +811,8 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
         )
       ),
       React.createElement("tbody",null,
-        filtered.map((tool,idx)=>React.createElement("tr",{key:tool.id,onClick:()=>onSelect(tool),tabIndex:0,
-          onKeyDown:e=>{if(e.key==="Enter"){onSelect(tool);}},
+        filtered.map((tool,idx)=>React.createElement("tr",{key:tool.id,onClick:()=>onSelect(tool),tabIndex:0,role:"button","aria-label":tool.name,
+          onKeyDown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(tool);}},
           style:{cursor:"pointer",background:idx%2===0?"white":"#F3F5F8"},
           onMouseEnter:e=>e.currentTarget.style.background="#D1ECEB",onMouseLeave:e=>e.currentTarget.style.background=idx%2===0?"white":"#F3F5F8"},
           React.createElement("td",{style:{position:"sticky",left:0,background:"inherit",padding:"10px 14px",fontWeight:600,borderBottom:"1px solid #E9E9E9",zIndex:1}},
@@ -796,8 +852,9 @@ function DetailModal({tool,onClose,lang}) {
     document.addEventListener("keydown",h);
     return () => document.removeEventListener("keydown",h);
   },[onClose]);
+  const trapRef = useFocusTrap(true);
   return React.createElement("div",{role:"dialog","aria-modal":"true","aria-label":tool.name,style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",zIndex:100,display:"flex",justifyContent:"center",alignItems:"center",padding:20},onClick:onClose},
-    React.createElement("div",{style:{background:"white",borderRadius:16,maxWidth:700,width:"100%",maxHeight:"90vh",overflow:"auto",padding:24},onClick:e=>e.stopPropagation()},
+    React.createElement("div",{ref:trapRef,style:{background:"white",borderRadius:16,maxWidth:700,width:"100%",maxHeight:"90vh",overflow:"auto",padding:24},onClick:e=>e.stopPropagation()},
       React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20,gap:12}},
         React.createElement("div",{style:{display:"flex",gap:14,alignItems:"center",flex:1,minWidth:0}},
           React.createElement(ToolIcon,{toolId:tool.id,size:48}),
@@ -806,7 +863,7 @@ function DetailModal({tool,onClose,lang}) {
             React.createElement("p",{style:{margin:"4px 0 0",color:"#707070",fontSize:14}},tool.desc)
           )
         ),
-        React.createElement("button",{onClick:onClose,"aria-label":"Schließen",style:{background:"none",border:"none",fontSize:28,cursor:"pointer",color:"#8A8A8E",padding:4,lineHeight:1}},"\u00D7")
+        React.createElement("button",{onClick:onClose,"aria-label":t(lang,"dialog_close"),style:{background:"none",border:"none",fontSize:28,cursor:"pointer",color:"#8A8A8E",padding:4,lineHeight:1}},"\u00D7")
       ),
       React.createElement("div",{style:{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap"}},
         React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang}),
@@ -837,11 +894,12 @@ function CompareView({toolIds,tools,onClose,lang}) {
   const items = toolIds.map(id=>tools.find(t2=>t2.id===id)).filter(Boolean);
   if(items.length<2) return null;
   const goalKeys = ["info","bewerten","komm","collab","bloomG"];
-  return React.createElement("div",{role:"dialog","aria-modal":"true",style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",zIndex:100,display:"flex",justifyContent:"center",alignItems:"center",padding:20},onClick:onClose},
-    React.createElement("div",{style:{background:"white",borderRadius:16,maxWidth:900,width:"100%",maxHeight:"90vh",overflow:"auto",padding:24},onClick:e=>e.stopPropagation()},
+  const trapRef = useFocusTrap(true);
+  return React.createElement("div",{role:"dialog","aria-modal":"true","aria-labelledby":"compare-dialog-title",style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",zIndex:100,display:"flex",justifyContent:"center",alignItems:"center",padding:20},onClick:onClose},
+    React.createElement("div",{ref:trapRef,style:{background:"white",borderRadius:16,maxWidth:900,width:"100%",maxHeight:"90vh",overflow:"auto",padding:24},onClick:e=>e.stopPropagation()},
       React.createElement("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:20}},
-        React.createElement("h2",{style:{margin:0,fontSize:20,color:"#194866"}},t(lang,"compare_btn")),
-        React.createElement("button",{onClick:onClose,"aria-label":"Schließen",style:{background:"none",border:"none",fontSize:24,cursor:"pointer",color:"#8A8A8E"}},"\u00D7")
+        React.createElement("h2",{id:"compare-dialog-title",style:{margin:0,fontSize:20,color:"#194866"}},t(lang,"compare_btn")),
+        React.createElement("button",{onClick:onClose,"aria-label":t(lang,"dialog_close"),style:{background:"none",border:"none",fontSize:24,cursor:"pointer",color:"#8A8A8E"}},"\u00D7")
       ),
       React.createElement("div",{style:{overflowX:"auto"}},
       React.createElement("table",{style:{width:"100%",borderCollapse:"collapse",fontSize:13}},
@@ -894,7 +952,7 @@ function WizardView({tools,onSelect,lang}) {
   },[step,goal,setup,support,bloomMin,tools]);
 
   const sty=active=>({padding:"6px 14px",borderRadius:20,fontSize:12,fontWeight:active?600:400,background:active?"#194866":"#F3F5F8",color:active?"white":"#707070",border:"none"});
-  const optBtn=(sel,onClick,children)=>React.createElement("button",{onClick,style:{padding:"14px 18px",borderRadius:12,border:sel?"2px solid #f98012":"2px solid #E9E9E9",background:sel?"#FFECDB":"white",cursor:"pointer",textAlign:"left",fontSize:14,transition:"all 0.15s",width:"100%"}},children);
+  const optBtn=(sel,onClick,children)=>React.createElement("button",{onClick,style:{padding:"14px 18px",borderRadius:12,border:sel?"2px solid #b85a00":"2px solid #E9E9E9",background:sel?"#FFECDB":"white",cursor:"pointer",textAlign:"left",fontSize:14,transition:"all 0.15s",width:"100%"}},children);
 
   const goBack = () => { if(step>0) setStep(step-1); };
 
@@ -932,7 +990,7 @@ function WizardView({tools,onSelect,lang}) {
             React.createElement("strong",{style:{color:"#194866"}},setupLabel(c,lang))
           )
         )),
-        optBtn(false,()=>{setSetup(null);setStep(2)},React.createElement("strong",{style:{color:"#707070"}},t(lang,"wizard_skip")+" – "+t(lang,"wizard_skip_desc")))
+        optBtn(false,()=>{setSetup(null);setStep(2)},React.createElement("strong",{style:{color:"#353535"}},t(lang,"wizard_skip")+" – "+t(lang,"wizard_skip_desc")))
       ),
       React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",marginTop:20}},
         React.createElement("button",{onClick:goBack,style:{padding:"8px 16px",borderRadius:8,border:"1px solid #E9E9E9",background:"white",cursor:"pointer",fontSize:13}},"\u2190 "+t(lang,"wizard_back"))
@@ -949,7 +1007,7 @@ function WizardView({tools,onSelect,lang}) {
             React.createElement("strong",{style:{color:"#194866"}},supportLabel(c,lang))
           )
         )),
-        optBtn(false,()=>{setSupport(null);setStep(3)},React.createElement("strong",{style:{color:"#707070"}},t(lang,"wizard_skip")+" – "+t(lang,"wizard_skip_desc")))
+        optBtn(false,()=>{setSupport(null);setStep(3)},React.createElement("strong",{style:{color:"#353535"}},t(lang,"wizard_skip")+" – "+t(lang,"wizard_skip_desc")))
       ),
       React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",marginTop:20}},
         React.createElement("button",{onClick:goBack,style:{padding:"8px 16px",borderRadius:8,border:"1px solid #E9E9E9",background:"white",cursor:"pointer",fontSize:13}},"\u2190 "+t(lang,"wizard_back"))
@@ -983,7 +1041,7 @@ function WizardView({tools,onSelect,lang}) {
         results.map(t2=>{
           const pcol = purposeColor(t2);
           const plabel = purposeLabel(t2,lang);
-          return React.createElement("div",{key:t2.id,onClick:()=>onSelect(t2),tabIndex:0,style:{display:"flex",alignItems:"stretch",gap:0,padding:0,background:"white",borderRadius:10,border:"1px solid #E9E9E9",cursor:"pointer",overflow:"hidden"},
+          return React.createElement("div",{key:t2.id,onClick:()=>onSelect(t2),tabIndex:0,role:"button","aria-label":t2.name+" – "+plabel,onKeyDown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(t2);}},style:{display:"flex",alignItems:"stretch",gap:0,padding:0,background:"white",borderRadius:10,border:"1px solid #E9E9E9",cursor:"pointer",overflow:"hidden"},
             onMouseEnter:e=>e.currentTarget.style.borderColor=pcol,onMouseLeave:e=>e.currentTarget.style.borderColor="#E9E9E9"},
             React.createElement("div",{style:{width:6,background:pcol,flexShrink:0},"aria-hidden":"true"}),
             React.createElement("div",{style:{display:"flex",alignItems:"center",gap:14,padding:14,flex:1,minWidth:0}},
@@ -1162,9 +1220,9 @@ function App() {
   const toggleCompare = id => setCompareIds(p=>p.includes(id)?p.filter(x=>x!==id):p.length>=4?p:[...p,id]);
   const filteredTools = TOOLS.filter(t2=>!search||t2.name.toLowerCase().includes(search.toLowerCase())||t2.desc.toLowerCase().includes(search.toLowerCase()));
 
-  const navBtn = (v,label) => React.createElement("button",{onClick:()=>setView(v),"aria-pressed":view===v,style:{padding:"8px 16px",borderRadius:8,border:"none",background:view===v?"#194866":"transparent",color:view===v?"white":"#707070",cursor:"pointer",fontSize:14,fontWeight:view===v?600:400}},label);
+  const navBtn = (v,label) => React.createElement("button",{onClick:()=>setView(v),"aria-current":view===v?"page":undefined,style:{padding:"8px 16px",borderRadius:8,border:"none",background:view===v?"#194866":"transparent",color:view===v?"white":"#707070",cursor:"pointer",fontSize:14,fontWeight:view===v?600:400}},label);
 
-  const langBtn = (code, label) => React.createElement("button",{key:code,onClick:()=>setLang(code),"aria-pressed":lang===code,style:{padding:"4px 10px",borderRadius:6,border:"none",background:lang===code?"#f98012":"transparent",color:lang===code?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:lang===code?700:400}},label);
+  const langBtn = (code, label) => React.createElement("button",{key:code,onClick:()=>setLang(code),"aria-pressed":lang===code,style:{padding:"4px 10px",borderRadius:6,border:"none",background:lang===code?"#b85a00":"transparent",color:lang===code?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:lang===code?700:400}},label);
 
   return React.createElement("div",{style:{fontFamily:"Inter, system-ui, -apple-system, sans-serif",background:"#F3F5F8",minHeight:"100vh",zoom:fontScale}},
     React.createElement("a",{href:"#main",style:{position:"absolute",left:"-9999px",top:0,padding:8,background:"#194866",color:"white",zIndex:200},onFocus:e=>e.currentTarget.style.left="0",onBlur:e=>e.currentTarget.style.left="-9999px"},"Zum Inhalt springen"),
@@ -1181,9 +1239,9 @@ function App() {
           ),
           React.createElement("div",{style:{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}},
             React.createElement("div",{role:"group","aria-label":"Schriftgröße",style:{display:"flex",gap:2,background:"rgba(0,0,0,0.2)",padding:3,borderRadius:8}},
-              React.createElement("button",{onClick:()=>setFontScale(s=>Math.max(0.85,Math.round((s-0.1)*100)/100)),title:t(lang,"a11y_font_smaller"),"aria-label":t(lang,"a11y_font_smaller"),"aria-pressed":fontScale<0.999,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale<0.999?"#f98012":"transparent",color:fontScale<0.999?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:fontScale<0.999?700:400}},"A−"),
-              React.createElement("button",{onClick:()=>setFontScale(1),title:t(lang,"a11y_font_reset"),"aria-label":t(lang,"a11y_font_reset"),"aria-pressed":Math.abs(fontScale-1)<0.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:Math.abs(fontScale-1)<0.001?"#f98012":"transparent",color:Math.abs(fontScale-1)<0.001?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:Math.abs(fontScale-1)<0.001?700:400}},"A"),
-              React.createElement("button",{onClick:()=>setFontScale(s=>Math.min(1.4,Math.round((s+0.1)*100)/100)),title:t(lang,"a11y_font_larger"),"aria-label":t(lang,"a11y_font_larger"),"aria-pressed":fontScale>1.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale>1.001?"#f98012":"transparent",color:fontScale>1.001?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:fontScale>1.001?700:400}},"A+")
+              React.createElement("button",{onClick:()=>setFontScale(s=>Math.max(0.85,Math.round((s-0.1)*100)/100)),title:t(lang,"a11y_font_smaller"),"aria-label":t(lang,"a11y_font_smaller"),"aria-pressed":fontScale<0.999,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale<0.999?"#b85a00":"transparent",color:fontScale<0.999?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:fontScale<0.999?700:400}},"A−"),
+              React.createElement("button",{onClick:()=>setFontScale(1),title:t(lang,"a11y_font_reset"),"aria-label":t(lang,"a11y_font_reset"),"aria-pressed":Math.abs(fontScale-1)<0.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:Math.abs(fontScale-1)<0.001?"#b85a00":"transparent",color:Math.abs(fontScale-1)<0.001?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:Math.abs(fontScale-1)<0.001?700:400}},"A"),
+              React.createElement("button",{onClick:()=>setFontScale(s=>Math.min(1.4,Math.round((s+0.1)*100)/100)),title:t(lang,"a11y_font_larger"),"aria-label":t(lang,"a11y_font_larger"),"aria-pressed":fontScale>1.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale>1.001?"#b85a00":"transparent",color:fontScale>1.001?"white":"#D9D9D9",cursor:"pointer",fontSize:12,fontWeight:fontScale>1.001?700:400}},"A+")
             ),
             React.createElement("div",{role:"group","aria-label":"Sprache",style:{display:"flex",gap:2,background:"rgba(0,0,0,0.2)",padding:3,borderRadius:8}},
               langBtn("de","DE"), langBtn("en","EN"), langBtn("fr","FR"), langBtn("es","ES")
@@ -1228,8 +1286,8 @@ function App() {
       )
     ),
     React.createElement("main",{id:"main",style:{maxWidth:1200,margin:"0 auto",padding:"16px 24px 40px"}},
-      view==="matrix"&&React.createElement(MatrixView,{tools:filteredTools,onSelect:setSelectedTool,filters:filters,onResetFilters:resetFilters,lang:lang}),
-      view==="cards"&&(filteredTools.filter(t2=>{
+      view==="matrix"&&React.createElement("section",{"aria-labelledby":"view-matrix-title"},React.createElement("h2",{id:"view-matrix-title",className:"sr-only"},t(lang,"nav_matrix")),React.createElement(MatrixView,{tools:filteredTools,onSelect:setSelectedTool,filters:filters,onResetFilters:resetFilters,lang:lang})),
+      view==="cards"&&React.createElement("section",{"aria-labelledby":"view-cards-title"},React.createElement("h2",{id:"view-cards-title",className:"sr-only"},t(lang,"nav_cards")),(filteredTools.filter(t2=>{
         if(filters.setup&&t2.setup!==filters.setup) return false;
         if(filters.support&&t2.support!==filters.support) return false;
         if(filters.goal&&filters.onlyGreen&&t2.goals[filters.goal]?.r!=="grün") return false;
@@ -1240,7 +1298,7 @@ function App() {
           React.createElement("div",{style:{fontSize:48,marginBottom:8},"aria-hidden":"true"},"🔍"),
           React.createElement("h3",{style:{margin:"0 0 8px",color:"#194866",fontSize:18}},t(lang,"empty_title")),
           React.createElement("p",{style:{margin:"0 0 16px",color:"#353535",fontSize:14,lineHeight:1.5}},t(lang,"empty_text")),
-          React.createElement("button",{onClick:resetFilters,style:{padding:"8px 16px",borderRadius:8,border:"none",background:"#f98012",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"empty_reset"))
+          React.createElement("button",{onClick:resetFilters,style:{padding:"8px 16px",borderRadius:8,border:"none",background:"#b85a00",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"empty_reset"))
         ) :
         React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(280px, 1fr))",gap:14}},
           filteredTools.filter(t2=>{
@@ -1252,8 +1310,8 @@ function App() {
           }).map(t2=>React.createElement(ToolCard,{key:t2.id,tool:t2,onSelect:setSelectedTool,onCompare:toggleCompare,isC:compareIds.includes(t2.id),lang:lang}))
         )
       ),
-      view==="wizard"&&React.createElement(WizardView,{tools:TOOLS,onSelect:setSelectedTool,lang:lang})
-    ),
+      view==="wizard"&&React.createElement("section",{"aria-labelledby":"view-wizard-title"},React.createElement("h2",{id:"view-wizard-title",className:"sr-only"},t(lang,"nav_wizard")),React.createElement(WizardView,{tools:TOOLS,onSelect:setSelectedTool,lang:lang}))
+    )),
     selectedTool&&React.createElement(DetailModal,{tool:selectedTool,onClose:()=>setSelectedTool(null),lang:lang}),
     showCompare&&React.createElement(CompareView,{toolIds:compareIds,tools:TOOLS,onClose:()=>setShowCompare(false),lang:lang}),
     React.createElement(Footer,{lang:lang})
