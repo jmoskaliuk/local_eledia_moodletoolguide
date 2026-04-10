@@ -1,39 +1,43 @@
 === eLeDia Moodle Tool Guide ===
 Contributors: eledia, jmoskaliuk
-Tags: moodle, elearning, shortcode, tool-guide, didaktik
+Tags: moodle, elearning, shortcode, tool-guide, didactics
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Interaktiver Wegweiser durch die Aktivitäten von Moodle 5 — Matrix, Karten und Assistent-Ansicht. Einbindung per Shortcode.
+Interactive guide to the activities of Moodle 5 — matrix, cards and wizard views. Embed via shortcode.
 
 == Description ==
 
-Der **eLeDia Moodle Tool Guide** hilft Lehrenden und Kursdesigner:innen, die passende Moodle-Aktivität für ihr didaktisches Ziel auszuwählen. Der Guide bündelt kuratiertes Wissen zu rund 25 Moodle-Aktivitäten mit Metadaten zu Einrichtungsaufwand, Betreuungsaufwand, Eignung für vier Lernziel-Kategorien (Informieren, Bewerten, Kommunizieren, Kollaborieren) sowie Bloom-Taxonomie-Level.
+The **eLeDia Moodle Tool Guide** helps teachers and course designers pick the right Moodle activity for their didactic goal. The guide bundles curated knowledge about around 25 Moodle activities with metadata on setup effort, ongoing support effort, suitability for four learning goal categories (inform, assess, communicate, collaborate) and Bloom taxonomy level.
 
-Drei Ansichten auf denselben Datenbestand:
+Three views on the same dataset:
 
-* **Matrix** — Tabellenansicht mit Einrichtungs-/Betreuungsaufwand und Lernziel-Eignung per Daumen-Icon.
-* **Karten** — Kachel-Ansicht mit Filtern für Aufwand, Lernziel und Bloom-Level.
-* **Assistent** — geführter Wizard in fünf Schritten, der anhand der Antworten passende Aktivitäten empfiehlt.
+* **Matrix** — table view with setup/support effort and learning-goal suitability shown as thumbs icons.
+* **Cards** — tile view with filters for effort, learning goal and Bloom level.
+* **Wizard** — guided five-step wizard that recommends matching activities based on the user's answers.
 
-Der Guide ist mehrsprachig (Deutsch, Englisch, Französisch, Spanisch), WCAG-2.2-AA-konform und bietet einen integrierten Schriftgrößen-Umschalter. Die Daten basieren auf einer Übersetzung des schweizerischen Moodle Tool Guide von Joyce Seitzinger, Gavin Henrick und Nicolas Martignoni (ursprüngliche deutsche Übersetzung: Ralf Hilgenstock), didaktisch aktualisiert auf Moodle 5.
+The guide is multilingual (English, German, French, Spanish), WCAG 2.2 AA compliant and ships with a built-in font-size switcher. The data is based on a translation of the Swiss Moodle Tool Guide by Joyce Seitzinger, Gavin Henrick and Nicolas Martignoni (original German translation: Ralf Hilgenstock), didactically updated for Moodle 5.
+
+This plugin is a lightweight wrapper around the standalone HTML Tool Guide — the JavaScript payload is synced from the canonical prototype. The plugin ships one shortcode, no admin UI, no database tables, no tracking.
+
+Translated plugin readmes are available in the plugin folder: `readme-de.txt` (Deutsch), `readme-fr.txt` (Français), `readme-es.txt` (Español).
 
 == Installation ==
 
-1. Plugin-ZIP unter *Plugins → Installieren → Plugin hochladen* einspielen.
-2. Plugin aktivieren.
-3. Auf einer beliebigen Seite, einem Post oder in einem Custom Post den Shortcode `[eledia_toolguide]` einfügen.
+1. Upload the plugin ZIP via *Plugins → Add New → Upload Plugin*.
+2. Activate the plugin.
+3. Insert the shortcode `[eledia_toolguide]` on any page, post or custom post type.
 
-Optionale Shortcode-Attribute:
+Optional shortcode attributes:
 
-* `lang="de|en|fr|es"` — erzwingt eine bestimmte Sprache. Ohne Angabe wird die WordPress-Locale verwendet.
-* `height="800px"` — setzt die Mindesthöhe des Containers. Default: `800px`.
+* `lang="de|en|fr|es"` — force a specific language. Defaults to the WordPress locale.
+* `height="800px"` — set the minimum height of the container. Default: `800px`.
 
-Beispiele:
+Examples:
 
 `[eledia_toolguide]`
 `[eledia_toolguide lang="en"]`
@@ -41,36 +45,43 @@ Beispiele:
 
 == Frequently Asked Questions ==
 
-= Lädt das Plugin React von einem externen CDN? =
+= Does the plugin load React from an external CDN? =
 
-In der Standardkonfiguration ja — React 18.3.1 wird von unpkg.com geladen. Für DSGVO-konforme Installationen ohne externe Requests kannst du React selbst hosten: Lege `react.production.min.js` und `react-dom.production.min.js` aus der React-Distribution in `assets/js/vendor/` ab. Das Plugin erkennt die lokalen Dateien automatisch und nutzt sie statt des CDN.
+By default, yes — React 18.3.1 is loaded from unpkg.com. For GDPR-compliant installations without external requests you can self-host React: drop `react.production.min.js` and `react-dom.production.min.js` from the React distribution into `assets/js/vendor/`. The plugin detects the local files automatically and uses them instead of the CDN.
 
-= Funktioniert das Plugin mit dem Gutenberg-Block-Editor? =
+= Does the plugin work with the Gutenberg block editor? =
 
-Der Shortcode funktioniert überall, wo WordPress Shortcodes ausführt — auch im Gutenberg-Shortcode-Block. Ein nativer Gutenberg-Block ist für eine spätere Version geplant.
+The shortcode works anywhere WordPress runs shortcodes — including the Gutenberg shortcode block. A native Gutenberg block is planned for a later version.
 
-= Kann ich die Tool-Liste erweitern? =
+= Can I extend the tool list? =
 
-Die Tool-Daten sind aktuell im JavaScript-Bundle hardcodiert. Ein Admin-Editor für die Tool-Liste ist geplant.
+The tool data is currently hard-coded in the JavaScript bundle. An admin editor for the tool list is planned.
+
+= Is tracking or telemetry included? =
+
+No. The plugin is 100% self-contained (except for the optional React CDN) and does not call home.
 
 == Changelog ==
 
+= 1.1.9 =
+* All three matrix rating icons updated to Lucide v1.8.0: thumbs-up, thumbs-down and circle-slash have a new, redrawn shape. The old paths were from an older Lucide version and looked noticeably different.
+* Plugin readme available in English (main), German, French and Spanish.
+
 = 1.1.8 =
-* Matrix "neutral"-Icon: statt seitlichem Daumen jetzt Lucide circle-slash
-  (Kreis mit Schrägstrich). Eindeutiger als rotiertes thumbs-up.
+* Matrix "neutral" icon: now uses Lucide circle-slash (circle with a diagonal slash) instead of a rotated thumbs-up. Reads more clearly as "neither up nor down".
 
 = 1.1.7 =
-* Aktivitäts-Icons nutzen jetzt die offiziellen Moodle-5-Purpose-Farben (Verwaltung/Bewertung/Zusammenarbeit/Kommunikation/Interaktive Inhalte/Ressourcen).
-* Assistent: Bloom-Stufen-Buttons in eLeDia-CI-Palette statt HSL-Verlauf.
-* Assistent-Ergebniskarten nutzen jetzt die gleiche Kartendarstellung wie die Kartenansicht.
-* Seitlicher Daumen in der Matrix als Lucide-thumbs-up um -90° rotiert.
+* Activity icons now use the official Moodle 5 purpose colors (administration / assessment / collaboration / communication / interactive content / resources).
+* Wizard: Bloom level buttons now use the eLeDia CI color palette instead of an HSL gradient.
+* Wizard result cards now use the same card layout as the main cards view.
+* Matrix sideways thumb rendered as Lucide thumbs-up rotated -90° (later replaced in 1.1.8).
 
 = 1.1.6 =
-* Initial WordPress-Port aus dem Moodle-Plugin local_toolguide 1.1.6.
-* Shortcode-basierte Einbindung.
-* React 18 via CDN oder selbst gehostet.
-* WCAG 2.2 AA: Kontrast, Keyboard-Bedienung, Fokus-Management, Live-Regions.
+* Initial WordPress port from the Moodle plugin local_toolguide 1.1.6.
+* Shortcode-based embedding.
+* React 18 via CDN or self-hosted.
+* WCAG 2.2 AA: contrast, keyboard operation, focus management, live regions.
 
 == Credits ==
 
-Basis: [Moodle Tool Guide für Lehrende](https://www.cyberlearn.ch/) von Joyce Seitzinger, Gavin Henrick und Nicolas Martignoni. Deutsche Ursprungs-Übersetzung: Ralf Hilgenstock. Bearbeitung und Moodle-5-Aktualisierung: eLeDia GmbH.
+Based on the [Moodle Tool Guide for Teachers](https://www.cyberlearn.ch/) by Joyce Seitzinger, Gavin Henrick and Nicolas Martignoni. Original German translation: Ralf Hilgenstock. Redesign and Moodle 5 update: eLeDia GmbH.

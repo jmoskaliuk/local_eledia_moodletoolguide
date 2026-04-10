@@ -3,7 +3,7 @@
  * Plugin Name:       eLeDia Moodle Tool Guide
  * Plugin URI:        https://github.com/jmoskaliuk/local_eledia_moodletoolguide
  * Description:       Interaktiver Wegweiser durch die Aktivitäten von Moodle 5 — Matrix, Karten und Assistent-Ansicht. Einbindung per Shortcode [eledia_toolguide].
- * Version:           1.1.8
+ * Version:           1.1.9
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            eLeDia GmbH
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'ELEDIA_TOOLGUIDE_VERSION', '1.1.8' );
+define( 'ELEDIA_TOOLGUIDE_VERSION', '1.1.9' );
 define( 'ELEDIA_TOOLGUIDE_FILE', __FILE__ );
 define( 'ELEDIA_TOOLGUIDE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ELEDIA_TOOLGUIDE_URL', plugin_dir_url( __FILE__ ) );
