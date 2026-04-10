@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactica
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Los datos de las herramientas están actualmente codificados en el bundle JavaSc
 No. El plugin es 100 % autónomo (excepto el CDN de React opcional) y no se comunica con servidores externos.
 
 == Registro de cambios ==
+
+= 1.1.12 =
+* Pie de página rediseñado para coincidir con la nueva cabecera: beige claro cálido (#FFECDB) con texto y enlaces subrayados en azul oscuro, en lugar de la franja azul oscuro con enlaces naranjas. Los logotipos de eLeDia y Moodle Partner, la insignia CC-BY-NC-SA y el icono de GitHub se leen con claridad sobre el nuevo fondo.
 
 = 1.1.11 =
 * Nuevo aspecto de la cabecera: el degradado azul se sustituye por un beige claro cálido (#FFECDB) con texto azul oscuro, y la subnavegación ahora es gris (#F3F5F8) en lugar de blanca — ya no hay una franja blanca a todo ancho en la parte superior en pantallas anchas. Mejores contrastes con zoom y en modo de alto contraste.

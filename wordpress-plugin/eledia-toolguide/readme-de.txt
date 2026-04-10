@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didaktik
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Die Tool-Daten sind aktuell im JavaScript-Bundle hardcodiert. Ein Admin-Editor f
 Nein. Das Plugin ist zu 100 % self-contained (abgesehen vom optionalen React-CDN) und telefoniert nicht nach Hause.
 
 == Changelog ==
+
+= 1.1.12 =
+* Footer passend zum neuen Header gestaltet: warmes helles Beige (#FFECDB) mit dunkelblauem Text und dunkelblauen unterstrichenen Links statt des dunkelblauen Balkens mit orangen Links. eLeDia- und Moodle-Partner-Logo, CC-BY-NC-SA-Badge und GitHub-Icon sind auf dem neuen Hintergrund gut lesbar.
 
 = 1.1.11 =
 * Neuer Header-Look: Der blaue Verlaufs-Header weicht einem warmen hellen Beige (#FFECDB) mit dunkelblauem Text, die Sub-Navigation ist jetzt grau (#F3F5F8) statt weiß — kein durchgehend weißer Balken mehr oben auf breiten Screens. Bessere Kontraste bei Zoom und im Hochkontrast-Modus.

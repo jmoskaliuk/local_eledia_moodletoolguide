@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactics
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ The tool data is currently hard-coded in the JavaScript bundle. An admin editor 
 No. The plugin is 100% self-contained (except for the optional React CDN) and does not call home.
 
 == Changelog ==
+
+= 1.1.12 =
+* Footer redesigned to match the new header: warm light beige (#FFECDB) background with dark blue text and dark blue underlined links instead of the dark blue bar with orange links. The eLeDia and Moodle Partner logos, CC-BY-NC-SA badge and GitHub icon all read clearly on the new background.
 
 = 1.1.11 =
 * New header look: the blue gradient header is replaced by a warm light beige (#FFECDB) with dark blue text, and the sub-navigation is now gray (#F3F5F8) instead of white — no more full-bleed white strip at the top on wide screens. Better contrast in high-zoom and high-contrast scenarios.

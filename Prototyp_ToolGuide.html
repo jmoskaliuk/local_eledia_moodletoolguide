@@ -1189,10 +1189,10 @@ function IconCC({size=24, lang}) {
 }
 
 function Footer({lang}) {
-  const linkSty = {color:"#FCBC82",textDecoration:"underline"};
+  const linkSty = {color:"#194866",textDecoration:"underline"};
   return React.createElement("footer",{
     role:"contentinfo",
-    style:{background:"#194866",color:"#D9D9D9",padding:"14px 24px",fontSize:11,lineHeight:1.55}
+    style:{background:"#FFECDB",color:"#194866",padding:"14px 24px",fontSize:11,lineHeight:1.55,borderTop:"1px solid #FCBC82"}
   },
     React.createElement("div",{
       style:{maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:20,flexWrap:"wrap"}
@@ -1200,7 +1200,7 @@ function Footer({lang}) {
       // LEFT: credits + license icon + github icon
       React.createElement("div",{style:{flex:"1 1 460px",minWidth:260}},
         React.createElement("p",{style:{margin:"0 0 4px"}},
-          React.createElement("strong",{style:{color:"white"}},"Moodle Tool Guide"),
+          React.createElement("strong",{style:{color:"#194866"}},"Moodle Tool Guide"),
           " · ",t(lang,"credit_original")," ",
           React.createElement("a",{href:"https://www.joyceseitzinger.com/",target:"_blank",rel:"noopener",style:linkSty},"Joyce Seitzinger"),
           ", ",
@@ -1223,12 +1223,12 @@ function Footer({lang}) {
           React.createElement("a",{
             href:"https://creativecommons.org/licenses/by-nc-sa/4.0/",target:"_blank",rel:"noopener",
             title:"CC BY-NC-SA 4.0",
-            style:{display:"inline-flex",alignItems:"center",color:"#FFFFFF",textDecoration:"none"}
+            style:{display:"inline-flex",alignItems:"center",color:"#194866",textDecoration:"none"}
           }, React.createElement(IconCC,{size:24,lang:lang})),
           React.createElement("a",{
             href:REPO_URL,target:"_blank",rel:"noopener",
             title:t(lang,"alt_github"),
-            style:{display:"inline-flex",alignItems:"center",color:"#FFFFFF",textDecoration:"none"}
+            style:{display:"inline-flex",alignItems:"center",color:"#194866",textDecoration:"none"}
           }, React.createElement(IconGitHub,{size:18,lang:lang}))
         )
       ),

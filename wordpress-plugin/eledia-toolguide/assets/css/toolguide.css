@@ -89,21 +89,24 @@
 
 /* Footer link style: the React inline style sets color + underline on
    links via style={linkSty}. WP themes sometimes override with
-   !important — re-assert it here by matching the exact container. */
+   !important — re-assert it here by matching the exact container.
+   Since v1.1.12 the footer uses the same beige background as the
+   header, so links are dark blue (#194866) to match. */
 .eledia-toolguide-root footer a,
 .eledia-toolguide-root footer a:link,
 .eledia-toolguide-root footer a:visited,
 .eledia-toolguide-root footer a:hover,
 .eledia-toolguide-root footer a:active {
-    color: #FCBC82 !important;
+    color: #194866 !important;
     text-decoration: underline !important;
 }
 
-/* Icon links (CC, GitHub) inside the footer flex-row — no underline. */
+/* Icon links (CC, GitHub) inside the footer flex-row — no underline,
+   dark blue so the GitHub octocat inherits via currentColor. */
 .eledia-toolguide-root footer a[title="CC BY-NC-SA 4.0"],
 .eledia-toolguide-root footer a[title*="GitHub"],
 .eledia-toolguide-root footer a[title*="github"] {
-    color: #FFFFFF !important;
+    color: #194866 !important;
     text-decoration: none !important;
 }
 
