@@ -3,13 +3,13 @@
 (function() {
   "use strict";
   if (typeof React === "undefined" || typeof ReactDOM === "undefined") {
-    console.error("[local_toolguide] React/ReactDOM not loaded");
+    console.error("[eledia-toolguide] React/ReactDOM not loaded");
     return;
   }
-  // Inject component-scoped styles into the host page.
-  var __tgStyle = document.createElement("style");
-  __tgStyle.textContent = "*, *::before, *::after { box-sizing: border-box; }\n#toolguide-root { font-family: Inter, system-ui, -apple-system, sans-serif; color: #353535; }\n#toolguide-root ::selection { background: #F98012; color: white; }\n#toolguide-root button:focus-visible, #toolguide-root a:focus-visible { outline: 3px solid #F98012; outline-offset: 2px; }\nhtml.hc #toolguide-root, html.hc #toolguide-root * { background: #000 !important; color: #fff !important; }\nhtml.hc #toolguide-root a { color: #FCBC82 !important; text-decoration: underline !important; }\nhtml.hc #toolguide-root button[aria-pressed=\"true\"] { background: #FCBC82 !important; color: #000 !important; border-color: #FCBC82 !important; }\n@media (prefers-reduced-motion: reduce) { #toolguide-root *, #toolguide-root *::before, #toolguide-root *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }";
-  document.head.appendChild(__tgStyle);
+  if (!document.querySelector(".eledia-toolguide-root")) {
+    // Shortcode not present on this page — nothing to do.
+    return;
+  }
 
 const { useState, useMemo } = React;
 
@@ -1343,6 +1343,6 @@ function App() {
   );
 }
 
-ReactDOM.render(React.createElement(App), document.getElementById("toolguide-root"));
+ReactDOM.render(React.createElement(App), document.querySelector(".eledia-toolguide-root"));
 
 })();

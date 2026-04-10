@@ -599,9 +599,11 @@ function ToolIcon({toolId, size=32}) {
   const icon = TOOL_ICONS[toolId];
   if (!icon) return null;
   const r = Math.round(size * 0.2);
+  const purpose = TOOL_PURPOSE[toolId] || "content";
+  const bg = PURPOSE_COLORS[purpose] || icon.bg;
   return React.createElement("span",{
     "aria-hidden":"true",
-    style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:size,height:size,borderRadius:r,background:icon.bg,flexShrink:0},
+    style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:size,height:size,borderRadius:r,background:bg,flexShrink:0},
     dangerouslySetInnerHTML:{__html:`<svg viewBox="0 0 24 24" width="${size*0.6}" height="${size*0.6}">${icon.svg}</svg>`}
   });
 }
@@ -615,11 +617,17 @@ function GoalIcon({goalKey, color, size=20, title=""}) {
   });
 }
 
-// Thumbs icons for matrix cells: up / sideways / down — Lucide-consistent stroke style
+// Thumbs icons for matrix cells: up / sideways / down — pure Lucide paths.
+// The "orange" (sideways) state is the same thumbs-up path; ThumbIcon rotates
+// the entire SVG 90° clockwise via CSS so the thumb points right cleanly,
+// without any off-center SVG transform artifacts.
+const LUCIDE_STROKE = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+const THUMBS_UP_PATH = '<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L15 2a3.13 3.13 0 0 1 3 3.88Z"/>';
+const THUMBS_DOWN_PATH = '<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H17a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L9 22a3.13 3.13 0 0 1-3-3.88Z"/>';
 const THUMBS = {
-  grün:    `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L15 2a3.13 3.13 0 0 1 3 3.88Z"/></g>`,
-  orange:  `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="10,6 4,12 10,18"/><polyline points="14,6 20,12 14,18"/></g>`,
-  rot:     `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H17a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L9 22a3.13 3.13 0 0 1-3-3.88Z"/></g>`
+  grün:   `<g ${LUCIDE_STROKE}>${THUMBS_UP_PATH}</g>`,
+  orange: `<g ${LUCIDE_STROKE}>${THUMBS_UP_PATH}</g>`,
+  rot:    `<g ${LUCIDE_STROKE}>${THUMBS_DOWN_PATH}</g>`
 };
 
 
@@ -671,12 +679,13 @@ function useFocusTrap(active) {
 
 function ThumbIcon({rating, size=22, title=""}) {
   const color = rc(rating);
+  const rotate = rating === "orange" ? "transform:rotate(90deg);" : "";
   return React.createElement("span", {
     title: title,
     role: "img",
     "aria-label": title,
     style: {display:"inline-flex",alignItems:"center",justifyContent:"center",width:size+10,height:size+10,borderRadius:8,background:rb(rating),color:color,cursor:"help"},
-    dangerouslySetInnerHTML: {__html:`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="pointer-events:none">${THUMBS[rating]||THUMBS.rot}</svg>`}
+    dangerouslySetInnerHTML: {__html:`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="pointer-events:none;${rotate}">${THUMBS[rating]||THUMBS.rot}</svg>`}
   });
 }
 
@@ -796,7 +805,7 @@ function ToolCard({tool, onSelect, onCompare, isC, lang}) {
     ),
     React.createElement("div",{style:{marginBottom:10}},React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:25})),
     React.createElement("p",{style:{fontSize:11,color:"#707070",lineHeight:1.4,margin:"0 0 10px",borderTop:"1px solid #E9E9E9",paddingTop:8,fontStyle:"italic"}},tool.complexityText),
-    React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",alignItems:"center"}},
+    onCompare&&React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",alignItems:"center"}},
       React.createElement("button",{onClick:e=>{e.stopPropagation();onCompare(tool.id)},style:{fontSize:11,padding:"4px 10px",borderRadius:6,border:isC?"1px solid #f98012":"1px solid #E9E9E9",background:isC?"#FFECDB":"white",color:isC?"#f98012":"#707070",cursor:"pointer"}},isC?t(lang,"in_compare"):t(lang,"add_compare"))
     )
   );
@@ -1045,9 +1054,12 @@ function WizardView({tools,onSelect,lang}) {
       React.createElement("div",{style:{display:"flex",flexDirection:"column",alignItems:"center",gap:6}},
         I18N[lang].bloom_levels.map((name,i)=>{
           const lvl=i+1, w=140+(5-i)*30;
+          const ciPalette = ["#194866","#267372","#669933","#A5C387","#FCBC82","#F98012"];
+          const ciColor = ciPalette[i];
+          const isActive = bloomMin===lvl;
           return React.createElement("button",{key:i,onClick:()=>{setBloomMin(lvl);setStep(4)},
             title:I18N[lang].bloom_descs[i],
-            style:{width:w,padding:"10px 0",borderRadius:6,border:bloomMin===lvl?"2px solid #f98012":"2px solid #E9E9E9",background:bloomMin===lvl?"#FFECDB":"hsl("+(200+i*25)+", 60%, "+(95-i*5)+"%)",cursor:"pointer",fontSize:13,fontWeight:500}
+            style:{width:w,padding:"10px 0",borderRadius:6,border:isActive?"2px solid "+ciColor:"2px solid #E9E9E9",background:isActive?ciColor:ciColor+"22",color:isActive?"white":"#194866",cursor:"pointer",fontSize:13,fontWeight:600,transition:"all .15s"}
           },lvl+". "+name);
         }),
         React.createElement("button",{onClick:()=>{setBloomMin(0);setStep(4)},style:{marginTop:8,padding:"8px 20px",borderRadius:6,border:"1px solid #E9E9E9",background:"white",cursor:"pointer",fontSize:13}},t(lang,"wizard_skip"))
@@ -1064,25 +1076,8 @@ function WizardView({tools,onSelect,lang}) {
       results.length===0 ? React.createElement("div",{role:"status","aria-live":"polite",style:{padding:24,background:"#FFECDB",border:"2px dashed #f98012",borderRadius:12,textAlign:"center"}},
         React.createElement("p",{style:{margin:0,color:"#353535",fontSize:14}},t(lang,"empty_text"))
       ) :
-      React.createElement("div",{style:{display:"grid",gap:10}},
-        results.map(t2=>{
-          const pcol = purposeColor(t2);
-          const plabel = purposeLabel(t2,lang);
-          return React.createElement("div",{key:t2.id,onClick:()=>onSelect(t2),tabIndex:0,role:"button","aria-label":t2.name+" – "+plabel,onKeyDown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(t2);}},style:{display:"flex",alignItems:"stretch",gap:0,padding:0,background:"white",borderRadius:10,border:"1px solid #E9E9E9",cursor:"pointer",overflow:"hidden"},
-            onMouseEnter:e=>e.currentTarget.style.borderColor=pcol,onMouseLeave:e=>e.currentTarget.style.borderColor="#E9E9E9"},
-            React.createElement("div",{style:{width:6,background:pcol,flexShrink:0},"aria-hidden":"true"}),
-            React.createElement("div",{style:{display:"flex",alignItems:"center",gap:14,padding:14,flex:1,minWidth:0}},
-              React.createElement(ToolIcon,{toolId:t2.id,size:32}),
-              React.createElement("div",{style:{flex:1,minWidth:0}},
-                React.createElement("strong",{style:{color:"#194866"}},t2.name)," ",
-                React.createElement("span",{style:{display:"inline-block",fontSize:10,fontWeight:600,color:pcol,background:pcol+"22",padding:"2px 7px",borderRadius:10,marginLeft:4,verticalAlign:"middle",textTransform:"uppercase",letterSpacing:0.3}},plabel),
-                React.createElement("div",{style:{fontSize:12,color:"#707070",marginTop:2}},goal?t2.goals[goal].t:t2.desc),
-                React.createElement("div",{style:{marginTop:4}},React.createElement(BloomBars,{bloom:t2.bloom,lang:lang,size:14}))
-              ),
-              React.createElement(ThumbIcon,{rating:goal?t2.goals[goal].r:"grün",size:18,title:goal?rl(t2.goals[goal].r,lang):""})
-            )
-          );
-        })
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:16}},
+        results.map(t2=>React.createElement(ToolCard,{key:t2.id,tool:t2,onSelect:onSelect,lang:lang}))
       ),
       React.createElement("div",{style:{display:"flex",gap:8,justifyContent:"flex-end",marginTop:20}},
         React.createElement("button",{onClick:()=>{setStep(0);setGoal(null);setSetup(null);setSupport(null);setBloomMin(0)},
@@ -1245,7 +1240,7 @@ function Footer({lang}) {
           href:"https://eledia.de/",target:"_blank",rel:"noopener",
           style:{display:"inline-flex",alignItems:"center"},
           "aria-label":t(lang,"alt_eledia_logo")+" – eledia.de"
-        }, React.createElement(LogoEledia,{size:30,lang:lang})),
+        }, React.createElement(LogoEledia,{size:42,lang:lang})),
         React.createElement("a",{
           href:"https://moodle.com/de/certified-service-provider/eledia-gmbh/",target:"_blank",rel:"noopener",
           style:{display:"inline-flex",alignItems:"center"},
