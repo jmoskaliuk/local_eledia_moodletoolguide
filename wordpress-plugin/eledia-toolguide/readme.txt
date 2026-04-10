@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didaktik
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,10 @@ Der Shortcode funktioniert überall, wo WordPress Shortcodes ausführt — auch 
 Die Tool-Daten sind aktuell im JavaScript-Bundle hardcodiert. Ein Admin-Editor für die Tool-Liste ist geplant.
 
 == Changelog ==
+
+= 1.1.8 =
+* Matrix "neutral"-Icon: statt seitlichem Daumen jetzt Lucide circle-slash
+  (Kreis mit Schrägstrich). Eindeutiger als rotiertes thumbs-up.
 
 = 1.1.7 =
 * Aktivitäts-Icons nutzen jetzt die offiziellen Moodle-5-Purpose-Farben (Verwaltung/Bewertung/Zusammenarbeit/Kommunikation/Interaktive Inhalte/Ressourcen).

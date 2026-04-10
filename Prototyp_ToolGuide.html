@@ -617,16 +617,18 @@ function GoalIcon({goalKey, color, size=20, title=""}) {
   });
 }
 
-// Thumbs icons for matrix cells: up / sideways / down — pure Lucide paths.
-// The "orange" (sideways) state is the same thumbs-up path; ThumbIcon rotates
-// the entire SVG 90° clockwise via CSS so the thumb points right cleanly,
-// without any off-center SVG transform artifacts.
+// Rating icons for matrix cells: up / neutral / down — pure Lucide paths.
+// grün  = lucide thumbs-up
+// orange = lucide circle-slash  (neutral / "weder noch" — ersetzt den seitlichen Daumen,
+//          weil Lucide keinen hat und rotierte thumbs-up wie eine Kaffeetasse aussehen)
+// rot   = lucide thumbs-down
 const LUCIDE_STROKE = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
 const THUMBS_UP_PATH = '<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L15 2a3.13 3.13 0 0 1 3 3.88Z"/>';
 const THUMBS_DOWN_PATH = '<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H17a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L9 22a3.13 3.13 0 0 1-3-3.88Z"/>';
+const CIRCLE_SLASH_PATH = '<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>';
 const THUMBS = {
   grün:   `<g ${LUCIDE_STROKE}>${THUMBS_UP_PATH}</g>`,
-  orange: `<g ${LUCIDE_STROKE}>${THUMBS_UP_PATH}</g>`,
+  orange: `<g ${LUCIDE_STROKE}>${CIRCLE_SLASH_PATH}</g>`,
   rot:    `<g ${LUCIDE_STROKE}>${THUMBS_DOWN_PATH}</g>`
 };
 
@@ -679,13 +681,12 @@ function useFocusTrap(active) {
 
 function ThumbIcon({rating, size=22, title=""}) {
   const color = rc(rating);
-  const rotate = rating === "orange" ? "transform:rotate(90deg);" : "";
   return React.createElement("span", {
     title: title,
     role: "img",
     "aria-label": title,
     style: {display:"inline-flex",alignItems:"center",justifyContent:"center",width:size+10,height:size+10,borderRadius:8,background:rb(rating),color:color,cursor:"help"},
-    dangerouslySetInnerHTML: {__html:`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="pointer-events:none;${rotate}">${THUMBS[rating]||THUMBS.rot}</svg>`}
+    dangerouslySetInnerHTML: {__html:`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="pointer-events:none">${THUMBS[rating]||THUMBS.rot}</svg>`}
   });
 }
 
