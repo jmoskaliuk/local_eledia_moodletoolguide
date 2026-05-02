@@ -7,16 +7,16 @@ An interactive Tool Guide for Moodle 5 — based on the classic *Moodle Tool Gui
 Three delivery tracks from a single source of truth:
 
 1. **Standalone web page** — `Prototyp_ToolGuide.html`: single-file React/HTML, can be embedded directly via `<iframe>`.
-2. **Moodle local plugin** — `moodle-plugin/local/toolguide/` / `local_toolguide.zip`: installable local plugin for Moodle 4.5 / 5.x.
-3. **WordPress plugin** — `wordpress-plugin/eledia-toolguide/` / `eledia-toolguide.zip`: shortcode `[eledia_toolguide]` for any WordPress site.
+2. **Moodle local plugin** — `moodle-plugin/local/toolguide/` / `moodle-plugin/local_toolguide.zip`: installable local plugin for Moodle 4.1+ / 5.x.
+3. **WordPress plugin** — `wordpress-plugin/eledia-toolguide/` / `wordpress-plugin/eledia-toolguide.zip`: shortcode `[eledia_toolguide]` for any WordPress site.
 
 ## Features
 
 - **25 Moodle activities** with didactic recommendations across five learning goals
-- **Matrix view** with thumbs-up / circle-slash / thumbs-down rating icons and hover tooltips
+- **Matrix view** with thumbs-up / sideways / thumbs-down rating icons and hover/tap tooltips for desktop, tablet and mobile
 - **Cards view** with full descriptions and filters (setup effort, support effort, goal, Bloom level)
 - **Wizard** — guided five-step selection that recommends activities based on the user's answers
-- **Compare mode** for up to three tools side by side
+- **Compare mode** for up to four tools side by side, including a quick reset for a new comparison
 - **Two-dimensional effort**: setup effort and ongoing support effort
 - **Bloom's taxonomy** (levels 1–6) per activity
 - **4 UI languages**: English, German, French, Spanish
@@ -26,7 +26,7 @@ Three delivery tracks from a single source of truth:
 
 ## Data source
 
-`Datenbank_ToolGuide.xlsx` is the single source of truth for all tool data (descriptions, suitability per goal, effort, Bloom level). The standalone HTML, Moodle plugin JS and WordPress plugin JS are all synced from this file via `sync_plugin_js.py` and `sync_wordpress_js.py`.
+`Datenbank_ToolGuide.xlsx` is the source for the curated tool data (descriptions, suitability per goal, effort, Bloom level). `Prototyp_ToolGuide.html` is the current UI source of truth; the Moodle plugin JS and WordPress plugin JS are generated from it via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 
 ## Using the standalone web page
 
@@ -42,7 +42,7 @@ Three delivery tracks from a single source of truth:
 From the Moodle root directory:
 
 ```bash
-unzip local_toolguide.zip -d local/
+unzip /path/to/local_toolguide.zip
 php admin/cli/upgrade.php
 ```
 
@@ -67,7 +67,7 @@ Examples:
 [eledia_toolguide height="auto"]
 ```
 
-By default the WordPress plugin loads React 18.3.1 from unpkg.com. For GDPR-compliant installations without external requests, you can self-host React by placing `react.production.min.js` and `react-dom.production.min.js` in `assets/js/vendor/` — the plugin detects the local files automatically.
+The WordPress plugin uses WordPress' bundled React abstraction (`wp-element`) and does not load React from an external CDN. The Tool Guide bundle is marked for WP Rocket `nowprocket` exclusion so JavaScript delay optimizers do not leave the loading indicator visible until the first scroll interaction.
 
 ## License
 

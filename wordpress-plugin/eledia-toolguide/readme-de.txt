@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didaktik
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.12
+Stable tag: 1.1.25
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,7 +47,7 @@ Beispiele:
 
 = Lädt das Plugin React von einem externen CDN? =
 
-In der Standardkonfiguration ja — React 18.3.1 wird von unpkg.com geladen. Für DSGVO-konforme Installationen ohne externe Requests kannst du React selbst hosten: Lege `react.production.min.js` und `react-dom.production.min.js` aus der React-Distribution in `assets/js/vendor/` ab. Das Plugin erkennt die lokalen Dateien automatisch und nutzt sie statt des CDN.
+Nein. Das Plugin nutzt das von WordPress mitgelieferte `wp-element`-Paket und lädt React nicht von einem externen CDN.
 
 = Funktioniert das Plugin mit dem Gutenberg-Block-Editor? =
 
@@ -59,9 +59,48 @@ Die Tool-Daten sind aktuell im JavaScript-Bundle hardcodiert. Ein Admin-Editor f
 
 = Gibt es Tracking oder Telemetrie? =
 
-Nein. Das Plugin ist zu 100 % self-contained (abgesehen vom optionalen React-CDN) und telefoniert nicht nach Hause.
+Nein. Das Plugin ist zu 100 % self-contained und telefoniert nicht nach Hause.
 
 == Changelog ==
+
+= 1.1.25 =
+* Tool-Guide-Skripte und Inline-Bootstrap-Code mit WP-Rocket-`nowprocket`-Ausnahmen markiert, damit die App ohne Scroll-Interaktion startet.
+
+= 1.1.24 =
+* Tippfreundliche Hinweise für Matrix-Spaltenköpfe ergänzt und Matrix-Tooltip-Hinweise für Touch-Geräte wie iPad unten im Viewport fixiert.
+
+= 1.1.23 =
+* Aktion „Neuen Vergleich starten“ in der Vergleichsansicht ergänzt und Vergleichsbuttons auf Karten unten ausgerichtet.
+
+= 1.1.22 =
+* Bloom-Lernziele werden in Kartendetails neutral dargestellt statt als Gut/Teilweise/Ungeeignet-Eignung.
+
+= 1.1.21 =
+* Tippfreundliche mobile Matrix-Hinweise für Aufwandspunkte und Eignungs-Icons ergänzt.
+
+= 1.1.20 =
+* Mobile Nutzer*innen starten nun standardmäßig in der Kartenansicht, und der Ladehinweis wird vor dem Rendern der App explizit entfernt.
+
+= 1.1.19 =
+* Daumen-Icon für „teilweise geeignet“ korrigiert, sodass es nach links zeigt.
+
+= 1.1.18 =
+* Barrierearmen Ladehinweis ergänzt, während das WordPress-Bundle startet, und die kompakte mobile Matrix aus dem HTML-Prototyp synchronisiert.
+
+= 1.1.17 =
+* Mobile Ansicht verbessert: Die Matrix-Lesepfeile werden auf kleinen Screens ausgeblendet, das Suchfeld steht linksbündig und die Auswahlboxen im Assistenten bleiben innerhalb der Viewport-Breite.
+
+= 1.1.16 =
+* Mobile Matrix-Karten für iPhone verbessert: Die Chips der didaktischen Ziele laufen nun zweispaltig und brechen sauber um, sodass lange Labels nicht mehr überlappen.
+
+= 1.1.15 =
+* WordPress-Theme-Integration verbessert: Der Tool Guide bricht nun auf volle Viewport-Breite aus, sodass Header, Navigation, Inhaltsfläche und Footer-Bänder durchlaufen. Der Footer bleibt bei kurzen Ergebnislisten unten.
+
+= 1.1.14 =
+* WordPress-JavaScript-Internationalisierung für UI-Texte ergänzt: `wp-i18n`, `wp_set_script_translations()`, gebündelte JSON-Übersetzungen und ein POT-Template. Die kuratierten Tooldaten bleiben weiterhin über die eingebaute DE/EN/FR/ES-Sprachumschaltung verfügbar.
+
+= 1.1.13 =
+* Aktuellen HTML-Prototyp in das WordPress-Plugin synchronisiert: Matrix-Hilfe, Info-Panels, Sie-Form, verbesserte Assistenten-Filterung, mobilfreundliche Matrix-Karten und Barrierefreiheitsverbesserungen bei Kontrast, Fokus und Tabellensemantik. React wird nun über das von WordPress mitgelieferte `wp-element`-Paket statt über ein externes CDN geladen.
 
 = 1.1.12 =
 * Footer passend zum neuen Header gestaltet: warmes helles Beige (#FFECDB) mit dunkelblauem Text und dunkelblauen unterstrichenen Links statt des dunkelblauen Balkens mit orangen Links. eLeDia- und Moodle-Partner-Logo, CC-BY-NC-SA-Badge und GitHub-Icon sind auf dem neuen Hintergrund gut lesbar.
@@ -89,7 +128,7 @@ Nein. Das Plugin ist zu 100 % self-contained (abgesehen vom optionalen React-CDN
 = 1.1.6 =
 * Initial WordPress-Port aus dem Moodle-Plugin local_toolguide 1.1.6.
 * Shortcode-basierte Einbindung.
-* React 18 via CDN oder selbst gehostet.
+* React über das von WordPress mitgelieferte `wp-element`-Paket.
 * WCAG 2.2 AA: Kontrast, Keyboard-Bedienung, Fokus-Management, Live-Regions.
 
 == Credits ==

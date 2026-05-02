@@ -7,7 +7,7 @@
  * there is literally nothing to clean up. We keep this file anyway as a
  * hook point in case future versions add persistent data.
  *
- * @package EledialToolguide
+ * @package ElediaToolguide
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {

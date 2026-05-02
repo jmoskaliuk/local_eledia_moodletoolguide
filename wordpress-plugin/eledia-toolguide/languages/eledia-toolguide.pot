@@ -1,0 +1,442 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: eLeDia Moodle Tool Guide 1.1.25\n"
+"Report-Msgid-Bugs-To: https://github.com/jmoskaliuk/local_eledia_moodletoolguide/issues\n"
+"POT-Creation-Date: 2026-05-02 19:14:39+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: eledia-toolguide\n"
+
+#: assets/js/toolguide.js
+msgid "+ Compare"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "✓ In comparison"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "🎓 Bloom: all levels"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "About the Tool Guide"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Activity"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Adapted by the Moodle experts of eLeDia | eLearning im Dialog. More Moodle know-how at"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Analyze"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Any"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Apply"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Assessment"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Back"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Back to step"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Based on a translation by"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Based on the Moodle Tool Guide · eLeDia · Idea: Joyce Seitzinger"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid ""
+"Benjamin Bloom's taxonomy of learning objectives arranges learning into levels "
+"of cognitive depth. It helps formulate learning objectives clearly, make "
+"competence levels more visible and structure learning units accordingly. It "
+"remains a central reference model in didactics and education."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Bloom"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Bloom's Learning Goals"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Can content be created cooperatively?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Can it be used for communication?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Cards"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Close"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Collaborative Creation"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Communication & Interaction"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Compare"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Start new comparison"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Complex"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Create"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Description"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Does it allow measuring knowledge?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Doesn't matter"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Draw connections among ideas."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Easy"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "eLeDia – eLearning im Dialog"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "eLeDia logo"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Evaluate"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Explain ideas or concepts in your own words."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Find the right tool for your didactic goal"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "from level"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Für den Moodle Tool Guide muss JavaScript aktiviert sein."
+msgstr ""
+
+#: eledia-toolguide.php
+msgid "Tool Guide wird geladen …"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Goal"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Hide reading arrows"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "High"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "How much effort does it take to ONE-TIME create and configure this activity?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "How much ongoing effort is needed DURING use – moderating, grading, replying?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "How much ongoing support effort is acceptable?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "How much setup effort is acceptable?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Information & Transfer"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Is it suitable for delivering information?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Justify a stand or decision based on the material."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Language"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Larger text"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "License"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Low"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "matching tools found"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Matrix"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Medium"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Minimum Bloom level?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Moodle Docs"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Moodle Premium Certified Services Provider"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Moodle Tool Guide"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Moodle Tool Guide matrix"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "More ideas at eledia.community"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "No matching activities found"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Not suited"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Open details for {name}"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Original concept"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Overview"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Partially suited"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Produce new or original work."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Read matrix"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Recall facts and basic concepts."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Remember"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Reset filters"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Reset text size"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Result"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Search"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Search tool…"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Setup"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Setup effort: all"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Shows the reading directions: didactic goals horizontally, technical choice vertically."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Skip to content"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Smaller text"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Source on GitHub"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Start over"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Suitability by didactic goal"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Support"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Support effort: all"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Text size"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid ""
+"There is no Moodle activity that matches the selected combination. Loosen one or "
+"more filters to see suggestions – or try the Wizard for a guided selection."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid ""
+"This Moodle Tool Guide provides a compact overview and comparison of activities "
+"and resources in Moodle. It supports the selection of suitable tools based on "
+"didactic goals or available time. All tools are classified according to Benjamin "
+"Bloom's taxonomy of learning objectives. It is intended for teachers, trainers "
+"and education professionals."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Understand"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Use information in new situations."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Views"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Well suited"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Well suited for …"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "What can you use (technically)?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "What do you want to achieve (didactically)?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "What do you want to achieve?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "What does Bloom mean?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid ""
+"Which cognitive learning levels of Bloom's Taxonomy does this activity typically "
+"support? 1=Remember, 6=Create."
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Which learning goals are supported?"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Wizard"
+msgstr ""
+
+#: assets/js/toolguide.js
+msgid "Wizard steps"
+msgstr ""

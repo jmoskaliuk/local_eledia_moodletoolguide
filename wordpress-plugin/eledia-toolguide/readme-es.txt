@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactica
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.12
+Stable tag: 1.1.25
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,7 +47,7 @@ Ejemplos:
 
 = ¿Carga el plugin React desde un CDN externo? =
 
-Por defecto, sí — React 18.3.1 se carga desde unpkg.com. Para instalaciones conformes al RGPD sin peticiones externas puedes autoalojar React: coloca `react.production.min.js` y `react-dom.production.min.js` de la distribución de React en `assets/js/vendor/`. El plugin detecta los archivos locales automáticamente y los usa en lugar del CDN.
+No. El plugin usa el paquete `wp-element` incluido en WordPress y no carga React desde un CDN externo.
 
 = ¿Funciona el plugin con el editor de bloques Gutenberg? =
 
@@ -59,9 +59,48 @@ Los datos de las herramientas están actualmente codificados en el bundle JavaSc
 
 = ¿Hay seguimiento o telemetría? =
 
-No. El plugin es 100 % autónomo (excepto el CDN de React opcional) y no se comunica con servidores externos.
+No. El plugin es 100 % autónomo y no se comunica con servidores externos.
 
 == Registro de cambios ==
+
+= 1.1.25 =
+* Scripts del Tool Guide y código inline de arranque marcados con exclusiones WP Rocket `nowprocket` para que la aplicación arranque sin interacción de scroll.
+
+= 1.1.24 =
+* Añadidas indicaciones táctiles para cabeceras de matriz y fijadas las indicaciones de matriz en la parte inferior del viewport para dispositivos táctiles como iPad.
+
+= 1.1.23 =
+* Añadida la acción « Iniciar nueva comparación » en la vista de comparación y alineados los botones de comparación al fondo de las tarjetas.
+
+= 1.1.22 =
+* Los objetivos de aprendizaje de Bloom se muestran de forma neutral en los detalles de las tarjetas, no como idoneidad buena/parcial/mala.
+
+= 1.1.21 =
+* Añadidas indicaciones táctiles en la matriz móvil para puntos de esfuerzo e iconos de idoneidad.
+
+= 1.1.20 =
+* En móvil, la vista inicial ahora es Tarjetas y el indicador de carga se elimina explícitamente antes de renderizar la aplicación.
+
+= 1.1.19 =
+* Corregido el icono de idoneidad parcial para que el pulgar apunte hacia la izquierda.
+
+= 1.1.18 =
+* Añadido un indicador de carga accesible mientras arranca el paquete de WordPress y sincronizada la matriz móvil compacta del prototipo HTML.
+
+= 1.1.17 =
+* Diseño móvil mejorado: las flechas de lectura de la matriz se ocultan en pantallas pequeñas, el campo de búsqueda queda alineado a la izquierda y las opciones del asistente se ajustan al viewport.
+
+= 1.1.16 =
+* Tarjetas móviles de la matriz mejoradas para iPhone: los chips de objetivos didácticos usan ahora dos columnas y las etiquetas largas ya no se solapan.
+
+= 1.1.15 =
+* Integración con temas de WordPress mejorada: Tool Guide ahora ocupa todo el ancho del viewport para cabecera, navegación, fondo de contenido y pie de página. El pie de página permanece abajo en páginas con pocos resultados.
+
+= 1.1.14 =
+* Añadida compatibilidad con la internacionalización JavaScript de WordPress para textos de interfaz mediante `wp-i18n`, `wp_set_script_translations()`, traducciones JSON incluidas y una plantilla POT. Los datos seleccionados de herramientas siguen disponibles mediante el selector integrado DE/EN/FR/ES.
+
+= 1.1.13 =
+* Sincronizado el prototipo HTML actual con el plugin de WordPress: ayuda de lectura de la matriz, paneles de información, filtrado mejorado del asistente, tarjetas de matriz para móvil y mejoras de accesibilidad en contraste, foco y semántica de tabla. React se carga ahora mediante el paquete `wp-element` incluido en WordPress en lugar de un CDN externo.
 
 = 1.1.12 =
 * Pie de página rediseñado para coincidir con la nueva cabecera: beige claro cálido (#FFECDB) con texto y enlaces subrayados en azul oscuro, en lugar de la franja azul oscuro con enlaces naranjas. Los logotipos de eLeDia y Moodle Partner, la insignia CC-BY-NC-SA y el icono de GitHub se leen con claridad sobre el nuevo fondo.
@@ -89,7 +128,7 @@ No. El plugin es 100 % autónomo (excepto el CDN de React opcional) y no se comu
 = 1.1.6 =
 * Puerto inicial de WordPress desde el plugin de Moodle local_toolguide 1.1.6.
 * Incrustación basada en shortcode.
-* React 18 via CDN o autoalojado.
+* React mediante el paquete `wp-element` incluido en WordPress.
 * WCAG 2.2 AA: contraste, operación por teclado, gestión de foco, live regions.
 
 == Créditos ==

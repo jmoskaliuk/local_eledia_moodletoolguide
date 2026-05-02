@@ -37,15 +37,6 @@
     .tg-filterbar { padding: 10px 12px !important; }
     .tg-header { padding: 16px 14px !important; }
     .tg-nav { padding: 8px 12px !important; }
-    .tg-wizard { max-width: 100% !important; width: 100% !important; }
-    .tg-wizard-option { width: 100% !important; max-width: 100% !important; padding: 12px !important; }
-    .tg-wizard-option-content { align-items: flex-start !important; }
-    .tg-wizard-option-content > div { min-width: 0 !important; }
-    .tg-wizard-option-content span { white-space: normal !important; overflow-wrap: anywhere !important; }
-    .tg-nav-row { justify-content: flex-start !important; align-items: flex-start !important; }
-    .tg-nav-actions { justify-content: flex-start !important; width: 100% !important; }
-    .tg-nav-search-wrap { justify-content: flex-start !important; width: 100% !important; }
-    .tg-tool-search { width: 100% !important; max-width: 220px !important; }
     .tg-filterbar select, .tg-filterbar label { width: 100%; max-width: 100%; }
     .tg-filterbar > div { width: 100%; }
   }
@@ -255,7 +246,6 @@ const I18N = {
     nav_wizard: "Assistent",
     search_placeholder: "Tool suchen…",
     compare_btn: "Vergleichen",
-    compare_new: "Neuen Vergleich starten",
     filter_setup_all: "Aufwand Einrichtung: alle",
     filter_support_all: "Aufwand Betreuung: alle",
     filter_goal_default: "Gut geeignet für …",
@@ -350,13 +340,7 @@ const I18N = {
   ,
     alt_github: "Quellcode auf GitHub"
   ,
-    alt_cc_byncsa: "Lizenz: Creative Commons Namensnennung – Nicht-kommerziell – Weitergabe unter gleichen Bedingungen 4.0 International",
-    skip_to_content: "Zum Inhalt springen",
-    a11y_font_group: "Schriftgröße",
-    language: "Sprache",
-    views: "Ansichten",
-    search: "Suche",
-    matrix_aria: "Moodle Tool Guide Matrix"
+    alt_cc_byncsa: "Lizenz: Creative Commons Namensnennung – Nicht-kommerziell – Weitergabe unter gleichen Bedingungen 4.0 International"
   },
   en: {
     title: "Moodle Tool Guide",
@@ -376,7 +360,6 @@ const I18N = {
     nav_wizard: "Wizard",
     search_placeholder: "Search tool…",
     compare_btn: "Compare",
-    compare_new: "Start new comparison",
     filter_setup_all: "Setup effort: all",
     filter_support_all: "Support effort: all",
     filter_goal_default: "Well suited for …",
@@ -471,13 +454,7 @@ const I18N = {
   ,
     alt_github: "Source on GitHub"
   ,
-    alt_cc_byncsa: "License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
-    skip_to_content: "Skip to content",
-    a11y_font_group: "Text size",
-    language: "Language",
-    views: "Views",
-    search: "Search",
-    matrix_aria: "Moodle Tool Guide matrix"
+    alt_cc_byncsa: "License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"
   },
   fr: {
     title: "Guide des outils Moodle",
@@ -497,7 +474,6 @@ const I18N = {
     nav_wizard: "Assistant",
     search_placeholder: "Rechercher un outil…",
     compare_btn: "Comparer",
-    compare_new: "Commencer une nouvelle comparaison",
     filter_setup_all: "Effort de mise en place : tous",
     filter_support_all: "Effort d'animation : tous",
     filter_goal_default: "Bien adapté pour …",
@@ -592,13 +568,7 @@ const I18N = {
   ,
     alt_github: "Code source sur GitHub"
   ,
-    alt_cc_byncsa: "Licence : Creative Commons Attribution – Pas d'utilisation commerciale – Partage dans les mêmes conditions 4.0 International",
-    skip_to_content: "Aller au contenu",
-    a11y_font_group: "Taille du texte",
-    language: "Langue",
-    views: "Vues",
-    search: "Recherche",
-    matrix_aria: "Matrice du Moodle Tool Guide"
+    alt_cc_byncsa: "Licence : Creative Commons Attribution – Pas d'utilisation commerciale – Partage dans les mêmes conditions 4.0 International"
   },
   es: {
     title: "Guía de herramientas Moodle",
@@ -618,7 +588,6 @@ const I18N = {
     nav_wizard: "Asistente",
     search_placeholder: "Buscar herramienta…",
     compare_btn: "Comparar",
-    compare_new: "Iniciar nueva comparación",
     filter_setup_all: "Esfuerzo de configuración: todos",
     filter_support_all: "Esfuerzo de tutoría: todos",
     filter_goal_default: "Bien adaptado para …",
@@ -713,13 +682,7 @@ const I18N = {
   ,
     alt_github: "Código fuente en GitHub"
   ,
-    alt_cc_byncsa: "Licencia: Creative Commons Atribución – No comercial – Compartir igual 4.0 Internacional",
-    skip_to_content: "Saltar al contenido",
-    a11y_font_group: "Tamaño del texto",
-    language: "Idioma",
-    views: "Vistas",
-    search: "Buscar",
-    matrix_aria: "Matriz de Moodle Tool Guide"
+    alt_cc_byncsa: "Licencia: Creative Commons Atribución – No comercial – Compartir igual 4.0 Internacional"
   }
 };
 
@@ -828,7 +791,7 @@ const THUMBS_UP_PATH = '<path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8
 const THUMBS_DOWN_PATH = '<path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/><path d="M17 14V2"/>';
 const THUMBS = {
   grün:   `<g ${LUCIDE_STROKE}>${THUMBS_UP_PATH}</g>`,
-  orange: `<g ${LUCIDE_STROKE} transform="rotate(-90 12 12)">${THUMBS_UP_PATH}</g>`,
+  orange: `<g ${LUCIDE_STROKE} transform="rotate(90 12 12)">${THUMBS_UP_PATH}</g>`,
   rot:    `<g ${LUCIDE_STROKE}>${THUMBS_DOWN_PATH}</g>`
 };
 
@@ -985,7 +948,7 @@ function ToolCard({tool, onSelect, onCompare, isC, lang}) {
     tabIndex:0,
     onKeyDown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(tool);}},
     "aria-label":tool.name,
-    style:{background:"white",borderRadius:12,padding:18,cursor:"pointer",boxShadow:"0 1px 3px rgba(0,0,0,0.08)",border:isC?"2px solid #f98012":"2px solid transparent",transition:"all 0.2s",display:"flex",flexDirection:"column",height:"100%"},
+    style:{background:"white",borderRadius:12,padding:18,cursor:"pointer",boxShadow:"0 1px 3px rgba(0,0,0,0.08)",border:isC?"2px solid #f98012":"2px solid transparent",transition:"all 0.2s"},
     onMouseEnter:e=>{e.currentTarget.style.boxShadow="0 4px 12px rgba(0,0,0,0.12)";e.currentTarget.style.transform="translateY(-2px)"},
     onMouseLeave:e=>{e.currentTarget.style.boxShadow="0 1px 3px rgba(0,0,0,0.08)";e.currentTarget.style.transform="none"}
   },
@@ -1001,17 +964,13 @@ function ToolCard({tool, onSelect, onCompare, isC, lang}) {
       React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"labeled"})
     ),
     React.createElement("div",{style:{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap",alignItems:"center"}},
-      goals.map(gk=>{
-        const isBloom = gk==="bloomG";
-        const label = isBloom ? tg(lang,gk).label+": "+tool.bloom : tg(lang,gk).label+": "+rl(tool.goals[gk].r,lang);
-        return React.createElement("span",{key:gk,title:label,role:"img","aria-label":label,style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:30,height:30,borderRadius:8,background:isBloom?"#F3F5F8":rb(tool.goals[gk].r),cursor:"help"}},
-          React.createElement(GoalIcon,{goalKey:gk,color:isBloom?"#8A8A8E":rc(tool.goals[gk].r),size:16})
-        );
-      })
+      goals.map(gk=>React.createElement("span",{key:gk,title:tg(lang,gk).label+": "+rl(tool.goals[gk].r,lang),role:"img","aria-label":tg(lang,gk).label+": "+rl(tool.goals[gk].r,lang),style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:30,height:30,borderRadius:8,background:rb(tool.goals[gk].r),cursor:"help"}},
+        React.createElement(GoalIcon,{goalKey:gk,color:rc(tool.goals[gk].r),size:16})
+      ))
     ),
     React.createElement("div",{style:{marginBottom:10}},React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:25})),
     React.createElement("p",{style:{fontSize:11,color:"#707070",lineHeight:1.4,margin:"0 0 10px",borderTop:"1px solid #E9E9E9",paddingTop:8,fontStyle:"italic"}},tool.complexityText),
-    onCompare&&React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",alignItems:"center",marginTop:"auto"}},
+    onCompare&&React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",alignItems:"center"}},
       React.createElement("button",{onClick:e=>{e.stopPropagation();onCompare(tool.id)},style:{fontSize:11,padding:"4px 10px",borderRadius:6,border:isC?"1px solid #f98012":"1px solid #E9E9E9",background:isC?"#FFECDB":"white",color:isC?"#f98012":"#707070",cursor:"pointer"}},isC?t(lang,"in_compare"):t(lang,"add_compare"))
     )
   );
@@ -1053,77 +1012,46 @@ function MatrixUseGuideRail({lang}) {
 }
 
 function MobileMatrixView({tools, onSelect, lang}) {
-  const [mobileTip,setMobileTip]=React.useState(null);
   const goalKeys = ["info","bewerten","komm","collab"];
-  const cell = {padding:"6px 2px",textAlign:"center",borderBottom:"1px solid #E9E9E9",minWidth:31,width:31};
-  const tipButton = (label, children) => React.createElement("button",{
-    type:"button",
-    onClick:e=>{e.stopPropagation();setMobileTip(label);},
-    "aria-label":label,
-    style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:28,height:28,padding:0,border:"none",background:"transparent",color:"inherit",cursor:"pointer"}
-  },children);
-  const effortDot = (level, kind) => {
-    const value = kind==="setup" ? setupLabel(level, lang) : supportLabel(level, lang);
-    const colLabel = kind==="setup" ? t(lang,"setup") : t(lang,"support");
-    return tipButton(colLabel+": "+value,
-      React.createElement("span",{
-        title: colLabel+": "+value,
-        role:"img",
-        "aria-label":colLabel+": "+value,
-        style:{display:"inline-block",width:11,height:11,borderRadius:"50%",background:effortColor(level),boxShadow:"0 0 0 3px "+effortBg(level)}
-      })
-    );
-  };
-  return React.createElement("div",{className:"tg-mobile-matrix",style:{display:"none"}},
-    React.createElement("div",{style:{overflowX:"auto",WebkitOverflowScrolling:"touch",border:"1px solid #DDE4EA",borderRadius:10,background:"white",boxShadow:"0 1px 3px rgba(0,0,0,0.06)"}},
-      mobileTip&&React.createElement("div",{role:"status","aria-live":"polite",style:{position:"fixed",left:12,right:12,bottom:14,zIndex:220,display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:8,padding:"9px 10px",background:"#FFF4EA",border:"1px solid #FCBC82",borderRadius:8,boxShadow:"0 8px 22px rgba(25,72,102,0.18)",color:"#194866",fontSize:12,lineHeight:1.35}},
-        React.createElement("span",null,mobileTip),
-        React.createElement("button",{type:"button",onClick:()=>setMobileTip(null),"aria-label":t(lang,"dialog_close"),style:{flex:"0 0 auto",width:22,height:22,border:"1px solid #FCBC82",borderRadius:6,background:"white",color:"#194866",cursor:"pointer",fontSize:15,lineHeight:"18px",padding:0}},"\u00d7")
+  return React.createElement("div",{className:"tg-mobile-matrix",style:{display:"none",gap:12}},
+    React.createElement("div",{style:{display:"grid",gap:8,marginBottom:2}},
+      React.createElement("div",{style:{display:"inline-flex",alignItems:"center",gap:8,color:"#194866",fontSize:13,fontWeight:700}},
+        React.createElement("span",{style:{width:26,height:2,background:"#F98012",borderRadius:99},"aria-hidden":"true"}),
+        t(lang,"matrix_goal_axis")
       ),
-      React.createElement("table",{style:{width:"100%",minWidth:306,borderCollapse:"separate",borderSpacing:0,fontSize:11,background:"white",tableLayout:"fixed"},"aria-label":t(lang,"matrix_aria")},
-        React.createElement("thead",null,
-          React.createElement("tr",null,
-            React.createElement("th",{scope:"col",style:{position:"sticky",left:0,zIndex:2,background:"#194866",color:"white",padding:"7px 6px",textAlign:"left",minWidth:110,width:110}},
-              t(lang,"activity")
-            ),
-            React.createElement("th",{scope:"col",title:t(lang,"setup_help"),"aria-label":t(lang,"setup")+". "+t(lang,"setup_help"),style:{...cell,background:"#194866",color:"white",borderBottom:"none"}},
-              tipButton(t(lang,"setup")+". "+t(lang,"setup_help"),React.createElement(IconMonitorCog,{size:13,color:"white"}))
-            ),
-            React.createElement("th",{scope:"col",title:t(lang,"support_help"),"aria-label":t(lang,"support")+". "+t(lang,"support_help"),style:{...cell,background:"#194866",color:"white",borderBottom:"none"}},
-              tipButton(t(lang,"support")+". "+t(lang,"support_help"),React.createElement(IconUsers,{size:13,color:"white"}))
-            ),
-            goalKeys.map(gk=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).label+". "+tg(lang,gk).q,"aria-label":tg(lang,gk).label+". "+tg(lang,gk).q,style:{...cell,background:"#194866",color:"white",borderBottom:"none"}},
-              tipButton(tg(lang,gk).label+". "+tg(lang,gk).q,React.createElement(GoalIcon,{goalKey:gk,color:"white",size:13}))
-            ))
-          )
-        ),
-        React.createElement("tbody",null,
-          tools.map((tool,idx)=>React.createElement("tr",{key:tool.id,style:{background:idx%2===0?"white":"#F3F5F8"}},
-            React.createElement("th",{scope:"row",style:{position:"sticky",left:0,zIndex:1,background:"inherit",padding:"6px",borderBottom:"1px solid #E9E9E9",textAlign:"left",minWidth:110,width:110}},
-              React.createElement("button",{type:"button",onClick:()=>onSelect(tool),"aria-label":t(lang,"a11y_open_tool_details").replace("{name}",tool.name),style:{display:"grid",gridTemplateColumns:"20px minmax(0,1fr)",alignItems:"center",gap:5,width:"100%",padding:0,border:"none",background:"transparent",color:"#194866",font:"inherit",fontWeight:700,textAlign:"left",cursor:"pointer"}},
-                React.createElement(ToolIcon,{toolId:tool.id,size:20}),
-                React.createElement("span",{style:{display:"block",minWidth:0,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},tool.name)
-              )
-            ),
-            React.createElement("td",{style:cell},
-              effortDot(tool.setup,"setup")
-            ),
-            React.createElement("td",{style:cell},
-              effortDot(tool.support,"support")
-            ),
-            goalKeys.map(gk=>{
-              const r = tool.goals[gk].r;
-              const tooltipText = tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t;
-              return React.createElement("td",{key:gk,style:cell},
-                tipButton(tooltipText,
-                  React.createElement(ThumbIcon,{rating:r,size:13,title:tooltipText})
-                )
-              );
-            })
-          ))
-        )
+      React.createElement("div",{style:{display:"inline-flex",alignItems:"center",gap:8,color:"#194866",fontSize:13,fontWeight:700}},
+        React.createElement("span",{style:{width:2,height:20,background:"#F98012",borderRadius:99},"aria-hidden":"true"}),
+        t(lang,"matrix_tool_axis")
       )
-    )
+    ),
+    tools.map(tool=>React.createElement("button",{
+      key:tool.id,
+      type:"button",
+      onClick:()=>onSelect(tool),
+      style:{width:"100%",textAlign:"left",background:"white",border:"1px solid #E9E9E9",borderRadius:8,padding:12,boxShadow:"0 1px 3px rgba(0,0,0,0.06)",cursor:"pointer",color:"#353535"}
+    },
+      React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:10}},
+        React.createElement(ToolIcon,{toolId:tool.id,size:34}),
+        React.createElement("div",{style:{minWidth:0,flex:1}},
+          React.createElement("div",{style:{fontSize:15,fontWeight:700,color:"#194866",lineHeight:1.2}},tool.name),
+          React.createElement("div",{style:{fontSize:12,color:"#707070",lineHeight:1.3,marginTop:2}},tool.desc)
+        ),
+        React.createElement("div",{style:{flex:"0 0 auto"}},React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:15}))
+      ),
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:10}},
+        React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang,display:"labeled"}),
+        React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"labeled"})
+      ),
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(4, minmax(0, 1fr))",gap:6}},
+        goalKeys.map(gk=>{
+          const r = tool.goals[gk].r;
+          return React.createElement("span",{key:gk,title:tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t,role:"img","aria-label":tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t,style:{minHeight:54,borderRadius:8,background:rb(r),border:"1px solid "+rc(r),display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:4,padding:"6px 4px",color:"#194866"}},
+            React.createElement(GoalIcon,{goalKey:gk,color:rc(r),size:17}),
+            React.createElement("span",{style:{fontSize:10,lineHeight:1.1,fontWeight:700,textAlign:"center"}},tg(lang,gk).label)
+          );
+        })
+      )
+    ))
   );
 }
 
@@ -1153,14 +1081,7 @@ function InfoDisclosure({label, text, lang, maxWidth=760}) {
 
 function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
   const [showReadingGuide,setShowReadingGuide]=React.useState(false);
-  const [matrixTip,setMatrixTip]=React.useState(null);
   const detailLabel = name => t(lang,"a11y_open_tool_details").replace("{name}",name);
-  const tipButton = (label, children, extraStyle={}) => React.createElement("button",{
-    type:"button",
-    onClick:e=>{e.stopPropagation();setMatrixTip(label);},
-    "aria-label":label,
-    style:{display:"inline-flex",alignItems:"center",justifyContent:"center",padding:0,border:"none",background:"transparent",color:"inherit",cursor:"help",font:"inherit",...extraStyle}
-  },children);
   let filtered = tools.filter(t=>{
     if(filters.setup&&t.setup!==filters.setup) return false;
     if(filters.support&&t.support!==filters.support) return false;
@@ -1181,10 +1102,6 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
     React.createElement("div",{role:"status","aria-live":"polite",className:"sr-only"},filtered.length+" "+t(lang,"wizard_results")),
     React.createElement(MobileMatrixView,{tools:filtered,onSelect:onSelect,lang:lang}),
     React.createElement("div",{className:"tg-desktop-matrix",style:{paddingTop:2}},
-      matrixTip&&React.createElement("div",{role:"status","aria-live":"polite",style:{position:"fixed",left:"50%",bottom:18,transform:"translateX(-50%)",zIndex:220,width:"min(720px, calc(100vw - 24px))",display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:10,padding:"10px 12px",background:"#FFF4EA",border:"1px solid #FCBC82",borderRadius:8,boxShadow:"0 8px 22px rgba(25,72,102,0.18)",color:"#194866",fontSize:13,lineHeight:1.4}},
-        React.createElement("span",null,matrixTip),
-        React.createElement("button",{type:"button",onClick:()=>setMatrixTip(null),"aria-label":t(lang,"dialog_close"),style:{flex:"0 0 auto",width:24,height:24,border:"1px solid #FCBC82",borderRadius:6,background:"white",color:"#194866",cursor:"pointer",fontSize:16,lineHeight:"20px",padding:0}},"\u00d7")
-      ),
       React.createElement("div",{style:{display:"flex",justifyContent:"flex-start",margin:"0 0 10px"}},
         React.createElement("button",{
           type:"button",
@@ -1204,22 +1121,22 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
           React.createElement("div",{style:{minWidth:900,flex:"1 0 900px"}},
             showReadingGuide?React.createElement(MatrixReadGuide,{lang:lang}):null,
             React.createElement("div",{style:{borderRadius:12,boxShadow:"0 1px 3px rgba(0,0,0,0.05)",overflow:"hidden"}},
-            React.createElement("table",{style:{width:"100%",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":t(lang,"matrix_aria")},
+            React.createElement("table",{style:{width:"100%",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":"Moodle Tool Guide Matrix"},
               React.createElement("thead",null,
                 React.createElement("tr",null,
                   React.createElement("th",{scope:"col",style:{position:"sticky",left:0,background:"#194866",color:"white",padding:"12px 14px",textAlign:"left",zIndex:2,minWidth:210}},
                     t(lang,"activity")
                   ),
                   React.createElement("th",{scope:"col",title:t(lang,"setup_help"),"aria-label":t(lang,"setup")+". "+t(lang,"setup_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
-                    tipButton(t(lang,"setup")+". "+t(lang,"setup_help"),React.createElement(IconMonitorCog,{size:16,color:"white"}),{width:28,height:22,opacity:0.9}),
+                    React.createElement("div",{style:{display:"flex",justifyContent:"center",opacity:0.9},"aria-hidden":"true"},React.createElement(IconMonitorCog,{size:16,color:"white"})),
                     React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"setup"))
                   ),
                   React.createElement("th",{scope:"col",title:t(lang,"support_help"),"aria-label":t(lang,"support")+". "+t(lang,"support_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
-                    tipButton(t(lang,"support")+". "+t(lang,"support_help"),React.createElement(IconUsers,{size:16,color:"white"}),{width:28,height:22,opacity:0.9}),
+                    React.createElement("div",{style:{display:"flex",justifyContent:"center",opacity:0.9},"aria-hidden":"true"},React.createElement(IconUsers,{size:16,color:"white"})),
                     React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"support"))
                   ),
                   goalKeys.map(gk=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).q,"aria-label":tg(lang,gk).label+". "+tg(lang,gk).q,style:{background:"#194866",color:"white",padding:"12px 10px",textAlign:"center",minWidth:80,cursor:"help"}},
-                    tipButton(tg(lang,gk).label+". "+tg(lang,gk).q,React.createElement(GoalIcon,{goalKey:gk,color:"white",size:18}),{width:30,height:24}),
+                    React.createElement("div",{style:{display:"flex",justifyContent:"center"}},React.createElement(GoalIcon,{goalKey:gk,color:"white",size:18})),
                     React.createElement("div",{style:{fontSize:11,marginTop:4,maxWidth:90,margin:"4px auto 0"}},tg(lang,gk).label)
                   ))
                 )
@@ -1235,23 +1152,23 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
                     )
                   ),
                   React.createElement("td",{style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                    tipButton(t(lang,"setup")+": "+setupLabel(tool.setup,lang)+" – "+t(lang,"setup_help"),React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang,display:"compact"}))
+                    React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang,display:"compact"})
                   ),
                   React.createElement("td",{style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                    tipButton(t(lang,"support")+": "+supportLabel(tool.support,lang)+" – "+t(lang,"support_help"),React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"compact"}))
+                    React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"compact"})
                   ),
                   goalKeys.map(gk=>{
                     const r = tool.goals[gk].r;
                     const tooltipText = tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t;
                     if (gk==="bloomG") {
                       return React.createElement("td",{key:gk,style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                        tipButton(tooltipText,
+                        React.createElement("div",{title:tooltipText,style:{display:"flex",justifyContent:"center",cursor:"help"}},
                           React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:14,label:tooltipText})
                         )
                       );
                     }
                     return React.createElement("td",{key:gk,style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                      tipButton(tooltipText,React.createElement(ThumbIcon,{rating:r,size:22,title:tooltipText}))
+                      React.createElement(ThumbIcon,{rating:r,size:22,title:tooltipText})
                     );
                   })
                 ))
@@ -1296,17 +1213,13 @@ function DetailModal({tool,onClose,lang}) {
         React.createElement("p",{style:{margin:0,fontSize:13,color:"#353535",lineHeight:1.6}},tool.longDesc)
       ):null,
       React.createElement("h3",{style:{fontSize:14,margin:"0 0 12px",color:"#194866",textTransform:"uppercase",letterSpacing:0.5}},t(lang,"suitability_header")),
-      goalKeys.map(gk=>{
-        const isBloom = gk==="bloomG";
-        const tone = isBloom ? "#8A8A8E" : rc(tool.goals[gk].r);
-        return React.createElement("div",{key:gk,style:{marginBottom:10,padding:12,background:isBloom?"#F3F5F8":rb(tool.goals[gk].r),borderRadius:10,borderLeft:"4px solid "+tone}},
-          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4,gap:8}},
-            React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6,fontWeight:600,fontSize:13,color:"#194866"}},React.createElement(GoalIcon,{goalKey:gk,color:tone,size:18}),tg(lang,gk).label),
-            React.createElement("span",{style:{fontSize:11,color:tone,fontWeight:600,whiteSpace:"nowrap"}},isBloom?tool.bloom:rl(tool.goals[gk].r,lang))
-          ),
-          React.createElement("p",{style:{margin:0,fontSize:12,color:"#353535",lineHeight:1.5}},tool.goals[gk].t)
-        );
-      }),
+      goalKeys.map(gk=>React.createElement("div",{key:gk,style:{marginBottom:10,padding:12,background:rb(tool.goals[gk].r),borderRadius:10,borderLeft:"4px solid "+rc(tool.goals[gk].r)}},
+        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4,gap:8}},
+          React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6,fontWeight:600,fontSize:13,color:"#194866"}},React.createElement(GoalIcon,{goalKey:gk,color:rc(tool.goals[gk].r),size:18}),tg(lang,gk).label),
+          React.createElement("span",{style:{fontSize:11,color:rc(tool.goals[gk].r),fontWeight:600,whiteSpace:"nowrap"}},rl(tool.goals[gk].r,lang))
+        ),
+        React.createElement("p",{style:{margin:0,fontSize:12,color:"#353535",lineHeight:1.5}},tool.goals[gk].t)
+      )),
       React.createElement("div",{style:{display:"flex",gap:10,flexWrap:"wrap",marginTop:20}},
         tool.docsUrl?React.createElement("a",{href:tool.docsUrl,target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#A9CBD5",color:"#194866",textDecoration:"none",border:"1px solid #A9CBD5",fontWeight:500}},t(lang,"docs_btn")):null,
         lang==="de"?React.createElement("a",{href:COMMUNITY_TOOLGUIDE_URL,target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#FFECDB",color:"#9A4A00",textDecoration:"none",border:"1px solid #FCBC82",fontWeight:600}},t(lang,"community_btn")):null
@@ -1315,7 +1228,7 @@ function DetailModal({tool,onClose,lang}) {
   );
 }
 
-function CompareView({toolIds,tools,onClose,onReset,lang}) {
+function CompareView({toolIds,tools,onClose,lang}) {
   const items = toolIds.map(id=>tools.find(t2=>t2.id===id)).filter(Boolean);
   if(items.length<2) return null;
   const goalKeys = ["info","bewerten","komm","collab","bloomG"];
@@ -1336,7 +1249,7 @@ function CompareView({toolIds,tools,onClose,onReset,lang}) {
           React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"description")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8",color:"#353535",fontSize:12}},t2.desc))),
           React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"setup")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(EffortBadge,{level:t2.setup,kind:"setup",lang:lang})))),
           React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"support")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(EffortBadge,{level:t2.support,kind:"support",lang:lang})))),
-          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"bloom_short")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(BloomHats,{bloom:t2.bloom,lang:lang,size:14})))),
+          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},"Bloom"),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(BloomHats,{bloom:t2.bloom,lang:lang,size:14})))),
           goalKeys.map(gk=>{
             return React.createElement("tr",{key:gk},
               React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6}},React.createElement(GoalIcon,{goalKey:gk,color:"#353535",size:16}),tg(lang,gk).label)),
@@ -1349,10 +1262,6 @@ function CompareView({toolIds,tools,onClose,onReset,lang}) {
           })
         )
       )
-      ),
-      React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",gap:10,marginTop:18,flexWrap:"wrap"}},
-        React.createElement("button",{type:"button",onClick:onReset,style:{padding:"8px 14px",borderRadius:8,border:"none",background:"#b85a00",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"compare_new")),
-        React.createElement("button",{type:"button",onClick:onClose,style:{padding:"8px 14px",borderRadius:8,border:"1px solid #E9E9E9",background:"white",color:"#194866",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"dialog_close"))
       )
     )
   );
@@ -1381,11 +1290,11 @@ function WizardView({tools,onSelect,lang}) {
   },[step,goal,setup,support,bloomMin,tools]);
 
   const sty=active=>({padding:"6px 14px",borderRadius:20,fontSize:12,fontWeight:active?600:400,background:active?"#194866":"#F3F5F8",color:active?"white":"#707070",border:"none"});
-  const optBtn=(sel,onClick,children)=>React.createElement("button",{className:"tg-wizard-option",onClick,style:{padding:"13px 16px",borderRadius:12,border:sel?"2px solid #b85a00":"2px solid #E9E9E9",background:sel?"#FFECDB":"white",cursor:"pointer",textAlign:"left",fontSize:14,transition:"all 0.15s",width:"100%",maxWidth:"100%",boxSizing:"border-box",overflow:"hidden"}},children);
+  const optBtn=(sel,onClick,children)=>React.createElement("button",{onClick,style:{padding:"14px 18px",borderRadius:12,border:sel?"2px solid #b85a00":"2px solid #E9E9E9",background:sel?"#FFECDB":"white",cursor:"pointer",textAlign:"left",fontSize:14,transition:"all 0.15s",width:"100%"}},children);
 
   const goBack = () => { if(step>0) setStep(step-1); };
 
-  return React.createElement("div",{className:"tg-wizard",style:{maxWidth:600,width:"100%",margin:"0 auto",boxSizing:"border-box"}},
+  return React.createElement("div",{style:{maxWidth:600,margin:"0 auto"}},
     React.createElement("nav",{"aria-label":t(lang,"wizard_breadcrumb"),style:{display:"flex",gap:6,marginBottom:24,justifyContent:"center",flexWrap:"wrap"}},
       [t(lang,"wizard_step1"),t(lang,"wizard_step2"),t(lang,"wizard_step3"),t(lang,"wizard_step4"),t(lang,"wizard_step5")].map((s,i)=>{
         const reachable = i <= step;
@@ -1402,9 +1311,9 @@ function WizardView({tools,onSelect,lang}) {
     ),
     step===0&&React.createElement("div",null,
       React.createElement("h3",{style:{textAlign:"center",marginBottom:20,color:"#194866"}},t(lang,"wizard_q1")),
-      React.createElement("div",{className:"tg-wizard-options",style:{display:"grid",gap:10}},
+      React.createElement("div",{style:{display:"grid",gap:10}},
         ["info","bewerten","komm","collab"].map(gk=>optBtn(goal===gk,()=>{setGoal(gk);setStep(1)},
-          React.createElement("div",{className:"tg-wizard-option-content",style:{display:"flex",alignItems:"flex-start",gap:10,minWidth:0}},React.createElement(GoalIcon,{goalKey:gk,color:goal===gk?"#f98012":"#353535",size:22}),React.createElement("div",{style:{minWidth:0,flex:1}},React.createElement("strong",{style:{color:"#194866"}},tg(lang,gk).label),React.createElement("br"),React.createElement("span",{style:{display:"block",fontSize:12,color:"#707070",overflowWrap:"anywhere"}},tg(lang,gk).q)))
+          React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10}},React.createElement(GoalIcon,{goalKey:gk,color:goal===gk?"#f98012":"#353535",size:22}),React.createElement("div",null,React.createElement("strong",{style:{color:"#194866"}},tg(lang,gk).label),React.createElement("br"),React.createElement("span",{style:{fontSize:12,color:"#707070"}},tg(lang,gk).q)))
         ))
       )
     ),
@@ -1588,8 +1497,7 @@ function Footer({lang}) {
   const linkSty = {color:"#194866",textDecoration:"underline"};
   return React.createElement("footer",{
     role:"contentinfo",
-    className:"tg-footer",
-    style:{background:"#FFECDB",color:"#194866",padding:"14px 24px",fontSize:11,lineHeight:1.55,borderTop:"1px solid #FCBC82",marginTop:"auto",flexShrink:0}
+    style:{background:"#FFECDB",color:"#194866",padding:"14px 24px",fontSize:11,lineHeight:1.55,borderTop:"1px solid #FCBC82"}
   },
     React.createElement("div",{
       style:{maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:20,flexWrap:"wrap"}
@@ -1649,11 +1557,7 @@ function Footer({lang}) {
 }
 
 function App() {
-  const [view,setView]=React.useState(()=>(
-    typeof window !== "undefined" && window.matchMedia && window.matchMedia("(max-width: 640px)").matches
-      ? "cards"
-      : "matrix"
-  ));
+  const [view,setView]=React.useState("matrix");
   const [selectedTool,setSelectedTool]=React.useState(null);
   const [compareIds,setCompareIds]=React.useState([]);
   const [showCompare,setShowCompare]=React.useState(false);
@@ -1665,7 +1569,6 @@ function App() {
 
   const resetFilters = () => setFilters({setup:null,support:null,bloomMin:0,goal:null,onlyGreen:false});
   const toggleCompare = id => setCompareIds(p=>p.includes(id)?p.filter(x=>x!==id):p.length>=4?p:[...p,id]);
-  const resetCompare = () => { setCompareIds([]); setShowCompare(false); };
   const localizedTools = useMemo(()=>TOOLS.map(t2=>localizeTool(t2,lang)),[lang]);
   const filteredTools = localizedTools.filter(t2=>!search||t2.name.toLowerCase().includes(search.toLowerCase())||t2.desc.toLowerCase().includes(search.toLowerCase()));
   const localizedSelectedTool = selectedTool ? localizedTools.find(t2=>t2.id===selectedTool.id) || selectedTool : null;
@@ -1674,8 +1577,8 @@ function App() {
 
   const langBtn = (code, label) => React.createElement("button",{key:code,onClick:()=>setLang(code),"aria-pressed":lang===code,style:{padding:"4px 10px",borderRadius:6,border:"none",background:lang===code?"#194866":"transparent",color:lang===code?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:lang===code?700:400}},label);
 
-  return React.createElement("div",{className:"tg-app-shell",style:{fontFamily:"Inter, system-ui, -apple-system, sans-serif",background:"#F3F5F8",minHeight:"100vh",display:"flex",flexDirection:"column",zoom:fontScale}},
-    React.createElement("a",{href:"#main",style:{position:"absolute",left:"-9999px",top:0,padding:8,background:"#194866",color:"white",zIndex:200},onFocus:e=>e.currentTarget.style.left="0",onBlur:e=>e.currentTarget.style.left="-9999px"},t(lang,"skip_to_content")),
+  return React.createElement("div",{style:{fontFamily:"Inter, system-ui, -apple-system, sans-serif",background:"#F3F5F8",minHeight:"100vh",zoom:fontScale}},
+    React.createElement("a",{href:"#main",style:{position:"absolute",left:"-9999px",top:0,padding:8,background:"#194866",color:"white",zIndex:200},onFocus:e=>e.currentTarget.style.left="0",onBlur:e=>e.currentTarget.style.left="-9999px"},"Zum Inhalt springen"),
     React.createElement("header",{className:"tg-header",style:{background:"#FFECDB",color:"#194866",padding:"20px 24px",borderBottom:"1px solid #FCBC82"}},
       React.createElement("div",{style:{maxWidth:1200,margin:"0 auto"}},
         React.createElement("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,flexWrap:"wrap"}},
@@ -1688,30 +1591,30 @@ function App() {
             React.createElement("p",{style:{margin:0,fontSize:13,color:"#267372"}},t(lang,"subtitle"))
           ),
           React.createElement("div",{style:{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}},
-            React.createElement("div",{role:"group","aria-label":t(lang,"a11y_font_group"),style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
+            React.createElement("div",{role:"group","aria-label":"Schriftgröße",style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
               React.createElement("button",{onClick:()=>setFontScale(s=>Math.max(0.85,Math.round((s-0.1)*100)/100)),title:t(lang,"a11y_font_smaller"),"aria-label":t(lang,"a11y_font_smaller"),"aria-pressed":fontScale<0.999,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale<0.999?"#194866":"transparent",color:fontScale<0.999?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:fontScale<0.999?700:400}},"A−"),
               React.createElement("button",{onClick:()=>setFontScale(1),title:t(lang,"a11y_font_reset"),"aria-label":t(lang,"a11y_font_reset"),"aria-pressed":Math.abs(fontScale-1)<0.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:Math.abs(fontScale-1)<0.001?"#194866":"transparent",color:Math.abs(fontScale-1)<0.001?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:Math.abs(fontScale-1)<0.001?700:400}},"A"),
               React.createElement("button",{onClick:()=>setFontScale(s=>Math.min(1.4,Math.round((s+0.1)*100)/100)),title:t(lang,"a11y_font_larger"),"aria-label":t(lang,"a11y_font_larger"),"aria-pressed":fontScale>1.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale>1.001?"#194866":"transparent",color:fontScale>1.001?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:fontScale>1.001?700:400}},"A+")
             ),
-            React.createElement("div",{role:"group","aria-label":t(lang,"language"),style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
+            React.createElement("div",{role:"group","aria-label":"Sprache",style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
               langBtn("de","DE"), langBtn("en","EN"), langBtn("fr","FR"), langBtn("es","ES")
             )
           )
         )
       )
     ),
-    React.createElement("nav",{className:"tg-nav","aria-label":t(lang,"views"),style:{background:"#F3F5F8",borderBottom:"1px solid #E9E9E9",padding:"8px 24px",position:"sticky",top:0,zIndex:50}},
-      React.createElement("div",{className:"tg-nav-row",style:{maxWidth:1200,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}},
+    React.createElement("nav",{className:"tg-nav","aria-label":"Ansichten",style:{background:"#F3F5F8",borderBottom:"1px solid #E9E9E9",padding:"8px 24px",position:"sticky",top:0,zIndex:50}},
+      React.createElement("div",{style:{maxWidth:1200,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}},
         React.createElement("div",{style:{display:"flex",gap:4,flexWrap:"wrap"}},
           navBtn("matrix",t(lang,"nav_matrix"),IconLayoutGrid),
           navBtn("cards",t(lang,"nav_cards"),IconStickyNote),
           navBtn("wizard",t(lang,"nav_wizard"),IconBotMessageSquare)
         ),
-        React.createElement("div",{className:"tg-nav-actions",style:{display:"flex",gap:8,alignItems:"flex-start",justifyContent:"flex-end",flexWrap:"wrap"}},
+        React.createElement("div",{style:{display:"flex",gap:8,alignItems:"flex-start",justifyContent:"flex-end",flexWrap:"wrap"}},
           view!=="wizard"&&React.createElement(InfoDisclosure,{label:t(lang,"info_toolguide"),text:t(lang,"guide_intro"),lang:lang,maxWidth:420}),
           view!=="wizard"&&React.createElement(InfoDisclosure,{label:t(lang,"info_bloom"),text:t(lang,"bloom_intro"),lang:lang,maxWidth:420}),
-          React.createElement("div",{className:"tg-nav-search-wrap",style:{display:"flex",gap:8,alignItems:"center",justifyContent:"flex-end",flexWrap:"wrap"}},
-            view!=="wizard"&&React.createElement("input",{className:"tg-tool-search",value:search,onChange:e=>setSearch(e.target.value),placeholder:t(lang,"search_placeholder"),"aria-label":t(lang,"search"),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:13,width:160}}),
+          React.createElement("div",{style:{display:"flex",gap:8,alignItems:"center",justifyContent:"flex-end",flexWrap:"wrap"}},
+            view!=="wizard"&&React.createElement("input",{value:search,onChange:e=>setSearch(e.target.value),placeholder:t(lang,"search_placeholder"),"aria-label":"Suche",style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:13,width:160}}),
             compareIds.length>=2&&React.createElement("button",{onClick:()=>setShowCompare(true),style:{padding:"6px 14px",borderRadius:8,background:"#b85a00",color:"white",border:"none",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"compare_btn")+" ("+compareIds.length+")")
           )
         )
@@ -1741,13 +1644,13 @@ function App() {
           React.createElement("option",{value:""},t(lang,"filter_goal_default")),
           ["info","bewerten","komm","collab"].map(gk=>React.createElement("option",{key:gk,value:gk},"\u2714 "+tg(lang,gk).label))
         ),
-        React.createElement("select",{value:filters.bloomMin||"","aria-label":t(lang,"bloom_short"),onChange:e=>setFilters(f=>({...f,bloomMin:parseInt(e.target.value)||0})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
+        React.createElement("select",{value:filters.bloomMin||"","aria-label":"Bloom",onChange:e=>setFilters(f=>({...f,bloomMin:parseInt(e.target.value)||0})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
           React.createElement("option",{value:""},t(lang,"filter_bloom_all")),
           I18N[lang].bloom_levels.map((name,i)=>React.createElement("option",{key:i,value:i+1},t(lang,"filter_bloom_from")+" "+(i+1)+": "+name))
         )
       )
     ),
-    React.createElement("main",{id:"main",className:"tg-main-pad",style:{maxWidth:1200,width:"100%",margin:"0 auto",padding:"16px 24px 40px",flex:"1 0 auto"}},
+    React.createElement("main",{id:"main",className:"tg-main-pad",style:{maxWidth:1200,margin:"0 auto",padding:"16px 24px 40px"}},
       view==="matrix"&&React.createElement("section",{"aria-labelledby":"view-matrix-title"},React.createElement("h2",{id:"view-matrix-title",className:"sr-only"},t(lang,"nav_matrix")),React.createElement(MatrixView,{tools:filteredTools,onSelect:setSelectedTool,filters:filters,onResetFilters:resetFilters,lang:lang})),
       view==="cards"&&React.createElement("section",{"aria-labelledby":"view-cards-title"},React.createElement("h2",{id:"view-cards-title",className:"sr-only"},t(lang,"nav_cards")),(filteredTools.filter(t2=>{
         if(filters.setup&&t2.setup!==filters.setup) return false;
@@ -1775,7 +1678,7 @@ function App() {
       view==="wizard"&&React.createElement("section",{"aria-labelledby":"view-wizard-title"},React.createElement("h2",{id:"view-wizard-title",className:"sr-only"},t(lang,"nav_wizard")),React.createElement(WizardView,{tools:localizedTools,onSelect:setSelectedTool,lang:lang}))
     ),
     localizedSelectedTool&&React.createElement(DetailModal,{tool:localizedSelectedTool,onClose:()=>setSelectedTool(null),lang:lang}),
-    showCompare&&React.createElement(CompareView,{toolIds:compareIds,tools:localizedTools,onClose:()=>setShowCompare(false),onReset:resetCompare,lang:lang}),
+    showCompare&&React.createElement(CompareView,{toolIds:compareIds,tools:localizedTools,onClose:()=>setShowCompare(false),lang:lang}),
     React.createElement(Footer,{lang:lang})
   );
 }

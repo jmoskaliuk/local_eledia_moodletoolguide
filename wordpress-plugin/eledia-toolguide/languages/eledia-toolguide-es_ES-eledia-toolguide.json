@@ -1,0 +1,311 @@
+{
+  "translation-revision-date": "2026-05-02 19:20+0000",
+  "generator": "Codex",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "es-ES",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "Moodle Tool Guide": [
+        "Guía de herramientas Moodle"
+      ],
+      "Find the right tool for your didactic goal": [
+        "Encuentra la herramienta adecuada para tu objetivo didáctico"
+      ],
+      "This Moodle Tool Guide provides a compact overview and comparison of activities and resources in Moodle. It supports the selection of suitable tools based on didactic goals or available time. All tools are classified according to Benjamin Bloom's taxonomy of learning objectives. It is intended for teachers, trainers and education professionals.": [
+        "Este Moodle Tool Guide ofrece una visión general compacta y una posibilidad de comparar actividades y recursos en Moodle. Ayuda a elegir herramientas adecuadas según, por ejemplo, los objetivos didácticos o el tiempo disponible. Todas las herramientas están clasificadas según la taxonomía de objetivos de aprendizaje de Benjamin Bloom. Está dirigido a docentes, formadores y profesionales de la educación."
+      ],
+      "Benjamin Bloom's taxonomy of learning objectives arranges learning into levels of cognitive depth. It helps formulate learning objectives clearly, make competence levels more visible and structure learning units accordingly. It remains a central reference model in didactics and education.": [
+        "La taxonomía de objetivos de aprendizaje de Benjamin Bloom ordena el aprendizaje en niveles de profundidad cognitiva. Ayuda a formular objetivos con claridad, hacer visibles los niveles de competencia y estructurar las unidades de aprendizaje de forma específica. Sigue siendo un modelo de referencia central en didáctica y educación."
+      ],
+      "About the Tool Guide": [
+        "Información sobre el Tool Guide"
+      ],
+      "What does Bloom mean?": [
+        "¿Qué significa Bloom?"
+      ],
+      "What do you want to achieve (didactically)?": [
+        "Qué quieres lograr (didácticamente)?"
+      ],
+      "What can you use (technically)?": [
+        "Qué puedes usar (técnicamente)?"
+      ],
+      "Read matrix": [
+        "Leer matriz"
+      ],
+      "Hide reading arrows": [
+        "Ocultar flechas"
+      ],
+      "Shows the reading directions: didactic goals horizontally, technical choice vertically.": [
+        "Muestra las direcciones de lectura: objetivos didácticos en horizontal, elección técnica en vertical."
+      ],
+      "Open details for {name}": [
+        "Abrir detalles de {name}"
+      ],
+      "Matrix": [
+        "Matriz"
+      ],
+      "Cards": [
+        "Tarjetas"
+      ],
+      "Wizard": [
+        "Asistente"
+      ],
+      "Search tool…": [
+        "Buscar herramienta…"
+      ],
+      "Compare": [
+        "Comparar"
+      ],
+      "Setup effort: all": [
+        "Esfuerzo de configuración: todos"
+      ],
+      "Support effort: all": [
+        "Esfuerzo de tutoría: todos"
+      ],
+      "Well suited for …": [
+        "Bien adaptado para …"
+      ],
+      "🎓 Bloom: all levels": [
+        "🎓 Bloom: todos los niveles"
+      ],
+      "from level": [
+        "desde el nivel"
+      ],
+      "Setup": [
+        "Configuración"
+      ],
+      "How much effort does it take to ONE-TIME create and configure this activity?": [
+        "¿Cuánto esfuerzo cuesta crear y configurar esta actividad UNA VEZ?"
+      ],
+      "Support": [
+        "Acompañamiento"
+      ],
+      "How much ongoing effort is needed DURING use – moderating, grading, replying?": [
+        "¿Cuánto esfuerzo continuo se necesita DURANTE el uso – moderar, evaluar, responder?"
+      ],
+      "Easy": [
+        "Fácil"
+      ],
+      "Medium": [
+        "Medio"
+      ],
+      "Complex": [
+        "Complejo"
+      ],
+      "Low": [
+        "Bajo"
+      ],
+      "High": [
+        "Alto"
+      ],
+      "Activity": [
+        "Actividad"
+      ],
+      "Which cognitive learning levels of Bloom's Taxonomy does this activity typically support? 1=Remember, 6=Create.": [
+        "¿Qué niveles cognitivos de la Taxonomía de Bloom cubre esta actividad? 1=Recordar, 6=Crear."
+      ],
+      "Well suited": [
+        "Bien adaptado"
+      ],
+      "Partially suited": [
+        "Parcialmente adaptado"
+      ],
+      "Not suited": [
+        "No adaptado"
+      ],
+      "No matching activities found": [
+        "No se encontraron actividades"
+      ],
+      "There is no Moodle activity that matches the selected combination. Loosen one or more filters to see suggestions – or try the Wizard for a guided selection.": [
+        "No hay ninguna actividad de Moodle que coincida con esta combinación. Relaja uno o varios filtros para ver sugerencias – o prueba el Asistente para una selección guiada."
+      ],
+      "Reset filters": [
+        "Restablecer filtros"
+      ],
+      "Goal": [
+        "Objetivo"
+      ],
+      "What do you want to achieve?": [
+        "¿Qué quieres lograr?"
+      ],
+      "How much setup effort is acceptable?": [
+        "¿Cuánto esfuerzo de configuración es aceptable?"
+      ],
+      "How much ongoing support effort is acceptable?": [
+        "¿Cuánto esfuerzo de acompañamiento continuo es aceptable?"
+      ],
+      "matching tools found": [
+        "herramientas encontradas"
+      ],
+      "Back": [
+        "Atrás"
+      ],
+      "Start over": [
+        "Reiniciar"
+      ],
+      "Any": [
+        "Cualquiera"
+      ],
+      "Doesn't matter": [
+        "No importa"
+      ],
+      "Overview": [
+        "Resumen"
+      ],
+      "Suitability by didactic goal": [
+        "Idoneidad por objetivo didáctico"
+      ],
+      "Moodle Docs": [
+        "Documentación Moodle"
+      ],
+      "More ideas at eledia.community": [
+        "Más ideas en eledia.community"
+      ],
+      "✓ In comparison": [
+        "✓ En comparación"
+      ],
+      "+ Compare": [
+        "+ Comparar"
+      ],
+      "Description": [
+        "Descripción"
+      ],
+      "Source on GitHub": [
+        "Código fuente en GitHub"
+      ],
+      "Based on the Moodle Tool Guide · eLeDia · Idea: Joyce Seitzinger": [
+        "Basado en el Moodle Tool Guide · eLeDia · Idea: Joyce Seitzinger"
+      ],
+      "Remember": [
+        "Recordar"
+      ],
+      "Understand": [
+        "Comprender"
+      ],
+      "Apply": [
+        "Aplicar"
+      ],
+      "Analyze": [
+        "Analizar"
+      ],
+      "Evaluate": [
+        "Evaluar"
+      ],
+      "Create": [
+        "Crear"
+      ],
+      "Recall facts and basic concepts.": [
+        "Recordar hechos y conceptos básicos."
+      ],
+      "Explain ideas or concepts in your own words.": [
+        "Explicar ideas o conceptos con tus propias palabras."
+      ],
+      "Use information in new situations.": [
+        "Usar información en nuevas situaciones."
+      ],
+      "Draw connections among ideas.": [
+        "Establecer conexiones entre ideas."
+      ],
+      "Justify a stand or decision based on the material.": [
+        "Justificar una postura basándose en el material."
+      ],
+      "Produce new or original work.": [
+        "Producir un trabajo nuevo u original."
+      ],
+      "Information & Transfer": [
+        "Información y transferencia"
+      ],
+      "Is it suitable for delivering information?": [
+        "¿Es adecuado para transmitir información?"
+      ],
+      "Assessment": [
+        "Evaluar"
+      ],
+      "Does it allow measuring knowledge?": [
+        "¿Permite medir conocimientos?"
+      ],
+      "Communication & Interaction": [
+        "Comunicación e interacción"
+      ],
+      "Can it be used for communication?": [
+        "¿Puede usarse para comunicarse?"
+      ],
+      "Collaborative Creation": [
+        "Crear en colaboración"
+      ],
+      "Can content be created cooperatively?": [
+        "¿Se puede crear contenido cooperativamente?"
+      ],
+      "Bloom's Learning Goals": [
+        "Objetivos de Bloom"
+      ],
+      "Which learning goals are supported?": [
+        "¿Qué objetivos de aprendizaje se apoyan?"
+      ],
+      "Result": [
+        "Resultado"
+      ],
+      "Minimum Bloom level?": [
+        "¿Nivel Bloom mínimo?"
+      ],
+      "Original concept": [
+        "Concepto original"
+      ],
+      "Based on a translation by": [
+        "Basado en una traducción de"
+      ],
+      "Close": [
+        "Cerrar"
+      ],
+      "License": [
+        "Licencia"
+      ],
+      "Adapted by the Moodle experts of eLeDia | eLearning im Dialog. More Moodle know-how at": [
+        "Adaptado por las y los expertos Moodle de eLeDia | eLearning im Dialog. Más saber Moodle en"
+      ],
+      "Wizard steps": [
+        "Pasos del asistente"
+      ],
+      "Back to step": [
+        "Volver al paso"
+      ],
+      "Larger text": [
+        "Texto más grande"
+      ],
+      "Smaller text": [
+        "Texto más pequeño"
+      ],
+      "Reset text size": [
+        "Tamaño normal"
+      ],
+      "eLeDia logo": [
+        "Logo eLeDia"
+      ],
+      "License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International": [
+        "Licencia: Creative Commons Atribución – No comercial – Compartir igual 4.0 Internacional"
+      ],
+      "Skip to content": [
+        "Saltar al contenido"
+      ],
+      "Text size": [
+        "Tamaño del texto"
+      ],
+      "Language": [
+        "Idioma"
+      ],
+      "Views": [
+        "Vistas"
+      ],
+      "Search": [
+        "Buscar"
+      ],
+      "Moodle Tool Guide matrix": [
+        "Matriz de Moodle Tool Guide"
+      ]
+    }
+  }
+}
