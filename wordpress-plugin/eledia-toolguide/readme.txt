@@ -1,10 +1,10 @@
 === eLeDia Moodle Tool Guide ===
-Contributors: eledia, jmoskaliuk
+Contributors: elediamoodle
 Tags: moodle, elearning, shortcode, tool-guide, didactics
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.28
+Stable tag: 1.1.29
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,26 @@ The guide is multilingual (English, German, French, Spanish), WCAG 2.2 AA compli
 This plugin is a lightweight wrapper around the standalone HTML Tool Guide — the JavaScript payload is synced from the canonical prototype. The plugin ships one shortcode, no admin UI, no database tables, no tracking.
 
 Translated plugin readmes are available in the plugin folder: `readme-de.txt` (Deutsch), `readme-fr.txt` (Français), `readme-es.txt` (Español).
+
+== Source Code ==
+
+The distributed JavaScript file `assets/js/toolguide.js` is generated from the human-readable HTML/React prototype in the public repository:
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/Prototyp_ToolGuide.html
+
+The generation script is also public:
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/sync_wordpress_js.py
+
+To rebuild the WordPress JavaScript bundle from the repository root, run:
+
+`python3 sync_wordpress_js.py`
+
+To rebuild the installable plugin ZIP, run:
+
+`cd wordpress-plugin && zip -qr eledia-toolguide.zip eledia-toolguide -x '*/.DS_Store'`
+
+The stylesheet `assets/css/toolguide.css` is distributed as uncompressed source CSS.
 
 == Installation ==
 
@@ -62,6 +82,9 @@ The tool data is currently hard-coded in the JavaScript bundle. An admin editor 
 No. The plugin is 100% self-contained and does not call home.
 
 == Changelog ==
+
+= 1.1.29 =
+* Added WordPress.org review metadata: plugin owner contributor username and public source/build documentation for the generated JavaScript bundle.
 
 = 1.1.28 =
 * Updated WordPress.org compatibility metadata for Plugin Check and removed the no longer needed manual textdomain loading hook.

@@ -12,7 +12,7 @@ Tres vías de entrega desde una única fuente de datos:
 
 ## Características
 
-- **25 actividades de Moodle** con recomendaciones didácticas para cinco objetivos de aprendizaje
+- **22 actividades de Moodle** con recomendaciones didácticas para cinco objetivos de aprendizaje
 - **Vista Matriz** con iconos de pulgar arriba / lateral / pulgar abajo y tooltips al pasar el ratón o tocar, para escritorio, tableta y móvil
 - **Vista Tarjetas** con descripciones detalladas y filtros (esfuerzo de configuración, esfuerzo de acompañamiento, objetivo, nivel de Bloom)
 - **Asistente** — asistente guiado en 5 pasos que recomienda actividades según las respuestas

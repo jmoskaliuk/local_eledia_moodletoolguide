@@ -12,7 +12,7 @@ Drei Auslieferungswege aus einer Datenquelle:
 
 ## Features
 
-- **25 Moodle-Aktivitäten** mit didaktischen Empfehlungen für fünf Lernziele
+- **22 Moodle-Aktivitäten** mit didaktischen Empfehlungen für fünf Lernziele
 - **Matrix-Ansicht** mit Daumen-Icons (geeignet / teilweise / ungeeignet) und Hover-/Tipp-Tooltips für Desktop, Tablet und Mobil
 - **Karten-Ansicht** mit ausführlichen Beschreibungen und Filtern (Einrichtungsaufwand, Betreuungsaufwand, Lernziel, Bloom-Stufe)
 - **Assistent** — geführter 5-Schritt-Wizard mit Empfehlungen auf Basis der Antworten

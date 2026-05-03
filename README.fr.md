@@ -12,7 +12,7 @@ Trois canaux de livraison depuis une source unique :
 
 ## Fonctionnalités
 
-- **25 activités Moodle** avec des recommandations didactiques pour cinq objectifs pédagogiques
+- **22 activités Moodle** avec des recommandations didactiques pour cinq objectifs pédagogiques
 - **Vue Matrice** avec icônes pouce vers le haut / latéral / vers le bas et infobulles au survol ou au toucher pour ordinateur, tablette et mobile
 - **Vue Cartes** avec descriptions détaillées et filtres (effort de mise en place, effort d'accompagnement, objectif, niveau de Bloom)
 - **Assistant** — assistant guidé en 5 étapes qui recommande des activités selon les réponses

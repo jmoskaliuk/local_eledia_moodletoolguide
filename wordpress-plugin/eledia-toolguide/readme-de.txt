@@ -1,10 +1,10 @@
 === eLeDia Moodle Tool Guide ===
-Contributors: eledia, jmoskaliuk
+Contributors: elediamoodle
 Tags: moodle, elearning, shortcode, tool-guide, didaktik
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.28
+Stable tag: 1.1.29
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,26 @@ Der Guide ist mehrsprachig (Deutsch, Englisch, Französisch, Spanisch), WCAG-2.2
 Das Plugin ist ein schlanker Wrapper um den Standalone-HTML-Tool-Guide — der JavaScript-Payload wird aus dem Prototyp synchronisiert. Das Plugin liefert einen Shortcode, keine Admin-UI, keine Datenbank-Tabellen, kein Tracking.
 
 Hinweis: Die Haupt-Readme für die WordPress Plugin Directory ist Englisch (`readme.txt`). Diese Datei ist die deutsche Übersetzung.
+
+== Quellcode ==
+
+Die ausgelieferte JavaScript-Datei `assets/js/toolguide.js` wird aus dem menschenlesbaren HTML-/React-Prototyp im öffentlichen Repository erzeugt:
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/Prototyp_ToolGuide.html
+
+Das Generierungsskript ist ebenfalls öffentlich:
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/sync_wordpress_js.py
+
+Zum Neubauen des WordPress-JavaScript-Bundles im Repository-Root ausführen:
+
+`python3 sync_wordpress_js.py`
+
+Zum Neubauen des installierbaren Plugin-ZIPs ausführen:
+
+`cd wordpress-plugin && zip -qr eledia-toolguide.zip eledia-toolguide -x '*/.DS_Store'`
+
+Das Stylesheet `assets/css/toolguide.css` wird als unkomprimierter CSS-Quellcode ausgeliefert.
 
 == Installation ==
 
@@ -62,6 +82,9 @@ Die Tool-Daten sind aktuell im JavaScript-Bundle hardcodiert. Ein Admin-Editor f
 Nein. Das Plugin ist zu 100 % self-contained und telefoniert nicht nach Hause.
 
 == Changelog ==
+
+= 1.1.29 =
+* WordPress.org-Review-Metadaten ergänzt: Contributor-Username des Plugin-Owners sowie öffentliche Quellcode- und Build-Dokumentation für das generierte JavaScript-Bundle.
 
 = 1.1.28 =
 * WordPress.org-Kompatibilitätsdaten für Plugin Check aktualisiert und den nicht mehr benötigten manuellen Textdomain-Lade-Hook entfernt.

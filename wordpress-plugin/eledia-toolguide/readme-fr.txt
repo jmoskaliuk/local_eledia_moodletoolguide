@@ -1,10 +1,10 @@
 === eLeDia Moodle Tool Guide ===
-Contributors: eledia, jmoskaliuk
+Contributors: elediamoodle
 Tags: moodle, elearning, shortcode, tool-guide, didactique
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.28
+Stable tag: 1.1.29
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,26 @@ Le guide est multilingue (anglais, allemand, français, espagnol), conforme à W
 Ce plugin est un wrapper léger autour du Tool Guide HTML autonome — le payload JavaScript est synchronisé depuis le prototype. Le plugin fournit un shortcode, aucune interface admin, aucune table en base de données, aucun tracking.
 
 Remarque : le readme principal pour le WordPress Plugin Directory est en anglais (`readme.txt`). Ce fichier est la traduction française.
+
+== Code source ==
+
+Le fichier JavaScript distribué `assets/js/toolguide.js` est généré à partir du prototype HTML/React lisible par des humains dans le dépôt public :
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/Prototyp_ToolGuide.html
+
+Le script de génération est également public :
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/sync_wordpress_js.py
+
+Pour reconstruire le bundle JavaScript WordPress depuis la racine du dépôt, exécutez :
+
+`python3 sync_wordpress_js.py`
+
+Pour reconstruire le ZIP installable du plugin, exécutez :
+
+`cd wordpress-plugin && zip -qr eledia-toolguide.zip eledia-toolguide -x '*/.DS_Store'`
+
+La feuille de style `assets/css/toolguide.css` est distribuée comme source CSS non compressée.
 
 == Installation ==
 
@@ -62,6 +82,9 @@ Les données des outils sont actuellement codées en dur dans le bundle JavaScri
 Non. Le plugin est 100 % autonome et ne communique avec aucun serveur externe.
 
 == Journal des modifications ==
+
+= 1.1.29 =
+* Ajout des métadonnées demandées pour la revue WordPress.org : identifiant contributeur du propriétaire du plugin et documentation publique du code source et de la génération du bundle JavaScript.
 
 = 1.1.28 =
 * Mise à jour des métadonnées de compatibilité WordPress.org pour Plugin Check et suppression du hook manuel de chargement du textdomain devenu inutile.

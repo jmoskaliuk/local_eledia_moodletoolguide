@@ -1,10 +1,10 @@
 === eLeDia Moodle Tool Guide ===
-Contributors: eledia, jmoskaliuk
+Contributors: elediamoodle
 Tags: moodle, elearning, shortcode, tool-guide, didactica
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.28
+Stable tag: 1.1.29
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,26 @@ La guía es multilingüe (inglés, alemán, francés, español), cumple WCAG 2.2
 Este plugin es un envoltorio ligero alrededor de la Tool Guide HTML independiente — el payload de JavaScript se sincroniza desde el prototipo canónico. El plugin incluye un shortcode, sin interfaz de administración, sin tablas de base de datos, sin seguimiento.
 
 Nota: el readme principal para el WordPress Plugin Directory está en inglés (`readme.txt`). Este archivo es la traducción al español.
+
+== Código fuente ==
+
+El archivo JavaScript distribuido `assets/js/toolguide.js` se genera a partir del prototipo HTML/React legible por humanos en el repositorio público:
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/Prototyp_ToolGuide.html
+
+El script de generación también es público:
+
+https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/sync_wordpress_js.py
+
+Para reconstruir el bundle JavaScript de WordPress desde la raíz del repositorio, ejecute:
+
+`python3 sync_wordpress_js.py`
+
+Para reconstruir el ZIP instalable del plugin, ejecute:
+
+`cd wordpress-plugin && zip -qr eledia-toolguide.zip eledia-toolguide -x '*/.DS_Store'`
+
+La hoja de estilos `assets/css/toolguide.css` se distribuye como código fuente CSS sin comprimir.
 
 == Instalación ==
 
@@ -62,6 +82,9 @@ Los datos de las herramientas están actualmente codificados en el bundle JavaSc
 No. El plugin es 100 % autónomo y no se comunica con servidores externos.
 
 == Registro de cambios ==
+
+= 1.1.29 =
+* Añadidos los metadatos solicitados para la revisión de WordPress.org: nombre de usuario contribuidor del propietario del plugin y documentación pública del código fuente y generación del bundle JavaScript.
 
 = 1.1.28 =
 * Actualizados los metadatos de compatibilidad de WordPress.org para Plugin Check y eliminado el hook manual de carga del textdomain que ya no era necesario.

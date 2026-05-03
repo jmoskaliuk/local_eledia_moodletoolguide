@@ -12,7 +12,7 @@ Three delivery tracks from a single source of truth:
 
 ## Features
 
-- **25 Moodle activities** with didactic recommendations across five learning goals
+- **22 Moodle activities** with didactic recommendations across five learning goals
 - **Matrix view** with thumbs-up / sideways / thumbs-down rating icons and hover/tap tooltips for desktop, tablet and mobile
 - **Cards view** with full descriptions and filters (setup effort, support effort, goal, Bloom level)
 - **Wizard** — guided five-step selection that recommends activities based on the user's answers
