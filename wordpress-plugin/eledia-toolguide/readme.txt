@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactics
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.25
+Stable tag: 1.1.26
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Interactive guide to the activities of Moodle 5 — matrix, cards and wizard vie
 
 == Description ==
 
-The **eLeDia Moodle Tool Guide** helps teachers and course designers pick the right Moodle activity for their didactic goal. The guide bundles curated knowledge about around 25 Moodle activities with metadata on setup effort, ongoing support effort, suitability for four learning goal categories (inform, assess, communicate, collaborate) and Bloom taxonomy level.
+The **eLeDia Moodle Tool Guide** helps teachers and course designers pick the right Moodle activity for their didactic goal. The guide bundles curated knowledge about 23 Moodle activities with metadata on setup effort, ongoing support effort, suitability for four learning goal categories (inform, assess, communicate, collaborate) and Bloom taxonomy level.
 
 Three views on the same dataset:
 
@@ -62,6 +62,9 @@ The tool data is currently hard-coded in the JavaScript bundle. An admin editor 
 No. The plugin is 100% self-contained and does not call home.
 
 == Changelog ==
+
+= 1.1.26 =
+* Removed the deprecated Chat activity from the synced Moodle 5 tool data and aligned the activity list with the source spreadsheet.
 
 = 1.1.25 =
 * Marked Tool Guide scripts and inline bootstrap code with WP Rocket `nowprocket` exclusions so the app starts without waiting for scroll interaction.

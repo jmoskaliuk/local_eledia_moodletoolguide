@@ -37,6 +37,15 @@
     .tg-filterbar { padding: 10px 12px !important; }
     .tg-header { padding: 16px 14px !important; }
     .tg-nav { padding: 8px 12px !important; }
+    .tg-wizard { max-width: 100% !important; width: 100% !important; }
+    .tg-wizard-option { width: 100% !important; max-width: 100% !important; padding: 12px !important; }
+    .tg-wizard-option-content { align-items: flex-start !important; }
+    .tg-wizard-option-content > div { min-width: 0 !important; }
+    .tg-wizard-option-content span { white-space: normal !important; overflow-wrap: anywhere !important; }
+    .tg-nav-row { justify-content: flex-start !important; align-items: flex-start !important; }
+    .tg-nav-actions { justify-content: flex-start !important; width: 100% !important; }
+    .tg-nav-search-wrap { justify-content: flex-start !important; width: 100% !important; }
+    .tg-tool-search { width: 100% !important; max-width: 220px !important; }
     .tg-filterbar select, .tg-filterbar label { width: 100%; max-width: 100%; }
     .tg-filterbar > div { width: 100%; }
   }
@@ -62,13 +71,12 @@ const TOOLS = [
   { id:"datenbank", name:"Datenbank", desc:"Materialien sammeln, teilen & suchen", complexity:"komplex", complexityText:"Schwierig anzulegen. Vorher Aufbau planen!", bloom:"5/6",setup:"komplex",setupText:"Felder im Detail planen und definieren.",support:"mittel",supportText:"Einträge moderieren, Sammlung pflegen.", docsUrl:"https://docs.moodle.org/501/de/Datenbank", longDesc:"Die Datenbank-Aktivit\u00e4t erm\u00f6glicht es, strukturierte Eintr\u00e4ge mit frei definierbaren Feldern zu sammeln. Teilnehmende k\u00f6nnen Texte, Bilder, Dateien und Links in einem einheitlichen Format eintragen. Alle Eintr\u00e4ge sind durchsuchbar und k\u00f6nnen kommentiert und bewertet werden. Die Datenbank eignet sich f\u00fcr Materialsammlungen, Steckbriefe oder Projektportfolios. Die Einrichtung erfordert Planung, bietet daf\u00fcr aber sehr flexible Einsatzm\u00f6glichkeiten.", goals:{ info:{r:"orange",t:"Lehrende k\u00f6nnen Material pr\u00e4sentieren. Besser: TN tragen Daten ein."}, bewerten:{r:"gr\u00fcn",t:"Ja. Inhalte k\u00f6nnen bewertet werden. Flexibel einsetzbar."}, komm:{r:"orange",t:"Teilweise. Eintr\u00e4ge k\u00f6nnen kommentiert werden."}, collab:{r:"orange",t:"Autor/in kann bearbeiten. Teilnehmende kommentieren."}, bloomG:{r:"gr\u00fcn",t:"6/6 m\u00f6glich. Abh\u00e4ngig vom Einsatzszenario."}}},
   { id:"umfrage", name:"Umfrage", desc:"Befragung mit vordefinierten Fragen", complexity:"einfach", complexityText:"Einfach. Aus 3 Typen w\u00e4hlen.", bloom:"2/6",setup:"einfach",setupText:"Vorlage wählen, fertig.",support:"gering",supportText:"Keine Pflege – Auswertung am Ende.", docsUrl:"https://docs.moodle.org/501/de/Umfrage", longDesc:"Die Umfrage bietet drei vordefinierte, wissenschaftlich validierte Frageb\u00f6gen zur Evaluation von Lernumgebungen. Sie erfasst, wie Teilnehmende das Lernklima und den Unterricht wahrnehmen. Die Ergebnisse helfen Lehrenden, ihren Kurs zu verbessern. Im Gegensatz zum Feedback k\u00f6nnen die Fragen nicht ver\u00e4ndert werden. Die Umfrage eignet sich besonders zur Reflexion des Lernprozesses und zur Kursoptimierung.", goals:{ info:{r:"rot",t:"Nein. Die Umfrage ist ungeeignet zur Informationsverteilung."}, bewerten:{r:"rot",t:"Eher nicht. Besser zur Evaluation des Kurses."}, komm:{r:"rot",t:"Nein. Nur Einweg-Kommunikation: TN an Lehrende."}, collab:{r:"rot",t:"Nein. Rein individuelle Aktivit\u00e4t."}, bloomG:{r:"orange",t:"Hilft Teilnehmenden Lernprozess zu reflektieren."}}},
   { id:"feedback", name:"Feedback", desc:"Erstelle selbst Evaluationsfrageb\u00f6gen", complexity:"einfach", complexityText:"Einfach in Bedienung. Zeitaufwand f\u00fcr Fragen.", bloom:"3/6",setup:"mittel",setupText:"Fragen formulieren kostet Zeit.",support:"gering",supportText:"Auswertung am Ende.", docsUrl:"https://docs.moodle.org/501/de/Feedback", longDesc:"Mit der Feedback-Aktivit\u00e4t erstellen Sie eigene Frageb\u00f6gen mit frei definierbaren Fragen. Sie k\u00f6nnen Multiple-Choice, Textfelder, Bewertungsskalen und mehr einsetzen. Die Antworten k\u00f6nnen anonym oder namentlich erfasst werden. Feedback eignet sich hervorragend f\u00fcr Kursevaluationen, Erwartungsabfragen oder Stimmungsbilder. Im Gegensatz zur Umfrage haben Sie volle Kontrolle \u00fcber die Fragestellungen.", goals:{ info:{r:"rot",t:"Nein. Nicht zur Informationsverteilung vorgesehen."}, bewerten:{r:"rot",t:"Nein. Evaluationen generieren Feedback f\u00fcr Lehrende."}, komm:{r:"rot",t:"Nein. Nur Einweg-Kommunikation."}, collab:{r:"rot",t:"Nein. Rein individuelle Aktivit\u00e4t."}, bloomG:{r:"orange",t:"Kann kreativ gestaltet werden."}}},
-  { id:"abstimmung", name:"Abstimmung", desc:"Teilnehmende stimmen \u00fcber eine Frage ab", complexity:"einfach", complexityText:"Einfach. Frage(n) und Antworten anlegen.", bloom:"1/6",setup:"einfach",setupText:"Frage und Optionen eintippen.",support:"gering",supportText:"Keine Pflege nötig.", docsUrl:"https://docs.moodle.org/501/de/Abstimmung", longDesc:"Die Abstimmung stellt eine einzelne Frage mit vorgegebenen Antwortm\u00f6glichkeiten. Teilnehmende w\u00e4hlen eine Option, die Ergebnisse werden als Balkendiagramm angezeigt. Sie eignet sich f\u00fcr schnelle Meinungsbilder, Terminabsprachen oder Gruppeneinteilungen. Die Einrichtung dauert nur wenige Minuten. F\u00fcr komplexere Befragungen mit mehreren Fragen nutzen Sie besser die Feedback-Aktivit\u00e4t.", goals:{ info:{r:"rot",t:"Nein. Haupts\u00e4chlich zur schnellen Abfrage zu einem Thema."}, bewerten:{r:"gr\u00fcn",t:"Als Schnellabfrage einer Fragestellung verwenden."}, komm:{r:"rot",t:"Nein. Besser Forum oder Chat nutzen."}, collab:{r:"rot",t:"Nein. Besser Forum, Glossar oder Wiki nutzen."}, bloomG:{r:"orange",t:"Erlaubt einfache Abfrage von Wissen und Verst\u00e4ndnis."}}},
-  { id:"test", name:"Test", desc:"Testfragen mit automatischer Bewertung", complexity:"mittel", complexityText:"Zeitaufwand beim Erstellen. Auswertung automatisch.", bloom:"4/6",setup:"komplex",setupText:"Fragenpool aufbauen, Konfiguration durchdenken.",support:"mittel",supportText:"Ergebnisse sichten, Probleme klären.", docsUrl:"https://docs.moodle.org/501/de/Test", longDesc:"Der Test ist das zentrale Pr\u00fcfungswerkzeug in Moodle mit \u00fcber 15 Fragetypen \u2013 von Multiple-Choice \u00fcber L\u00fcckentext bis Zuordnung. Die Auswertung erfolgt automatisch mit sofortigem Feedback an die Teilnehmenden. Tests k\u00f6nnen zeitgesteuert, mit Zufallsfragen und mehreren Versuchen konfiguriert werden. Sie eignen sich f\u00fcr Selbsttests, \u00dcbungen und formale Pr\u00fcfungen gleicherma\u00dfen. Der Fragenpool erm\u00f6glicht die Wiederverwendung von Fragen \u00fcber Kurse hinweg.", goals:{ info:{r:"rot",t:"Zielt auf Bewertung, nicht Verteilung von Informationen."}, bewerten:{r:"gr\u00fcn",t:"Ja. F\u00fcr Fragen mit eindeutiger Antwort. Automatisch."}, komm:{r:"rot",t:"Nein. Besser Forum oder Chat nutzen."}, collab:{r:"rot",t:"Nein. Besser Forum oder Wiki nutzen."}, bloomG:{r:"gr\u00fcn",t:"Durch kreativen Umgang vielf\u00e4ltig einsetzbar."}}},
+  { id:"abstimmung", name:"Abstimmung", desc:"Teilnehmende stimmen \u00fcber eine Frage ab", complexity:"einfach", complexityText:"Einfach. Frage(n) und Antworten anlegen.", bloom:"1/6",setup:"einfach",setupText:"Frage und Optionen eintippen.",support:"gering",supportText:"Keine Pflege nötig.", docsUrl:"https://docs.moodle.org/501/de/Abstimmung", longDesc:"Die Abstimmung stellt eine einzelne Frage mit vorgegebenen Antwortm\u00f6glichkeiten. Teilnehmende w\u00e4hlen eine Option, die Ergebnisse werden als Balkendiagramm angezeigt. Sie eignet sich f\u00fcr schnelle Meinungsbilder, Terminabsprachen oder Gruppeneinteilungen. Die Einrichtung dauert nur wenige Minuten. F\u00fcr komplexere Befragungen mit mehreren Fragen nutzen Sie besser die Feedback-Aktivit\u00e4t.", goals:{ info:{r:"rot",t:"Nein. Haupts\u00e4chlich zur schnellen Abfrage zu einem Thema."}, bewerten:{r:"gr\u00fcn",t:"Als Schnellabfrage einer Fragestellung verwenden."}, komm:{r:"rot",t:"Nein. Besser Forum oder BigBlueButton nutzen."}, collab:{r:"rot",t:"Nein. Besser Forum, Glossar oder Wiki nutzen."}, bloomG:{r:"orange",t:"Erlaubt einfache Abfrage von Wissen und Verst\u00e4ndnis."}}},
+  { id:"test", name:"Test", desc:"Testfragen mit automatischer Bewertung", complexity:"mittel", complexityText:"Zeitaufwand beim Erstellen. Auswertung automatisch.", bloom:"4/6",setup:"komplex",setupText:"Fragenpool aufbauen, Konfiguration durchdenken.",support:"mittel",supportText:"Ergebnisse sichten, Probleme klären.", docsUrl:"https://docs.moodle.org/501/de/Test", longDesc:"Der Test ist das zentrale Pr\u00fcfungswerkzeug in Moodle mit \u00fcber 15 Fragetypen \u2013 von Multiple-Choice \u00fcber L\u00fcckentext bis Zuordnung. Die Auswertung erfolgt automatisch mit sofortigem Feedback an die Teilnehmenden. Tests k\u00f6nnen zeitgesteuert, mit Zufallsfragen und mehreren Versuchen konfiguriert werden. Sie eignen sich f\u00fcr Selbsttests, \u00dcbungen und formale Pr\u00fcfungen gleicherma\u00dfen. Der Fragenpool erm\u00f6glicht die Wiederverwendung von Fragen \u00fcber Kurse hinweg.", goals:{ info:{r:"rot",t:"Zielt auf Bewertung, nicht Verteilung von Informationen."}, bewerten:{r:"gr\u00fcn",t:"Ja. F\u00fcr Fragen mit eindeutiger Antwort. Automatisch."}, komm:{r:"rot",t:"Nein. Besser Forum oder BigBlueButton nutzen."}, collab:{r:"rot",t:"Nein. Besser Forum oder Wiki nutzen."}, bloomG:{r:"gr\u00fcn",t:"Durch kreativen Umgang vielf\u00e4ltig einsetzbar."}}},
   { id:"lektion", name:"Lektion", desc:"Informationen und Testfragen seitenweise aufbauen", complexity:"mittel", complexityText:"Erfordert Planung, dann effektive Lernaktivit\u00e4t.", bloom:"4/6",setup:"komplex",setupText:"Verzweigungslogik sorgfältig planen.",support:"gering",supportText:"Nach Aufbau weitgehend selbstläufig.", docsUrl:"https://docs.moodle.org/501/de/Lektion", longDesc:"Die Lektion pr\u00e4sentiert Inhalte auf einzelnen Seiten und verkn\u00fcpft sie mit Testfragen. Je nach Antwort werden Teilnehmende zu verschiedenen Seiten weitergeleitet \u2013 ein verzweigter Lernpfad entsteht. So k\u00f6nnen Sie adaptives Lernen umsetzen, bei dem der Weg vom Wissensstand abh\u00e4ngt. Lektionen eignen sich f\u00fcr gef\u00fchrte Lerneinheiten mit integrierten Verst\u00e4ndnispr\u00fcfungen. Die Erstellung erfordert Planung, ergibt aber eine sehr effektive Lernaktivit\u00e4t.", goals:{ info:{r:"gr\u00fcn",t:"Gut geeignet f\u00fcr gef\u00fchrte Informationspr\u00e4sentation."}, bewerten:{r:"gr\u00fcn",t:"Ja, erlaubt Bewertung durch integrierte Testfragen."}, komm:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, collab:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, bloomG:{r:"gr\u00fcn",t:"Durch kreativen Umgang vielf\u00e4ltig einsetzbar."}}},
   { id:"aufgabe", name:"Aufgabe", desc:"Aufgabenstellung mit individueller Bewertung", complexity:"einfach", complexityText:"Einfach. Auswahl aus vier Aufgabentypen.", bloom:"6/6",setup:"einfach",setupText:"Abgabetyp und Frist festlegen.",support:"hoch",supportText:"Bewertung und Feedback pro Abgabe.", docsUrl:"https://docs.moodle.org/501/de/Aufgabe", longDesc:"Die Aufgabe ist das vielseitigste Bewertungswerkzeug in Moodle. Teilnehmende reichen Texte, Dateien oder Medien ein, die Sie individuell mit Note und Kommentar bewerten. Vier Abgabetypen stehen zur Verf\u00fcgung: Dateiabgabe, Onlinetext, Audio-/Videoaufnahme. Abgabefristen, Verl\u00e4ngerungen und Gruppenabgaben sind konfigurierbar. Die Aufgabe eignet sich f\u00fcr Essays, Projektarbeiten, Pr\u00e4sentationen und jede Form individueller Leistungsnachweise.", goals:{ info:{r:"rot",t:"Nein. Kann aber Inhalte f\u00fcr Aufgabenstellung enthalten."}, bewerten:{r:"gr\u00fcn",t:"Ja. Individuelle Bewertung mit Note und Kommentar."}, komm:{r:"rot",t:"Wenig Interaktion. Au\u00dfer: wiederholte Abgabe mit Feedback."}, collab:{r:"orange",t:"Gruppenmitglied gibt stellvertretend L\u00f6sung ab."}, bloomG:{r:"gr\u00fcn",t:"Abh\u00e4ngig von Aufgabenformulierung und Beurteilungsform."}}},
   { id:"beurteilung", name:"Gegenseitige Beurteilung", desc:"Aufgabe mit Peer-Feedback", complexity:"komplex", complexityText:"Erfordert sorgf\u00e4ltige Planung.", bloom:"5/6",setup:"komplex",setupText:"Phasen, Kriterien und Bewertungsraster planen.",support:"hoch",supportText:"Phasen aktiv begleiten und steuern.", docsUrl:"https://docs.moodle.org/501/de/Gegenseitige_Beurteilung", longDesc:"Die Gegenseitige Beurteilung (Workshop) kombiniert Aufgabenabgabe mit Peer-Review. Teilnehmende reichen zun\u00e4chst eigene Arbeiten ein und bewerten anschlie\u00dfend die Einreichungen anderer nach vorgegebenen Kriterien. Dieser Prozess f\u00f6rdert kritisches Denken und Reflexion. Die Endbewertung setzt sich aus Peer- und Trainer-Bewertung zusammen. Die Einrichtung ist anspruchsvoll, bietet aber ein p\u00e4dagogisch sehr wertvolles Lernszenario.", goals:{ info:{r:"rot",t:"Nein. Ein anderes Tool verwenden."}, bewerten:{r:"gr\u00fcn",t:"Ja. Peer-Bewertung. TN beurteilen L\u00f6sungen anderer."}, komm:{r:"rot",t:"Nein. Erlaubt nur Feedback, keine Kommunikation."}, collab:{r:"rot",t:"Nein. F\u00fcr Gruppenaufgaben Forum oder Wiki nutzen."}, bloomG:{r:"gr\u00fcn",t:"Abh\u00e4ngig von Aufgabenformulierung und Beurteilungsform."}}},
   { id:"lernpaket", name:"Lernpaket", desc:"Lerninhalte im Format SCORM einbinden", complexity:"komplex", complexityText:"Erfordert Software oder Kauf von Inhalten.", bloom:"4/6",setup:"komplex",setupText:"SCORM-Inhalte mit externer Software erstellen.",support:"gering",supportText:"Nach Einbinden weitgehend selbstläufig.", docsUrl:"https://docs.moodle.org/501/de/Lernpaket", longDesc:"Lernpakete binden extern erstellte SCORM- oder AICC-Inhalte in Moodle ein. Diese interaktiven Lernmodule werden mit Autorentools wie Articulate, Captivate oder iSpring erstellt. Der Lernfortschritt und Ergebnisse werden automatisch an Moodle zur\u00fcckgemeldet. Lernpakete eignen sich f\u00fcr multimediale, interaktive Selbstlerneinheiten. Die Einbindung ist einfach, die Erstellung der Inhalte erfordert jedoch spezielle Software.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Gut geeignet f\u00fcr Informationsvermittlung."}, bewerten:{r:"gr\u00fcn",t:"Ja, Bewertungen k\u00f6nnen integriert sein."}, komm:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, collab:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, bloomG:{r:"gr\u00fcn",t:"Durch kreativen Umgang vielf\u00e4ltig einsetzbar."}}},
-  { id:"chat", name:"Chat", desc:"Echtzeit Text-Chat mit Teilnehmenden", complexity:"einfach", complexityText:"Einfach. Erfordert Moderation, kleine Gruppen.", bloom:"3/6",setup:"einfach",setupText:"Aktivität anlegen, Termin festlegen.",support:"hoch",supportText:"Live moderieren während der Sitzung.", docsUrl:"https://docs.moodle.org/501/de/Chat", longDesc:"Der Chat erm\u00f6glicht synchrone Textgespr\u00e4che in Echtzeit zwischen Kursteilnehmenden. Er eignet sich f\u00fcr Sprechstunden, Gruppendiskussionen oder spontanen Austausch in kleinen Gruppen. Chatverl\u00e4ufe werden protokolliert und k\u00f6nnen sp\u00e4ter eingesehen werden. Eine Moderation ist empfehlenswert, um den Gespr\u00e4chsverlauf zu steuern. F\u00fcr gr\u00f6\u00dfere Gruppen oder asynchrone Kommunikation ist das Forum besser geeignet.", goals:{ info:{r:"orange",t:"Erfordert Anwesenheit zum Zeitpunkt des Chats."}, bewerten:{r:"orange",t:"Chatbeitr\u00e4ge k\u00f6nnen wie m\u00fcndliche Mitarbeit bewertet werden."}, komm:{r:"gr\u00fcn",t:"Ja. Diskussionen in kleinen Gruppen oder Fragestunden."}, collab:{r:"gr\u00fcn",t:"Ja. Teilnehmende k\u00f6nnen zusammen arbeiten und diskutieren."}, bloomG:{r:"gr\u00fcn",t:"Kann mit kleinen Gruppen kreativ genutzt werden."}}},
   { id:"forum", name:"Forum", desc:"F\u00fcr vielf\u00e4ltige Lernstrategien verwendbar", complexity:"einfach", complexityText:"Einfach. Titel und Beschreibung gen\u00fcgen.", bloom:"5/6",setup:"einfach",setupText:"Forumtyp wählen, Titel vergeben.",support:"hoch",supportText:"Beiträge moderieren und beantworten.", docsUrl:"https://docs.moodle.org/501/de/Forum", longDesc:"Das Forum ist das vielseitigste Kommunikationswerkzeug in Moodle. Es erm\u00f6glicht zeitversetzte Diskussionen, in denen Teilnehmende Beitr\u00e4ge verfassen, aufeinander antworten und Dateien anh\u00e4ngen. Verschiedene Forentypen stehen zur Verf\u00fcgung \u2013 vom Nachrichtenforum bis zur offenen Diskussion. Beitr\u00e4ge k\u00f6nnen per E-Mail-Benachrichtigung verfolgt und sogar bewertet werden. Foren eignen sich f\u00fcr Ank\u00fcndigungen, Peer-Learning, Reflexion und kooperatives Arbeiten.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Nachrichtenforum und Mail-Benachrichtigung."}, bewerten:{r:"orange",t:"Jein. Beitr\u00e4ge k\u00f6nnen f\u00fcr einen Zeitraum bewertet werden."}, komm:{r:"gr\u00fcn",t:"Ja. Zeitversetzte Kommunikation. Kursgruppen nutzbar."}, collab:{r:"gr\u00fcn",t:"Ja. TN tauschen sich beim Erstellen von Inhalten aus."}, bloomG:{r:"gr\u00fcn",t:"Kann auch mit gro\u00dfen Gruppen kreativ genutzt werden."}}},
   { id:"extern", name:"Externes Tool", desc:"Externe Lernaktivit\u00e4t verbinden (LTI)", complexity:"komplex", complexityText:"Erfordert Zugangsdaten zu externen Anbietern.", bloom:"4/6",setup:"komplex",setupText:"Zugangsdaten/LTI-Konfig vom Anbieter nötig.",support:"gering",supportText:"Funktion gelegentlich prüfen.", docsUrl:"https://docs.moodle.org/501/de/Externes_Tool", longDesc:"Das Externe Tool verbindet Moodle \u00fcber den LTI-Standard mit externen Lernplattformen und Diensten. So k\u00f6nnen Teilnehmende direkt aus Moodle heraus auf externe Tools zugreifen \u2013 ohne separaten Login. Bewertungen k\u00f6nnen automatisch nach Moodle zur\u00fcck\u00fcbertragen werden. Typische Einsatzgebiete sind Simulationen, Labore, Verlagsinhalte oder spezialisierte Lerntools. Die Einrichtung erfordert technische Konfiguration und Zugangsdaten vom Anbieter.", goals:{ info:{r:"orange",t:"Abh\u00e4ngig vom verbundenen Tool."}, bewerten:{r:"orange",t:"Bewertungen k\u00f6nnen nach Moodle \u00fcbertragen werden."}, komm:{r:"orange",t:"Abh\u00e4ngig vom verbundenen Tool."}, collab:{r:"orange",t:"Abh\u00e4ngig vom verbundenen Tool."}, bloomG:{r:"orange",t:"H\u00e4ngt vom verbundenen Tool ab."}}},
   { id:"h5p", name:"H5P", desc:"Werkzeuge f\u00fcr interaktive Inhalte", complexity:"einfach", complexityText:"Einfache Bedienung durch Formulare.", bloom:"5/6",setup:"mittel",setupText:"Inhaltstyp wählen, im Editor befüllen.",support:"gering",supportText:"Keine Pflege im laufenden Betrieb.", docsUrl:"https://docs.moodle.org/501/de/H5P-Aktivit%C3%A4t", longDesc:"H5P bietet \u00fcber 40 interaktive Inhaltstypen direkt in Moodle \u2013 von interaktiven Videos \u00fcber Zeitstrahlen bis zu Drag-and-Drop-Aufgaben. Die Erstellung erfolgt \u00fcber intuitive Formulare ohne Programmierkenntnisse. Bewertungen werden automatisch erfasst und an das Moodle-Bewertungssystem \u00fcbergeben. H5P-Inhalte sind responsiv und funktionieren auf allen Ger\u00e4ten. Es ist eines der vielseitigsten Werkzeuge f\u00fcr interaktive und ansprechende Lernerfahrungen.", goals:{ info:{r:"gr\u00fcn",t:"Ja. Gute Visualisierung von Informationen."}, bewerten:{r:"gr\u00fcn",t:"Ja. Automatische Bewertung."}, komm:{r:"rot",t:"Nein. Keine Kommunikation m\u00f6glich."}, collab:{r:"rot",t:"Nein. Teilnehmende arbeiten einzeln."}, bloomG:{r:"gr\u00fcn",t:"Vielf\u00e4ltige Unterst\u00fctzung von Lernszenarien."}}},
@@ -95,13 +103,12 @@ const TOOL_TRANSLATIONS = {
     datenbank: { name:"Database", desc:"Collect, share & search materials", complexityText:"Difficult to set up. Plan the structure first!", docsUrl:"https://docs.moodle.org/501/en/Database_activity", longDesc:"The Database activity allows you to collect structured entries with freely definable fields. Participants can enter texts, images, files and links in a uniform format. All entries are searchable and can be commented on and rated. The database is suitable for material collections, profiles or project portfolios. Setup requires planning but in return offers very flexible use cases.", goals:{ info:"Teachers can present material. Better: participants enter data.", bewerten:"Yes. Content can be rated. Flexible to use.", komm:"Partly. Entries can be commented on.", collab:"Authors can edit, participants can comment.", bloomG:"6/6 possible. Depends on the use case." }},
     umfrage: { name:"Survey", desc:"Survey with predefined questions", complexityText:"Easy. Choose from 3 types.", docsUrl:"https://docs.moodle.org/501/en/Survey_activity", longDesc:"The Survey provides three predefined, scientifically validated questionnaires for evaluating learning environments. It captures how participants perceive the learning climate and the teaching. The results help teachers improve their courses. Unlike the Feedback activity, the questions cannot be modified. The Survey is particularly well suited to reflecting on the learning process and optimising the course.", goals:{ info:"No. The Survey is unsuitable for distributing information.", bewerten:"Not really. Better used to evaluate the course.", komm:"No. Only one-way communication: participants to teacher.", collab:"No. Purely individual activity.", bloomG:"Helps participants reflect on the learning process." }},
     feedback: { name:"Feedback", desc:"Build your own evaluation questionnaires", complexityText:"Easy to operate. Time investment for questions.", docsUrl:"https://docs.moodle.org/501/en/Feedback_activity", longDesc:"With the Feedback activity you create your own questionnaires with freely definable questions. You can use multiple choice, text fields, rating scales and more. Answers can be collected anonymously or by name. Feedback is excellent for course evaluations, expectation surveys or sentiment polls. Unlike the Survey activity, you have full control over the questions.", goals:{ info:"No. Not intended for distributing information.", bewerten:"No. Evaluations generate feedback for teachers.", komm:"No. Only one-way communication.", collab:"No. Purely individual activity.", bloomG:"Can be designed creatively." }},
-    abstimmung: { name:"Choice", desc:"Participants vote on a question", complexityText:"Easy. Add question(s) and answers.", docsUrl:"https://docs.moodle.org/501/en/Choice_activity", longDesc:"The Choice activity poses a single question with predefined answer options. Participants pick one option and the results are shown as a bar chart. It is suitable for quick polls, scheduling or group allocation. Setup takes only a few minutes. For more complex surveys with multiple questions, use the Feedback activity instead.", goals:{ info:"No. Mainly for a quick poll on a topic.", bewerten:"Use as a quick check on a question.", komm:"No. Use a forum or chat instead.", collab:"No. Use a forum, glossary or wiki instead.", bloomG:"Allows simple checking of knowledge and understanding." }},
-    test: { name:"Quiz", desc:"Quiz questions with automatic grading", complexityText:"Time investment when creating. Auto-grading.", docsUrl:"https://docs.moodle.org/501/en/Quiz_activity", longDesc:"The Quiz is the central assessment tool in Moodle, with over 15 question types – from multiple choice to fill-in-the-blank to matching. Grading is automatic with immediate feedback to participants. Quizzes can be timed, with random questions and multiple attempts. They are equally suitable for self-tests, exercises and formal exams. The question bank enables reuse of questions across courses.", goals:{ info:"Aimed at assessment, not distribution of information.", bewerten:"Yes. For questions with a clear answer. Automatic.", komm:"No. Use a forum or chat instead.", collab:"No. Use a forum or wiki instead.", bloomG:"Versatile through creative use." }},
+    abstimmung: { name:"Choice", desc:"Participants vote on a question", complexityText:"Easy. Add question(s) and answers.", docsUrl:"https://docs.moodle.org/501/en/Choice_activity", longDesc:"The Choice activity poses a single question with predefined answer options. Participants pick one option and the results are shown as a bar chart. It is suitable for quick polls, scheduling or group allocation. Setup takes only a few minutes. For more complex surveys with multiple questions, use the Feedback activity instead.", goals:{ info:"No. Mainly for a quick poll on a topic.", bewerten:"Use as a quick check on a question.", komm:"No. Use a forum or BigBlueButton instead.", collab:"No. Use a forum, glossary or wiki instead.", bloomG:"Allows simple checking of knowledge and understanding." }},
+    test: { name:"Quiz", desc:"Quiz questions with automatic grading", complexityText:"Time investment when creating. Auto-grading.", docsUrl:"https://docs.moodle.org/501/en/Quiz_activity", longDesc:"The Quiz is the central assessment tool in Moodle, with over 15 question types – from multiple choice to fill-in-the-blank to matching. Grading is automatic with immediate feedback to participants. Quizzes can be timed, with random questions and multiple attempts. They are equally suitable for self-tests, exercises and formal exams. The question bank enables reuse of questions across courses.", goals:{ info:"Aimed at assessment, not distribution of information.", bewerten:"Yes. For questions with a clear answer. Automatic.", komm:"No. Use a forum or BigBlueButton instead.", collab:"No. Use a forum or wiki instead.", bloomG:"Versatile through creative use." }},
     lektion: { name:"Lesson", desc:"Build pages of information and quiz questions", complexityText:"Requires planning, then an effective learning activity.", docsUrl:"https://docs.moodle.org/501/en/Lesson_activity", longDesc:"The Lesson presents content on individual pages and links them with quiz questions. Depending on the answer, participants are routed to different pages – a branching learning path emerges. This lets you implement adaptive learning where the path depends on prior knowledge. Lessons are suitable for guided learning units with integrated comprehension checks. Creation requires planning but yields a very effective learning activity.", goals:{ info:"Well suited for guided information delivery.", bewerten:"Yes, allows assessment via integrated quiz questions.", komm:"No. Participants work individually.", collab:"No. Participants work individually.", bloomG:"Versatile through creative use." }},
     aufgabe: { name:"Assignment", desc:"Task with individual grading", complexityText:"Easy. Choose from four submission types.", docsUrl:"https://docs.moodle.org/501/en/Assignment_activity", longDesc:"The Assignment is the most versatile assessment tool in Moodle. Participants submit texts, files or media which you grade individually with mark and comment. Four submission types are available: file, online text, audio/video recording. Deadlines, extensions and group submissions are configurable. Assignments are suitable for essays, project work, presentations and any form of individual proof of performance.", goals:{ info:"No. But can contain content for the task description.", bewerten:"Yes. Individual grading with mark and comment.", komm:"Little interaction. Except: repeated submission with feedback.", collab:"Group member can submit on behalf of the group.", bloomG:"Depends on task wording and assessment form." }},
     beurteilung: { name:"Workshop", desc:"Assignment with peer feedback", complexityText:"Requires careful planning.", docsUrl:"https://docs.moodle.org/501/en/Workshop_activity", longDesc:"The Workshop combines submission with peer review. Participants first submit their own work and then assess submissions of others against given criteria. This process fosters critical thinking and reflection. The final grade is a combination of peer and trainer assessment. Setup is demanding but offers a pedagogically very valuable learning scenario.", goals:{ info:"No. Use a different tool.", bewerten:"Yes. Peer assessment. Participants assess each other's solutions.", komm:"No. Allows only feedback, no communication.", collab:"No. For group tasks use a forum or wiki.", bloomG:"Depends on task wording and assessment form." }},
     lernpaket: { name:"SCORM package", desc:"Embed learning content in SCORM format", complexityText:"Requires software or purchased content.", docsUrl:"https://docs.moodle.org/501/en/SCORM_activity", longDesc:"SCORM packages embed externally created SCORM or AICC content in Moodle. These interactive learning modules are produced with authoring tools such as Articulate, Captivate or iSpring. Progress and results are automatically reported back to Moodle. SCORM packages are suitable for multimedia, interactive self-study units. Embedding is easy, but content creation requires special software.", goals:{ info:"Yes. Well suited for delivering information.", bewerten:"Yes, grading can be integrated.", komm:"No. Participants work individually.", collab:"No. Participants work individually.", bloomG:"Versatile through creative use." }},
-    chat: { name:"Chat", desc:"Real-time text chat with participants", complexityText:"Easy. Requires moderation; small groups.", docsUrl:"https://docs.moodle.org/501/en/Chat_activity", longDesc:"The Chat enables synchronous text conversations in real time between course participants. It is suitable for office hours, group discussions or spontaneous exchange in small groups. Chat logs are recorded and can be reviewed later. Moderation is recommended to steer the conversation. For larger groups or asynchronous communication, the Forum is better suited.", goals:{ info:"Requires presence at the time of the chat.", bewerten:"Chat contributions can be rated like oral participation.", komm:"Yes. Discussions in small groups or Q&A sessions.", collab:"Yes. Participants can work and discuss together.", bloomG:"Can be used creatively with small groups." }},
     forum: { name:"Forum", desc:"Versatile activity for many learning strategies", complexityText:"Easy. Title and description are enough.", docsUrl:"https://docs.moodle.org/501/en/Forum_activity", longDesc:"The Forum is the most versatile communication tool in Moodle. It enables time-shifted discussions in which participants write posts, reply to each other and attach files. Various forum types are available – from announcement forum to open discussion. Posts can be tracked via email subscription and even rated. Forums are suitable for announcements, peer learning, reflection and collaborative work.", goals:{ info:"Yes. News forum and email notification.", bewerten:"Sort of. Posts can be rated within a time frame.", komm:"Yes. Asynchronous communication. Course groups can be used.", collab:"Yes. Participants exchange while creating content.", bloomG:"Can be used creatively with large groups too." }},
     extern: { name:"External tool", desc:"Connect an external learning activity (LTI)", complexityText:"Requires credentials from external providers.", docsUrl:"https://docs.moodle.org/501/en/External_tool", longDesc:"The External tool connects Moodle via the LTI standard with external learning platforms and services. Participants can access external tools directly from Moodle – without a separate login. Grades can be transferred back to Moodle automatically. Typical use cases are simulations, labs, publisher content or specialised learning tools. Setup requires technical configuration and credentials from the provider.", goals:{ info:"Depends on the connected tool.", bewerten:"Grades can be transferred back to Moodle.", komm:"Depends on the connected tool.", collab:"Depends on the connected tool.", bloomG:"Depends on the connected tool." }},
     h5p: { name:"H5P", desc:"Tools for interactive content", complexityText:"Easy operation through forms.", docsUrl:"https://docs.moodle.org/501/en/H5P_activity", longDesc:"H5P offers over 40 interactive content types directly in Moodle – from interactive videos to timelines to drag-and-drop tasks. Authoring is done via intuitive forms without programming knowledge. Grades are captured automatically and passed to the Moodle gradebook. H5P content is responsive and works on all devices. It is one of the most versatile tools for interactive and engaging learning experiences.", goals:{ info:"Yes. Good visualisation of information.", bewerten:"Yes. Automatic grading.", komm:"No. No communication possible.", collab:"No. Participants work individually.", bloomG:"Diverse support for learning scenarios." }},
@@ -121,13 +128,12 @@ const TOOL_TRANSLATIONS = {
     datenbank: { name:"Base de données", desc:"Collecter, partager et chercher des matériaux", complexityText:"Difficile à mettre en place. Planifiez d'abord la structure !", docsUrl:"https://docs.moodle.org/3x/fr/Base_de_donn%C3%A9es", longDesc:"L'activité Base de données permet de recueillir des entrées structurées avec des champs librement définis. Les participants peuvent saisir textes, images, fichiers et liens dans un format uniforme. Toutes les entrées sont consultables et peuvent être commentées et évaluées. La base de données convient aux collections de matériaux, fiches descriptives ou portfolios de projet. La configuration demande de la planification mais offre des usages très flexibles.", goals:{ info:"Les enseignants peuvent présenter du contenu. Mieux : les participants saisissent des données.", bewerten:"Oui. Les contenus peuvent être notés. Usage flexible.", komm:"Partiellement. Les entrées peuvent être commentées.", collab:"L'auteur peut éditer, les autres commentent.", bloomG:"6/6 possible. Selon l'usage." }},
     umfrage: { name:"Sondage", desc:"Enquête avec questions prédéfinies", complexityText:"Facile. Choisissez parmi 3 types.", docsUrl:"https://docs.moodle.org/3x/fr/Sondage", longDesc:"Le Sondage propose trois questionnaires prédéfinis et scientifiquement validés pour évaluer les environnements d'apprentissage. Il mesure la perception du climat d'apprentissage et de l'enseignement. Les résultats aident les enseignants à améliorer leur cours. Contrairement au Feedback, les questions ne peuvent pas être modifiées. Le Sondage est particulièrement adapté à la réflexion sur le processus d'apprentissage et à l'optimisation du cours.", goals:{ info:"Non. Le Sondage ne convient pas à la diffusion d'informations.", bewerten:"Plutôt non. Mieux pour évaluer le cours.", komm:"Non. Communication unidirectionnelle uniquement.", collab:"Non. Activité purement individuelle.", bloomG:"Aide les participants à réfléchir à leur apprentissage." }},
     feedback: { name:"Feedback", desc:"Créer ses propres questionnaires d'évaluation", complexityText:"Facile à utiliser. Investissement de temps pour les questions.", docsUrl:"https://docs.moodle.org/3x/fr/Feedback", longDesc:"Avec l'activité Feedback, vous créez vos propres questionnaires avec des questions librement définies. Vous pouvez utiliser le choix multiple, des champs texte, des échelles d'évaluation, etc. Les réponses peuvent être collectées de manière anonyme ou nominative. Le Feedback convient parfaitement à l'évaluation de cours, aux enquêtes d'attentes ou aux baromètres d'humeur. Contrairement au Sondage, vous gardez le contrôle total des questions.", goals:{ info:"Non. Pas conçu pour diffuser de l'information.", bewerten:"Non. Les évaluations génèrent des retours pour les enseignants.", komm:"Non. Communication unidirectionnelle uniquement.", collab:"Non. Activité purement individuelle.", bloomG:"Peut être conçu de manière créative." }},
-    abstimmung: { name:"Sondage", desc:"Les participants votent sur une question", complexityText:"Facile. Question(s) et réponses à créer.", docsUrl:"https://docs.moodle.org/3x/fr/Consultation", longDesc:"L'activité Sondage (Choice) pose une seule question avec des options de réponse prédéfinies. Les participants choisissent une option et les résultats sont affichés sous forme d'histogramme. Convient aux sondages rapides, à la prise de rendez-vous ou aux groupes. Mise en place en quelques minutes. Pour des enquêtes plus complexes avec plusieurs questions, utilisez plutôt le Feedback.", goals:{ info:"Non. Surtout pour un sondage rapide sur un sujet.", bewerten:"À utiliser comme vérification rapide d'une question.", komm:"Non. Utilisez plutôt un forum ou un chat.", collab:"Non. Utilisez plutôt forum, glossaire ou wiki.", bloomG:"Permet une vérification simple des connaissances." }},
-    test: { name:"Test", desc:"Questions de test avec correction automatique", complexityText:"Investissement de temps à la création. Correction automatique.", docsUrl:"https://docs.moodle.org/3x/fr/Test", longDesc:"Le Test est l'outil central d'évaluation dans Moodle, avec plus de 15 types de questions – du QCM au texte à trous en passant par l'appariement. La correction est automatique avec un retour immédiat. Les tests peuvent être chronométrés, avec questions aléatoires et plusieurs tentatives. Ils conviennent autant aux auto-évaluations qu'aux examens formels. La banque de questions permet la réutilisation entre les cours.", goals:{ info:"Vise l'évaluation, pas la diffusion d'information.", bewerten:"Oui. Pour des questions à réponse claire. Automatique.", komm:"Non. Utilisez plutôt un forum ou un chat.", collab:"Non. Utilisez plutôt un forum ou un wiki.", bloomG:"Variable selon l'usage créatif." }},
+    abstimmung: { name:"Sondage", desc:"Les participants votent sur une question", complexityText:"Facile. Question(s) et réponses à créer.", docsUrl:"https://docs.moodle.org/3x/fr/Consultation", longDesc:"L'activité Sondage (Choice) pose une seule question avec des options de réponse prédéfinies. Les participants choisissent une option et les résultats sont affichés sous forme d'histogramme. Convient aux sondages rapides, à la prise de rendez-vous ou aux groupes. Mise en place en quelques minutes. Pour des enquêtes plus complexes avec plusieurs questions, utilisez plutôt le Feedback.", goals:{ info:"Non. Surtout pour un sondage rapide sur un sujet.", bewerten:"À utiliser comme vérification rapide d'une question.", komm:"Non. Utilisez plutôt un forum ou BigBlueButton.", collab:"Non. Utilisez plutôt forum, glossaire ou wiki.", bloomG:"Permet une vérification simple des connaissances." }},
+    test: { name:"Test", desc:"Questions de test avec correction automatique", complexityText:"Investissement de temps à la création. Correction automatique.", docsUrl:"https://docs.moodle.org/3x/fr/Test", longDesc:"Le Test est l'outil central d'évaluation dans Moodle, avec plus de 15 types de questions – du QCM au texte à trous en passant par l'appariement. La correction est automatique avec un retour immédiat. Les tests peuvent être chronométrés, avec questions aléatoires et plusieurs tentatives. Ils conviennent autant aux auto-évaluations qu'aux examens formels. La banque de questions permet la réutilisation entre les cours.", goals:{ info:"Vise l'évaluation, pas la diffusion d'information.", bewerten:"Oui. Pour des questions à réponse claire. Automatique.", komm:"Non. Utilisez plutôt un forum ou BigBlueButton.", collab:"Non. Utilisez plutôt un forum ou un wiki.", bloomG:"Variable selon l'usage créatif." }},
     lektion: { name:"Leçon", desc:"Construire des pages d'information et de questions", complexityText:"Demande de la planification, puis activité efficace.", docsUrl:"https://docs.moodle.org/3x/fr/Le%C3%A7on", longDesc:"La Leçon présente le contenu sur des pages individuelles et les associe à des questions. Selon la réponse, les participants sont dirigés vers différentes pages – un parcours d'apprentissage ramifié se forme. Cela permet une apprentissage adaptatif où le chemin dépend des connaissances. Les leçons conviennent aux unités guidées avec contrôles intégrés. La création demande de la planification mais donne une activité très efficace.", goals:{ info:"Bien adapté à une présentation guidée d'informations.", bewerten:"Oui, évaluation possible via les questions intégrées.", komm:"Non. Les participants travaillent individuellement.", collab:"Non. Les participants travaillent individuellement.", bloomG:"Variable selon l'usage créatif." }},
     aufgabe: { name:"Devoir", desc:"Énoncé avec évaluation individuelle", complexityText:"Facile. Choix parmi quatre types de remise.", docsUrl:"https://docs.moodle.org/3x/fr/Devoir", longDesc:"Le Devoir est l'outil d'évaluation le plus polyvalent de Moodle. Les participants soumettent textes, fichiers ou médias que vous notez individuellement avec note et commentaire. Quatre types de remise sont disponibles : fichier, texte en ligne, enregistrement audio/vidéo. Échéances, prolongations et remises de groupe sont configurables. Le devoir convient aux essais, aux travaux de projet, aux présentations et à toute forme de preuve individuelle.", goals:{ info:"Non. Mais peut contenir le contenu de l'énoncé.", bewerten:"Oui. Évaluation individuelle avec note et commentaire.", komm:"Peu d'interaction. Sauf : remises répétées avec retours.", collab:"Un membre du groupe peut soumettre pour le groupe.", bloomG:"Selon la formulation et la forme d'évaluation." }},
     beurteilung: { name:"Atelier", desc:"Devoir avec évaluation par les pairs", complexityText:"Demande une planification rigoureuse.", docsUrl:"https://docs.moodle.org/3x/fr/Atelier", longDesc:"L'Atelier (Workshop) combine remise de devoir et évaluation par les pairs. Les participants soumettent d'abord leur travail puis évaluent les remises des autres selon des critères donnés. Ce processus favorise l'esprit critique et la réflexion. La note finale combine évaluation par les pairs et par l'enseignant. La mise en place est exigeante mais offre un scénario pédagogiquement très riche.", goals:{ info:"Non. Utilisez un autre outil.", bewerten:"Oui. Évaluation par les pairs. Les participants évaluent les solutions des autres.", komm:"Non. Permet seulement des retours, pas de communication.", collab:"Non. Pour des tâches de groupe utilisez forum ou wiki.", bloomG:"Selon la formulation et la forme d'évaluation." }},
     lernpaket: { name:"Paquetage SCORM", desc:"Intégrer des contenus au format SCORM", complexityText:"Nécessite un logiciel ou des contenus achetés.", docsUrl:"https://docs.moodle.org/3x/fr/SCORM", longDesc:"Les paquetages SCORM intègrent dans Moodle des contenus SCORM ou AICC créés en externe. Ces modules d'apprentissage interactifs sont produits avec des outils comme Articulate, Captivate ou iSpring. La progression et les résultats sont automatiquement reportés à Moodle. Les paquetages conviennent aux unités d'auto-apprentissage multimédia et interactives. L'intégration est simple, mais la création des contenus demande des logiciels spécifiques.", goals:{ info:"Oui. Bien adapté à la transmission d'informations.", bewerten:"Oui, l'évaluation peut être intégrée.", komm:"Non. Les participants travaillent individuellement.", collab:"Non. Les participants travaillent individuellement.", bloomG:"Variable selon l'usage créatif." }},
-    chat: { name:"Salon de discussion", desc:"Chat textuel en temps réel avec les participants", complexityText:"Facile. Demande de la modération ; petits groupes.", docsUrl:"https://docs.moodle.org/3x/fr/Salon_de_discussion", longDesc:"Le Salon de discussion permet des conversations textuelles synchrones en temps réel entre participants. Il convient aux permanences, discussions de groupe ou échanges spontanés en petits groupes. Les historiques sont enregistrés et consultables ultérieurement. Une modération est recommandée pour orienter la discussion. Pour de plus grands groupes ou une communication asynchrone, le Forum est mieux adapté.", goals:{ info:"Demande la présence au moment du chat.", bewerten:"Les contributions peuvent être notées comme une participation orale.", komm:"Oui. Discussions en petits groupes ou séances de Q/R.", collab:"Oui. Les participants peuvent travailler et discuter ensemble.", bloomG:"Peut être utilisé de façon créative en petits groupes." }},
     forum: { name:"Forum", desc:"Activité polyvalente pour de nombreuses stratégies d'apprentissage", complexityText:"Facile. Titre et description suffisent.", docsUrl:"https://docs.moodle.org/3x/fr/Forum", longDesc:"Le Forum est l'outil de communication le plus polyvalent de Moodle. Il permet des discussions asynchrones où les participants postent, se répondent et joignent des fichiers. Plusieurs types de forums sont disponibles – du forum d'annonces à la discussion ouverte. Les messages peuvent être suivis par e-mail et même notés. Les forums conviennent aux annonces, à l'apprentissage entre pairs, à la réflexion et au travail collaboratif.", goals:{ info:"Oui. Forum d'annonces et notification par e-mail.", bewerten:"Plutôt oui. Les contributions peuvent être notées sur une période.", komm:"Oui. Communication asynchrone. Groupes de cours utilisables.", collab:"Oui. Les participants échangent en créant des contenus.", bloomG:"Peut aussi être utilisé de manière créative en grand groupe." }},
     extern: { name:"Outil externe", desc:"Connecter une activité d'apprentissage externe (LTI)", complexityText:"Nécessite des identifiants des fournisseurs externes.", docsUrl:"https://docs.moodle.org/3x/fr/Outil_externe", longDesc:"L'Outil externe relie Moodle à des plateformes et services externes via la norme LTI. Les participants peuvent accéder à des outils externes directement depuis Moodle – sans connexion séparée. Les notes peuvent être renvoyées automatiquement vers Moodle. Cas d'usage typiques : simulations, laboratoires, contenus d'éditeurs ou outils spécialisés. La mise en place demande une configuration technique et des identifiants du fournisseur.", goals:{ info:"Dépend de l'outil connecté.", bewerten:"Les notes peuvent être renvoyées vers Moodle.", komm:"Dépend de l'outil connecté.", collab:"Dépend de l'outil connecté.", bloomG:"Dépend de l'outil connecté." }},
     h5p: { name:"H5P", desc:"Outils pour contenus interactifs", complexityText:"Utilisation simple par formulaires.", docsUrl:"https://docs.moodle.org/3x/fr/H5P", longDesc:"H5P propose plus de 40 types de contenus interactifs directement dans Moodle – des vidéos interactives aux frises chronologiques jusqu'aux activités glisser-déposer. La création se fait via des formulaires intuitifs sans connaissances en programmation. Les notes sont collectées automatiquement et transmises au carnet de notes Moodle. Les contenus H5P sont responsives et fonctionnent sur tous les appareils. C'est l'un des outils les plus polyvalents pour des expériences d'apprentissage interactives et engageantes.", goals:{ info:"Oui. Bonne visualisation de l'information.", bewerten:"Oui. Évaluation automatique.", komm:"Non. Pas de communication possible.", collab:"Non. Les participants travaillent individuellement.", bloomG:"Soutien diversifié de scénarios d'apprentissage." }},
@@ -147,13 +153,12 @@ const TOOL_TRANSLATIONS = {
     datenbank: { name:"Base de datos", desc:"Recopilar, compartir y buscar materiales", complexityText:"Difícil de configurar. ¡Planifique antes la estructura!", docsUrl:"https://docs.moodle.org/all/es/Base_de_datos", longDesc:"La actividad Base de datos permite recopilar entradas estructuradas con campos de libre definición. Las y los participantes pueden introducir textos, imágenes, archivos y enlaces en un formato uniforme. Todas las entradas son consultables y pueden comentarse y calificarse. La base de datos es adecuada para colecciones de materiales, fichas o portafolios de proyecto. La configuración requiere planificación pero ofrece usos muy flexibles.", goals:{ info:"El profesorado puede presentar material. Mejor: que las y los participantes introduzcan datos.", bewerten:"Sí. Los contenidos pueden calificarse. Uso flexible.", komm:"Parcialmente. Las entradas pueden comentarse.", collab:"La autoría puede editar; las demás personas comentan.", bloomG:"6/6 posible. Según el escenario de uso." }},
     umfrage: { name:"Encuesta predefinida", desc:"Encuesta con preguntas predefinidas", complexityText:"Fácil. Elija entre 3 tipos.", docsUrl:"https://docs.moodle.org/all/es/Encuesta_predefinida", longDesc:"La Encuesta predefinida ofrece tres cuestionarios validados científicamente para evaluar entornos de aprendizaje. Capta cómo las y los participantes perciben el clima de aprendizaje y la enseñanza. Los resultados ayudan al profesorado a mejorar su curso. A diferencia del Feedback, las preguntas no pueden modificarse. Es especialmente adecuada para reflexionar sobre el proceso de aprendizaje y optimizar el curso.", goals:{ info:"No. La Encuesta no es adecuada para distribuir información.", bewerten:"Más bien no. Mejor para evaluar el curso.", komm:"No. Solo comunicación unidireccional.", collab:"No. Actividad puramente individual.", bloomG:"Ayuda a las y los participantes a reflexionar sobre su aprendizaje." }},
     feedback: { name:"Retroalimentación", desc:"Crear sus propios cuestionarios de evaluación", complexityText:"Fácil de manejar. Tiempo invertido en las preguntas.", docsUrl:"https://docs.moodle.org/all/es/Retroalimentaci%C3%B3n", longDesc:"Con la actividad Retroalimentación crea sus propios cuestionarios con preguntas de libre definición. Puede usar opción múltiple, campos de texto, escalas de valoración y más. Las respuestas se pueden recoger de forma anónima o nominal. Es excelente para evaluar cursos, sondear expectativas o tomar el pulso. A diferencia de la Encuesta predefinida, tiene control total sobre las preguntas.", goals:{ info:"No. No está pensada para distribuir información.", bewerten:"No. Las evaluaciones generan retroalimentación para el profesorado.", komm:"No. Solo comunicación unidireccional.", collab:"No. Actividad puramente individual.", bloomG:"Puede diseñarse de forma creativa." }},
-    abstimmung: { name:"Consulta", desc:"Las y los participantes votan una pregunta", complexityText:"Fácil. Crear pregunta(s) y respuestas.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_consulta", longDesc:"La Consulta plantea una sola pregunta con opciones de respuesta predefinidas. Las y los participantes eligen una opción y los resultados se muestran como gráfico de barras. Es adecuada para sondeos rápidos, planificación de citas o asignación de grupos. La configuración solo lleva unos minutos. Para encuestas más complejas con varias preguntas use mejor la Retroalimentación.", goals:{ info:"No. Sobre todo para un sondeo rápido sobre un tema.", bewerten:"Úsese como verificación rápida de una pregunta.", komm:"No. Mejor un foro o chat.", collab:"No. Mejor un foro, glosario o wiki.", bloomG:"Permite verificar de forma sencilla conocimientos y comprensión." }},
-    test: { name:"Cuestionario", desc:"Preguntas de cuestionario con corrección automática", complexityText:"Tiempo invertido en la creación. Corrección automática.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_cuestionario", longDesc:"El Cuestionario es la herramienta central de evaluación en Moodle, con más de 15 tipos de preguntas – desde opción múltiple hasta texto con huecos o emparejamiento. La corrección es automática con retroalimentación inmediata. Los cuestionarios pueden ser cronometrados, con preguntas aleatorias y varios intentos. Son adecuados igualmente para autoevaluaciones, ejercicios y exámenes formales. El banco de preguntas permite reutilización entre cursos.", goals:{ info:"Apunta a la evaluación, no a la distribución de información.", bewerten:"Sí. Para preguntas con respuesta clara. Automático.", komm:"No. Mejor un foro o chat.", collab:"No. Mejor un foro o wiki.", bloomG:"Versátil mediante uso creativo." }},
+    abstimmung: { name:"Consulta", desc:"Las y los participantes votan una pregunta", complexityText:"Fácil. Crear pregunta(s) y respuestas.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_consulta", longDesc:"La Consulta plantea una sola pregunta con opciones de respuesta predefinidas. Las y los participantes eligen una opción y los resultados se muestran como gráfico de barras. Es adecuada para sondeos rápidos, planificación de citas o asignación de grupos. La configuración solo lleva unos minutos. Para encuestas más complejas con varias preguntas use mejor la Retroalimentación.", goals:{ info:"No. Sobre todo para un sondeo rápido sobre un tema.", bewerten:"Úsese como verificación rápida de una pregunta.", komm:"No. Mejor un foro o BigBlueButton.", collab:"No. Mejor un foro, glosario o wiki.", bloomG:"Permite verificar de forma sencilla conocimientos y comprensión." }},
+    test: { name:"Cuestionario", desc:"Preguntas de cuestionario con corrección automática", complexityText:"Tiempo invertido en la creación. Corrección automática.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_cuestionario", longDesc:"El Cuestionario es la herramienta central de evaluación en Moodle, con más de 15 tipos de preguntas – desde opción múltiple hasta texto con huecos o emparejamiento. La corrección es automática con retroalimentación inmediata. Los cuestionarios pueden ser cronometrados, con preguntas aleatorias y varios intentos. Son adecuados igualmente para autoevaluaciones, ejercicios y exámenes formales. El banco de preguntas permite reutilización entre cursos.", goals:{ info:"Apunta a la evaluación, no a la distribución de información.", bewerten:"Sí. Para preguntas con respuesta clara. Automático.", komm:"No. Mejor un foro o BigBlueButton.", collab:"No. Mejor un foro o wiki.", bloomG:"Versátil mediante uso creativo." }},
     lektion: { name:"Lección", desc:"Construir páginas de información y preguntas", complexityText:"Requiere planificación; luego, una actividad eficaz.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_lecci%C3%B3n", longDesc:"La Lección presenta contenido en páginas individuales y las enlaza con preguntas. Según la respuesta, las y los participantes son dirigidos a páginas distintas – surge un itinerario de aprendizaje ramificado. Esto permite aprendizaje adaptativo, en el que el camino depende del nivel previo. Las lecciones son adecuadas para unidades guiadas con comprobaciones integradas. La creación requiere planificación pero da una actividad muy eficaz.", goals:{ info:"Bien adecuada para presentación guiada de información.", bewerten:"Sí, permite evaluación mediante preguntas integradas.", komm:"No. Las y los participantes trabajan individualmente.", collab:"No. Las y los participantes trabajan individualmente.", bloomG:"Versátil mediante uso creativo." }},
     aufgabe: { name:"Tarea", desc:"Enunciado con calificación individual", complexityText:"Fácil. Elija entre cuatro tipos de entrega.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_tarea", longDesc:"La Tarea es la herramienta de evaluación más versátil de Moodle. Las y los participantes entregan textos, archivos o medios que usted califica individualmente con nota y comentario. Hay cuatro tipos de entrega: archivo, texto en línea, grabación de audio/vídeo. Plazos, prórrogas y entregas en grupo son configurables. Es adecuada para ensayos, trabajos de proyecto, presentaciones y cualquier prueba individual de rendimiento.", goals:{ info:"No. Pero puede contener el contenido del enunciado.", bewerten:"Sí. Calificación individual con nota y comentario.", komm:"Poca interacción. Salvo: entrega repetida con retroalimentación.", collab:"Un miembro del grupo puede entregar en nombre del grupo.", bloomG:"Depende de la formulación de la tarea y de la forma de evaluación." }},
     beurteilung: { name:"Taller", desc:"Tarea con evaluación entre pares", complexityText:"Requiere planificación cuidadosa.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_taller", longDesc:"El Taller (Workshop) combina entrega de tarea con revisión por pares. Las y los participantes entregan primero su trabajo y después evalúan los trabajos de otras personas según criterios dados. Este proceso fomenta el pensamiento crítico y la reflexión. La nota final combina evaluación entre pares y del docente. La configuración es exigente pero ofrece un escenario pedagógico muy valioso.", goals:{ info:"No. Use otra herramienta.", bewerten:"Sí. Evaluación entre pares. Las y los participantes evalúan soluciones de otras personas.", komm:"No. Solo permite retroalimentación, no comunicación.", collab:"No. Para tareas grupales use foro o wiki.", bloomG:"Depende de la formulación de la tarea y de la forma de evaluación." }},
     lernpaket: { name:"Paquete SCORM", desc:"Integrar contenidos en formato SCORM", complexityText:"Requiere software o contenidos adquiridos.", docsUrl:"https://docs.moodle.org/all/es/SCORM", longDesc:"Los paquetes SCORM integran en Moodle contenidos SCORM o AICC creados externamente. Estos módulos interactivos se producen con herramientas de autor como Articulate, Captivate o iSpring. El progreso y los resultados se reportan automáticamente a Moodle. Son adecuados para unidades multimedia interactivas de autoaprendizaje. La integración es sencilla, pero la creación de contenidos requiere software específico.", goals:{ info:"Sí. Bien adecuado para transmitir información.", bewerten:"Sí, la calificación puede integrarse.", komm:"No. Las y los participantes trabajan individualmente.", collab:"No. Las y los participantes trabajan individualmente.", bloomG:"Versátil mediante uso creativo." }},
-    chat: { name:"Chat", desc:"Chat de texto en tiempo real con participantes", complexityText:"Fácil. Requiere moderación; grupos pequeños.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_chat", longDesc:"El Chat permite conversaciones de texto sincrónicas en tiempo real entre participantes. Es adecuado para tutorías, debates de grupo o intercambio espontáneo en grupos pequeños. Los registros se guardan y pueden consultarse después. Se recomienda moderar para conducir la conversación. Para grupos mayores o comunicación asíncrona el Foro está mejor adaptado.", goals:{ info:"Requiere presencia en el momento del chat.", bewerten:"Las contribuciones pueden calificarse como participación oral.", komm:"Sí. Debates en grupos pequeños o sesiones de preguntas.", collab:"Sí. Las y los participantes pueden trabajar y debatir juntos.", bloomG:"Puede usarse de forma creativa con grupos pequeños." }},
     forum: { name:"Foro", desc:"Actividad versátil para muchas estrategias de aprendizaje", complexityText:"Fácil. Bastan título y descripción.", docsUrl:"https://docs.moodle.org/all/es/Actividad_de_foro", longDesc:"El Foro es la herramienta de comunicación más versátil de Moodle. Permite debates asíncronos en los que las y los participantes escriben, responden y adjuntan archivos. Hay varios tipos de foro – desde el de noticias hasta el debate abierto. Las publicaciones se pueden seguir por correo y hasta calificar. Los foros son adecuados para anuncios, aprendizaje entre pares, reflexión y trabajo colaborativo.", goals:{ info:"Sí. Foro de novedades y aviso por correo.", bewerten:"Más bien sí. Las publicaciones pueden calificarse durante un periodo.", komm:"Sí. Comunicación asíncrona. Se pueden usar grupos del curso.", collab:"Sí. Intercambio mientras se crean contenidos.", bloomG:"Puede usarse creativamente también con grupos grandes." }},
     extern: { name:"Herramienta externa", desc:"Conectar una actividad de aprendizaje externa (LTI)", complexityText:"Requiere credenciales de proveedores externos.", docsUrl:"https://docs.moodle.org/all/es/Herramienta_externa", longDesc:"La Herramienta externa conecta Moodle con plataformas y servicios externos vía el estándar LTI. Las y los participantes acceden a herramientas externas directamente desde Moodle – sin un inicio de sesión separado. Las calificaciones pueden devolverse automáticamente a Moodle. Casos típicos: simulaciones, laboratorios, contenido editorial o herramientas especializadas. La configuración requiere ajuste técnico y credenciales del proveedor.", goals:{ info:"Depende de la herramienta conectada.", bewerten:"Las calificaciones pueden devolverse a Moodle.", komm:"Depende de la herramienta conectada.", collab:"Depende de la herramienta conectada.", bloomG:"Depende de la herramienta conectada." }},
     h5p: { name:"H5P", desc:"Herramientas para contenidos interactivos", complexityText:"Manejo sencillo mediante formularios.", docsUrl:"https://docs.moodle.org/all/es/H5P", longDesc:"H5P ofrece más de 40 tipos de contenido interactivo directamente en Moodle – desde vídeos interactivos hasta líneas de tiempo y arrastrar y soltar. La creación se hace con formularios intuitivos sin programación. Las calificaciones se recogen automáticamente y se pasan al libro de calificaciones. Los contenidos H5P son responsivos y funcionan en todos los dispositivos. Es una de las herramientas más versátiles para experiencias de aprendizaje interactivas y atractivas.", goals:{ info:"Sí. Buena visualización de información.", bewerten:"Sí. Calificación automática.", komm:"No. Sin posibilidad de comunicación.", collab:"No. Las y los participantes trabajan individualmente.", bloomG:"Apoyo diverso a escenarios de aprendizaje." }},
@@ -199,7 +204,6 @@ const TOOL_ICONS = {
   glossar:    {bg:"#A5C387", svg:`<rect x="3" y="2" width="18" height="20" rx="3" stroke="white" stroke-width="1.8" fill="none"/><path d="M8 6h2" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M12 6.25a3.5 3.5 0 0 1 3.5 3.5v.5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="12" cy="16" r="0.5" fill="white" stroke="white" stroke-width="1"/>`},
   datenbank:  {bg:"#A5C387", svg:`<ellipse cx="12" cy="5" rx="9" ry="3" stroke="white" stroke-width="1.8" fill="none"/><path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" stroke="white" stroke-width="1.8" fill="none"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="white" stroke-width="1.8" fill="none"/>`},
   forum:      {bg:"#65A1B3", svg:`<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 9h8M8 13h5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>`},
-  chat:       {bg:"#65A1B3", svg:`<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
   bbb:        {bg:"#65A1B3", svg:`<rect x="2" y="3" width="20" height="14" rx="2" stroke="white" stroke-width="1.8" fill="none"/><path d="M8 21h8M12 17v4" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="12" cy="10" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>`},
   test:       {bg:"#7C6576", svg:`<path d="M9 11l3 3L22 4" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
   aufgabe:    {bg:"#7C6576", svg:`<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 15l2 2 4-4" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`},
@@ -246,6 +250,7 @@ const I18N = {
     nav_wizard: "Assistent",
     search_placeholder: "Tool suchen…",
     compare_btn: "Vergleichen",
+    compare_new: "Neuen Vergleich starten",
     filter_setup_all: "Aufwand Einrichtung: alle",
     filter_support_all: "Aufwand Betreuung: alle",
     filter_goal_default: "Gut geeignet für …",
@@ -340,7 +345,13 @@ const I18N = {
   ,
     alt_github: "Quellcode auf GitHub"
   ,
-    alt_cc_byncsa: "Lizenz: Creative Commons Namensnennung – Nicht-kommerziell – Weitergabe unter gleichen Bedingungen 4.0 International"
+    alt_cc_byncsa: "Lizenz: Creative Commons Namensnennung – Nicht-kommerziell – Weitergabe unter gleichen Bedingungen 4.0 International",
+    skip_to_content: "Zum Inhalt springen",
+    a11y_font_group: "Schriftgröße",
+    language: "Sprache",
+    views: "Ansichten",
+    search: "Suche",
+    matrix_aria: "Moodle Tool Guide Matrix"
   },
   en: {
     title: "Moodle Tool Guide",
@@ -360,6 +371,7 @@ const I18N = {
     nav_wizard: "Wizard",
     search_placeholder: "Search tool…",
     compare_btn: "Compare",
+    compare_new: "Start new comparison",
     filter_setup_all: "Setup effort: all",
     filter_support_all: "Support effort: all",
     filter_goal_default: "Well suited for …",
@@ -454,7 +466,13 @@ const I18N = {
   ,
     alt_github: "Source on GitHub"
   ,
-    alt_cc_byncsa: "License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"
+    alt_cc_byncsa: "License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
+    skip_to_content: "Skip to content",
+    a11y_font_group: "Text size",
+    language: "Language",
+    views: "Views",
+    search: "Search",
+    matrix_aria: "Moodle Tool Guide matrix"
   },
   fr: {
     title: "Guide des outils Moodle",
@@ -474,6 +492,7 @@ const I18N = {
     nav_wizard: "Assistant",
     search_placeholder: "Rechercher un outil…",
     compare_btn: "Comparer",
+    compare_new: "Commencer une nouvelle comparaison",
     filter_setup_all: "Effort de mise en place : tous",
     filter_support_all: "Effort d'animation : tous",
     filter_goal_default: "Bien adapté pour …",
@@ -568,7 +587,13 @@ const I18N = {
   ,
     alt_github: "Code source sur GitHub"
   ,
-    alt_cc_byncsa: "Licence : Creative Commons Attribution – Pas d'utilisation commerciale – Partage dans les mêmes conditions 4.0 International"
+    alt_cc_byncsa: "Licence : Creative Commons Attribution – Pas d'utilisation commerciale – Partage dans les mêmes conditions 4.0 International",
+    skip_to_content: "Aller au contenu",
+    a11y_font_group: "Taille du texte",
+    language: "Langue",
+    views: "Vues",
+    search: "Recherche",
+    matrix_aria: "Matrice du Moodle Tool Guide"
   },
   es: {
     title: "Guía de herramientas Moodle",
@@ -588,6 +613,7 @@ const I18N = {
     nav_wizard: "Asistente",
     search_placeholder: "Buscar herramienta…",
     compare_btn: "Comparar",
+    compare_new: "Iniciar nueva comparación",
     filter_setup_all: "Esfuerzo de configuración: todos",
     filter_support_all: "Esfuerzo de tutoría: todos",
     filter_goal_default: "Bien adaptado para …",
@@ -682,7 +708,13 @@ const I18N = {
   ,
     alt_github: "Código fuente en GitHub"
   ,
-    alt_cc_byncsa: "Licencia: Creative Commons Atribución – No comercial – Compartir igual 4.0 Internacional"
+    alt_cc_byncsa: "Licencia: Creative Commons Atribución – No comercial – Compartir igual 4.0 Internacional",
+    skip_to_content: "Saltar al contenido",
+    a11y_font_group: "Tamaño del texto",
+    language: "Idioma",
+    views: "Vistas",
+    search: "Buscar",
+    matrix_aria: "Matriz de Moodle Tool Guide"
   }
 };
 
@@ -720,7 +752,7 @@ const PURPOSE_LABELS = {
 const TOOL_PURPOSE = {
   datei:"content", verzeichnis:"content", textseite:"content", buch:"content", url:"content",
   wiki:"collaboration", glossar:"collaboration", datenbank:"collaboration", lerntagebuch:"collaboration",
-  forum:"communication", chat:"communication", bbb:"communication", abstimmung:"communication",
+  forum:"communication", bbb:"communication", abstimmung:"communication",
   feedback:"communication", umfrage:"communication", board:"communication",
   test:"assessment", aufgabe:"assessment", beurteilung:"assessment",
   lektion:"interactivecontent", lernpaket:"interactivecontent", extern:"interactivecontent",
@@ -791,7 +823,7 @@ const THUMBS_UP_PATH = '<path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8
 const THUMBS_DOWN_PATH = '<path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/><path d="M17 14V2"/>';
 const THUMBS = {
   grün:   `<g ${LUCIDE_STROKE}>${THUMBS_UP_PATH}</g>`,
-  orange: `<g ${LUCIDE_STROKE} transform="rotate(90 12 12)">${THUMBS_UP_PATH}</g>`,
+  orange: `<g ${LUCIDE_STROKE} transform="rotate(-90 12 12)">${THUMBS_UP_PATH}</g>`,
   rot:    `<g ${LUCIDE_STROKE}>${THUMBS_DOWN_PATH}</g>`
 };
 
@@ -948,7 +980,7 @@ function ToolCard({tool, onSelect, onCompare, isC, lang}) {
     tabIndex:0,
     onKeyDown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(tool);}},
     "aria-label":tool.name,
-    style:{background:"white",borderRadius:12,padding:18,cursor:"pointer",boxShadow:"0 1px 3px rgba(0,0,0,0.08)",border:isC?"2px solid #f98012":"2px solid transparent",transition:"all 0.2s"},
+    style:{background:"white",borderRadius:12,padding:18,cursor:"pointer",boxShadow:"0 1px 3px rgba(0,0,0,0.08)",border:isC?"2px solid #f98012":"2px solid transparent",transition:"all 0.2s",display:"flex",flexDirection:"column",height:"100%"},
     onMouseEnter:e=>{e.currentTarget.style.boxShadow="0 4px 12px rgba(0,0,0,0.12)";e.currentTarget.style.transform="translateY(-2px)"},
     onMouseLeave:e=>{e.currentTarget.style.boxShadow="0 1px 3px rgba(0,0,0,0.08)";e.currentTarget.style.transform="none"}
   },
@@ -964,13 +996,17 @@ function ToolCard({tool, onSelect, onCompare, isC, lang}) {
       React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"labeled"})
     ),
     React.createElement("div",{style:{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap",alignItems:"center"}},
-      goals.map(gk=>React.createElement("span",{key:gk,title:tg(lang,gk).label+": "+rl(tool.goals[gk].r,lang),role:"img","aria-label":tg(lang,gk).label+": "+rl(tool.goals[gk].r,lang),style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:30,height:30,borderRadius:8,background:rb(tool.goals[gk].r),cursor:"help"}},
-        React.createElement(GoalIcon,{goalKey:gk,color:rc(tool.goals[gk].r),size:16})
-      ))
+      goals.map(gk=>{
+        const isBloom = gk==="bloomG";
+        const label = isBloom ? tg(lang,gk).label+": "+tool.bloom : tg(lang,gk).label+": "+rl(tool.goals[gk].r,lang);
+        return React.createElement("span",{key:gk,title:label,role:"img","aria-label":label,style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:30,height:30,borderRadius:8,background:isBloom?"#F3F5F8":rb(tool.goals[gk].r),cursor:"help"}},
+          React.createElement(GoalIcon,{goalKey:gk,color:isBloom?"#8A8A8E":rc(tool.goals[gk].r),size:16})
+        );
+      })
     ),
     React.createElement("div",{style:{marginBottom:10}},React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:25})),
     React.createElement("p",{style:{fontSize:11,color:"#707070",lineHeight:1.4,margin:"0 0 10px",borderTop:"1px solid #E9E9E9",paddingTop:8,fontStyle:"italic"}},tool.complexityText),
-    onCompare&&React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",alignItems:"center"}},
+    onCompare&&React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",alignItems:"center",marginTop:"auto"}},
       React.createElement("button",{onClick:e=>{e.stopPropagation();onCompare(tool.id)},style:{fontSize:11,padding:"4px 10px",borderRadius:6,border:isC?"1px solid #f98012":"1px solid #E9E9E9",background:isC?"#FFECDB":"white",color:isC?"#f98012":"#707070",cursor:"pointer"}},isC?t(lang,"in_compare"):t(lang,"add_compare"))
     )
   );
@@ -1012,46 +1048,77 @@ function MatrixUseGuideRail({lang}) {
 }
 
 function MobileMatrixView({tools, onSelect, lang}) {
+  const [mobileTip,setMobileTip]=React.useState(null);
   const goalKeys = ["info","bewerten","komm","collab"];
-  return React.createElement("div",{className:"tg-mobile-matrix",style:{display:"none",gap:12}},
-    React.createElement("div",{style:{display:"grid",gap:8,marginBottom:2}},
-      React.createElement("div",{style:{display:"inline-flex",alignItems:"center",gap:8,color:"#194866",fontSize:13,fontWeight:700}},
-        React.createElement("span",{style:{width:26,height:2,background:"#F98012",borderRadius:99},"aria-hidden":"true"}),
-        t(lang,"matrix_goal_axis")
+  const cell = {padding:"6px 2px",textAlign:"center",borderBottom:"1px solid #E9E9E9",minWidth:31,width:31};
+  const tipButton = (label, children) => React.createElement("button",{
+    type:"button",
+    onClick:e=>{e.stopPropagation();setMobileTip(label);},
+    "aria-label":label,
+    style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:28,height:28,padding:0,border:"none",background:"transparent",color:"inherit",cursor:"pointer"}
+  },children);
+  const effortDot = (level, kind) => {
+    const value = kind==="setup" ? setupLabel(level, lang) : supportLabel(level, lang);
+    const colLabel = kind==="setup" ? t(lang,"setup") : t(lang,"support");
+    return tipButton(colLabel+": "+value,
+      React.createElement("span",{
+        title: colLabel+": "+value,
+        role:"img",
+        "aria-label":colLabel+": "+value,
+        style:{display:"inline-block",width:11,height:11,borderRadius:"50%",background:effortColor(level),boxShadow:"0 0 0 3px "+effortBg(level)}
+      })
+    );
+  };
+  return React.createElement("div",{className:"tg-mobile-matrix",style:{display:"none"}},
+    React.createElement("div",{style:{overflowX:"auto",WebkitOverflowScrolling:"touch",border:"1px solid #DDE4EA",borderRadius:10,background:"white",boxShadow:"0 1px 3px rgba(0,0,0,0.06)"}},
+      mobileTip&&React.createElement("div",{role:"status","aria-live":"polite",style:{position:"fixed",left:12,right:12,bottom:14,zIndex:220,display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:8,padding:"9px 10px",background:"#FFF4EA",border:"1px solid #FCBC82",borderRadius:8,boxShadow:"0 8px 22px rgba(25,72,102,0.18)",color:"#194866",fontSize:12,lineHeight:1.35}},
+        React.createElement("span",null,mobileTip),
+        React.createElement("button",{type:"button",onClick:()=>setMobileTip(null),"aria-label":t(lang,"dialog_close"),style:{flex:"0 0 auto",width:22,height:22,border:"1px solid #FCBC82",borderRadius:6,background:"white",color:"#194866",cursor:"pointer",fontSize:15,lineHeight:"18px",padding:0}},"\u00d7")
       ),
-      React.createElement("div",{style:{display:"inline-flex",alignItems:"center",gap:8,color:"#194866",fontSize:13,fontWeight:700}},
-        React.createElement("span",{style:{width:2,height:20,background:"#F98012",borderRadius:99},"aria-hidden":"true"}),
-        t(lang,"matrix_tool_axis")
-      )
-    ),
-    tools.map(tool=>React.createElement("button",{
-      key:tool.id,
-      type:"button",
-      onClick:()=>onSelect(tool),
-      style:{width:"100%",textAlign:"left",background:"white",border:"1px solid #E9E9E9",borderRadius:8,padding:12,boxShadow:"0 1px 3px rgba(0,0,0,0.06)",cursor:"pointer",color:"#353535"}
-    },
-      React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:10}},
-        React.createElement(ToolIcon,{toolId:tool.id,size:34}),
-        React.createElement("div",{style:{minWidth:0,flex:1}},
-          React.createElement("div",{style:{fontSize:15,fontWeight:700,color:"#194866",lineHeight:1.2}},tool.name),
-          React.createElement("div",{style:{fontSize:12,color:"#707070",lineHeight:1.3,marginTop:2}},tool.desc)
+      React.createElement("table",{style:{width:"100%",minWidth:306,borderCollapse:"separate",borderSpacing:0,fontSize:11,background:"white",tableLayout:"fixed"},"aria-label":t(lang,"matrix_aria")},
+        React.createElement("thead",null,
+          React.createElement("tr",null,
+            React.createElement("th",{scope:"col",style:{position:"sticky",left:0,zIndex:2,background:"#194866",color:"white",padding:"7px 6px",textAlign:"left",minWidth:110,width:110}},
+              t(lang,"activity")
+            ),
+            React.createElement("th",{scope:"col",title:t(lang,"setup_help"),"aria-label":t(lang,"setup")+". "+t(lang,"setup_help"),style:{...cell,background:"#194866",color:"white",borderBottom:"none"}},
+              tipButton(t(lang,"setup")+". "+t(lang,"setup_help"),React.createElement(IconMonitorCog,{size:13,color:"white"}))
+            ),
+            React.createElement("th",{scope:"col",title:t(lang,"support_help"),"aria-label":t(lang,"support")+". "+t(lang,"support_help"),style:{...cell,background:"#194866",color:"white",borderBottom:"none"}},
+              tipButton(t(lang,"support")+". "+t(lang,"support_help"),React.createElement(IconUsers,{size:13,color:"white"}))
+            ),
+            goalKeys.map(gk=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).label+". "+tg(lang,gk).q,"aria-label":tg(lang,gk).label+". "+tg(lang,gk).q,style:{...cell,background:"#194866",color:"white",borderBottom:"none"}},
+              tipButton(tg(lang,gk).label+". "+tg(lang,gk).q,React.createElement(GoalIcon,{goalKey:gk,color:"white",size:13}))
+            ))
+          )
         ),
-        React.createElement("div",{style:{flex:"0 0 auto"}},React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:15}))
-      ),
-      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:10}},
-        React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang,display:"labeled"}),
-        React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"labeled"})
-      ),
-      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(4, minmax(0, 1fr))",gap:6}},
-        goalKeys.map(gk=>{
-          const r = tool.goals[gk].r;
-          return React.createElement("span",{key:gk,title:tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t,role:"img","aria-label":tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t,style:{minHeight:54,borderRadius:8,background:rb(r),border:"1px solid "+rc(r),display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:4,padding:"6px 4px",color:"#194866"}},
-            React.createElement(GoalIcon,{goalKey:gk,color:rc(r),size:17}),
-            React.createElement("span",{style:{fontSize:10,lineHeight:1.1,fontWeight:700,textAlign:"center"}},tg(lang,gk).label)
-          );
-        })
+        React.createElement("tbody",null,
+          tools.map((tool,idx)=>React.createElement("tr",{key:tool.id,style:{background:idx%2===0?"white":"#F3F5F8"}},
+            React.createElement("th",{scope:"row",style:{position:"sticky",left:0,zIndex:1,background:"inherit",padding:"6px",borderBottom:"1px solid #E9E9E9",textAlign:"left",minWidth:110,width:110}},
+              React.createElement("button",{type:"button",onClick:()=>onSelect(tool),"aria-label":t(lang,"a11y_open_tool_details").replace("{name}",tool.name),style:{display:"grid",gridTemplateColumns:"20px minmax(0,1fr)",alignItems:"center",gap:5,width:"100%",padding:0,border:"none",background:"transparent",color:"#194866",font:"inherit",fontWeight:700,textAlign:"left",cursor:"pointer"}},
+                React.createElement(ToolIcon,{toolId:tool.id,size:20}),
+                React.createElement("span",{style:{display:"block",minWidth:0,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},tool.name)
+              )
+            ),
+            React.createElement("td",{style:cell},
+              effortDot(tool.setup,"setup")
+            ),
+            React.createElement("td",{style:cell},
+              effortDot(tool.support,"support")
+            ),
+            goalKeys.map(gk=>{
+              const r = tool.goals[gk].r;
+              const tooltipText = tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t;
+              return React.createElement("td",{key:gk,style:cell},
+                tipButton(tooltipText,
+                  React.createElement(ThumbIcon,{rating:r,size:13,title:tooltipText})
+                )
+              );
+            })
+          ))
+        )
       )
-    ))
+    )
   );
 }
 
@@ -1081,7 +1148,14 @@ function InfoDisclosure({label, text, lang, maxWidth=760}) {
 
 function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
   const [showReadingGuide,setShowReadingGuide]=React.useState(false);
+  const [matrixTip,setMatrixTip]=React.useState(null);
   const detailLabel = name => t(lang,"a11y_open_tool_details").replace("{name}",name);
+  const tipButton = (label, children, extraStyle={}) => React.createElement("button",{
+    type:"button",
+    onClick:e=>{e.stopPropagation();setMatrixTip(label);},
+    "aria-label":label,
+    style:{display:"inline-flex",alignItems:"center",justifyContent:"center",padding:0,border:"none",background:"transparent",color:"inherit",cursor:"help",font:"inherit",...extraStyle}
+  },children);
   let filtered = tools.filter(t=>{
     if(filters.setup&&t.setup!==filters.setup) return false;
     if(filters.support&&t.support!==filters.support) return false;
@@ -1102,6 +1176,10 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
     React.createElement("div",{role:"status","aria-live":"polite",className:"sr-only"},filtered.length+" "+t(lang,"wizard_results")),
     React.createElement(MobileMatrixView,{tools:filtered,onSelect:onSelect,lang:lang}),
     React.createElement("div",{className:"tg-desktop-matrix",style:{paddingTop:2}},
+      matrixTip&&React.createElement("div",{role:"status","aria-live":"polite",style:{position:"fixed",left:"50%",bottom:18,transform:"translateX(-50%)",zIndex:220,width:"min(720px, calc(100vw - 24px))",display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:10,padding:"10px 12px",background:"#FFF4EA",border:"1px solid #FCBC82",borderRadius:8,boxShadow:"0 8px 22px rgba(25,72,102,0.18)",color:"#194866",fontSize:13,lineHeight:1.4}},
+        React.createElement("span",null,matrixTip),
+        React.createElement("button",{type:"button",onClick:()=>setMatrixTip(null),"aria-label":t(lang,"dialog_close"),style:{flex:"0 0 auto",width:24,height:24,border:"1px solid #FCBC82",borderRadius:6,background:"white",color:"#194866",cursor:"pointer",fontSize:16,lineHeight:"20px",padding:0}},"\u00d7")
+      ),
       React.createElement("div",{style:{display:"flex",justifyContent:"flex-start",margin:"0 0 10px"}},
         React.createElement("button",{
           type:"button",
@@ -1121,22 +1199,22 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
           React.createElement("div",{style:{minWidth:900,flex:"1 0 900px"}},
             showReadingGuide?React.createElement(MatrixReadGuide,{lang:lang}):null,
             React.createElement("div",{style:{borderRadius:12,boxShadow:"0 1px 3px rgba(0,0,0,0.05)",overflow:"hidden"}},
-            React.createElement("table",{style:{width:"100%",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":"Moodle Tool Guide Matrix"},
+            React.createElement("table",{style:{width:"100%",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":t(lang,"matrix_aria")},
               React.createElement("thead",null,
                 React.createElement("tr",null,
                   React.createElement("th",{scope:"col",style:{position:"sticky",left:0,background:"#194866",color:"white",padding:"12px 14px",textAlign:"left",zIndex:2,minWidth:210}},
                     t(lang,"activity")
                   ),
                   React.createElement("th",{scope:"col",title:t(lang,"setup_help"),"aria-label":t(lang,"setup")+". "+t(lang,"setup_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
-                    React.createElement("div",{style:{display:"flex",justifyContent:"center",opacity:0.9},"aria-hidden":"true"},React.createElement(IconMonitorCog,{size:16,color:"white"})),
+                    tipButton(t(lang,"setup")+". "+t(lang,"setup_help"),React.createElement(IconMonitorCog,{size:16,color:"white"}),{width:28,height:22,opacity:0.9}),
                     React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"setup"))
                   ),
                   React.createElement("th",{scope:"col",title:t(lang,"support_help"),"aria-label":t(lang,"support")+". "+t(lang,"support_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
-                    React.createElement("div",{style:{display:"flex",justifyContent:"center",opacity:0.9},"aria-hidden":"true"},React.createElement(IconUsers,{size:16,color:"white"})),
+                    tipButton(t(lang,"support")+". "+t(lang,"support_help"),React.createElement(IconUsers,{size:16,color:"white"}),{width:28,height:22,opacity:0.9}),
                     React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"support"))
                   ),
                   goalKeys.map(gk=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).q,"aria-label":tg(lang,gk).label+". "+tg(lang,gk).q,style:{background:"#194866",color:"white",padding:"12px 10px",textAlign:"center",minWidth:80,cursor:"help"}},
-                    React.createElement("div",{style:{display:"flex",justifyContent:"center"}},React.createElement(GoalIcon,{goalKey:gk,color:"white",size:18})),
+                    tipButton(tg(lang,gk).label+". "+tg(lang,gk).q,React.createElement(GoalIcon,{goalKey:gk,color:"white",size:18}),{width:30,height:24}),
                     React.createElement("div",{style:{fontSize:11,marginTop:4,maxWidth:90,margin:"4px auto 0"}},tg(lang,gk).label)
                   ))
                 )
@@ -1152,23 +1230,23 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
                     )
                   ),
                   React.createElement("td",{style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                    React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang,display:"compact"})
+                    tipButton(t(lang,"setup")+": "+setupLabel(tool.setup,lang)+" – "+t(lang,"setup_help"),React.createElement(EffortBadge,{level:tool.setup,kind:"setup",lang:lang,display:"compact"}))
                   ),
                   React.createElement("td",{style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                    React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"compact"})
+                    tipButton(t(lang,"support")+": "+supportLabel(tool.support,lang)+" – "+t(lang,"support_help"),React.createElement(EffortBadge,{level:tool.support,kind:"support",lang:lang,display:"compact"}))
                   ),
                   goalKeys.map(gk=>{
                     const r = tool.goals[gk].r;
                     const tooltipText = tg(lang,gk).label+": "+rl(r,lang)+" – "+tool.goals[gk].t;
                     if (gk==="bloomG") {
                       return React.createElement("td",{key:gk,style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                        React.createElement("div",{title:tooltipText,style:{display:"flex",justifyContent:"center",cursor:"help"}},
+                        tipButton(tooltipText,
                           React.createElement(BloomHats,{bloom:tool.bloom,lang:lang,size:14,label:tooltipText})
                         )
                       );
                     }
                     return React.createElement("td",{key:gk,style:{padding:8,textAlign:"center",borderBottom:"1px solid #E9E9E9"}},
-                      React.createElement(ThumbIcon,{rating:r,size:22,title:tooltipText})
+                      tipButton(tooltipText,React.createElement(ThumbIcon,{rating:r,size:22,title:tooltipText}))
                     );
                   })
                 ))
@@ -1213,13 +1291,17 @@ function DetailModal({tool,onClose,lang}) {
         React.createElement("p",{style:{margin:0,fontSize:13,color:"#353535",lineHeight:1.6}},tool.longDesc)
       ):null,
       React.createElement("h3",{style:{fontSize:14,margin:"0 0 12px",color:"#194866",textTransform:"uppercase",letterSpacing:0.5}},t(lang,"suitability_header")),
-      goalKeys.map(gk=>React.createElement("div",{key:gk,style:{marginBottom:10,padding:12,background:rb(tool.goals[gk].r),borderRadius:10,borderLeft:"4px solid "+rc(tool.goals[gk].r)}},
-        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4,gap:8}},
-          React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6,fontWeight:600,fontSize:13,color:"#194866"}},React.createElement(GoalIcon,{goalKey:gk,color:rc(tool.goals[gk].r),size:18}),tg(lang,gk).label),
-          React.createElement("span",{style:{fontSize:11,color:rc(tool.goals[gk].r),fontWeight:600,whiteSpace:"nowrap"}},rl(tool.goals[gk].r,lang))
-        ),
-        React.createElement("p",{style:{margin:0,fontSize:12,color:"#353535",lineHeight:1.5}},tool.goals[gk].t)
-      )),
+      goalKeys.map(gk=>{
+        const isBloom = gk==="bloomG";
+        const tone = isBloom ? "#8A8A8E" : rc(tool.goals[gk].r);
+        return React.createElement("div",{key:gk,style:{marginBottom:10,padding:12,background:isBloom?"#F3F5F8":rb(tool.goals[gk].r),borderRadius:10,borderLeft:"4px solid "+tone}},
+          React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4,gap:8}},
+            React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6,fontWeight:600,fontSize:13,color:"#194866"}},React.createElement(GoalIcon,{goalKey:gk,color:tone,size:18}),tg(lang,gk).label),
+            React.createElement("span",{style:{fontSize:11,color:tone,fontWeight:600,whiteSpace:"nowrap"}},isBloom?tool.bloom:rl(tool.goals[gk].r,lang))
+          ),
+          React.createElement("p",{style:{margin:0,fontSize:12,color:"#353535",lineHeight:1.5}},tool.goals[gk].t)
+        );
+      }),
       React.createElement("div",{style:{display:"flex",gap:10,flexWrap:"wrap",marginTop:20}},
         tool.docsUrl?React.createElement("a",{href:tool.docsUrl,target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#A9CBD5",color:"#194866",textDecoration:"none",border:"1px solid #A9CBD5",fontWeight:500}},t(lang,"docs_btn")):null,
         lang==="de"?React.createElement("a",{href:COMMUNITY_TOOLGUIDE_URL,target:"_blank",rel:"noopener",style:{fontSize:13,padding:"8px 16px",borderRadius:8,background:"#FFECDB",color:"#9A4A00",textDecoration:"none",border:"1px solid #FCBC82",fontWeight:600}},t(lang,"community_btn")):null
@@ -1228,7 +1310,7 @@ function DetailModal({tool,onClose,lang}) {
   );
 }
 
-function CompareView({toolIds,tools,onClose,lang}) {
+function CompareView({toolIds,tools,onClose,onReset,lang}) {
   const items = toolIds.map(id=>tools.find(t2=>t2.id===id)).filter(Boolean);
   if(items.length<2) return null;
   const goalKeys = ["info","bewerten","komm","collab","bloomG"];
@@ -1249,7 +1331,7 @@ function CompareView({toolIds,tools,onClose,lang}) {
           React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"description")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8",color:"#353535",fontSize:12}},t2.desc))),
           React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"setup")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(EffortBadge,{level:t2.setup,kind:"setup",lang:lang})))),
           React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"support")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(EffortBadge,{level:t2.support,kind:"support",lang:lang})))),
-          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},"Bloom"),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(BloomHats,{bloom:t2.bloom,lang:lang,size:14})))),
+          React.createElement("tr",null,React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},t(lang,"bloom_short")),items.map(t2=>React.createElement("td",{key:t2.id,style:{padding:10,textAlign:"center",borderBottom:"1px solid #F3F5F8"}},React.createElement(BloomHats,{bloom:t2.bloom,lang:lang,size:14})))),
           goalKeys.map(gk=>{
             return React.createElement("tr",{key:gk},
               React.createElement("td",{style:{padding:10,fontWeight:600,borderBottom:"1px solid #F3F5F8",color:"#707070"}},React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6}},React.createElement(GoalIcon,{goalKey:gk,color:"#353535",size:16}),tg(lang,gk).label)),
@@ -1262,6 +1344,10 @@ function CompareView({toolIds,tools,onClose,lang}) {
           })
         )
       )
+      ),
+      React.createElement("div",{style:{display:"flex",justifyContent:"flex-end",gap:10,marginTop:18,flexWrap:"wrap"}},
+        React.createElement("button",{type:"button",onClick:onReset,style:{padding:"8px 14px",borderRadius:8,border:"none",background:"#b85a00",color:"white",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"compare_new")),
+        React.createElement("button",{type:"button",onClick:onClose,style:{padding:"8px 14px",borderRadius:8,border:"1px solid #E9E9E9",background:"white",color:"#194866",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"dialog_close"))
       )
     )
   );
@@ -1290,11 +1376,11 @@ function WizardView({tools,onSelect,lang}) {
   },[step,goal,setup,support,bloomMin,tools]);
 
   const sty=active=>({padding:"6px 14px",borderRadius:20,fontSize:12,fontWeight:active?600:400,background:active?"#194866":"#F3F5F8",color:active?"white":"#707070",border:"none"});
-  const optBtn=(sel,onClick,children)=>React.createElement("button",{onClick,style:{padding:"14px 18px",borderRadius:12,border:sel?"2px solid #b85a00":"2px solid #E9E9E9",background:sel?"#FFECDB":"white",cursor:"pointer",textAlign:"left",fontSize:14,transition:"all 0.15s",width:"100%"}},children);
+  const optBtn=(sel,onClick,children)=>React.createElement("button",{className:"tg-wizard-option",onClick,style:{padding:"13px 16px",borderRadius:12,border:sel?"2px solid #b85a00":"2px solid #E9E9E9",background:sel?"#FFECDB":"white",cursor:"pointer",textAlign:"left",fontSize:14,transition:"all 0.15s",width:"100%",maxWidth:"100%",boxSizing:"border-box",overflow:"hidden"}},children);
 
   const goBack = () => { if(step>0) setStep(step-1); };
 
-  return React.createElement("div",{style:{maxWidth:600,margin:"0 auto"}},
+  return React.createElement("div",{className:"tg-wizard",style:{maxWidth:600,width:"100%",margin:"0 auto",boxSizing:"border-box"}},
     React.createElement("nav",{"aria-label":t(lang,"wizard_breadcrumb"),style:{display:"flex",gap:6,marginBottom:24,justifyContent:"center",flexWrap:"wrap"}},
       [t(lang,"wizard_step1"),t(lang,"wizard_step2"),t(lang,"wizard_step3"),t(lang,"wizard_step4"),t(lang,"wizard_step5")].map((s,i)=>{
         const reachable = i <= step;
@@ -1311,9 +1397,9 @@ function WizardView({tools,onSelect,lang}) {
     ),
     step===0&&React.createElement("div",null,
       React.createElement("h3",{style:{textAlign:"center",marginBottom:20,color:"#194866"}},t(lang,"wizard_q1")),
-      React.createElement("div",{style:{display:"grid",gap:10}},
+      React.createElement("div",{className:"tg-wizard-options",style:{display:"grid",gap:10}},
         ["info","bewerten","komm","collab"].map(gk=>optBtn(goal===gk,()=>{setGoal(gk);setStep(1)},
-          React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10}},React.createElement(GoalIcon,{goalKey:gk,color:goal===gk?"#f98012":"#353535",size:22}),React.createElement("div",null,React.createElement("strong",{style:{color:"#194866"}},tg(lang,gk).label),React.createElement("br"),React.createElement("span",{style:{fontSize:12,color:"#707070"}},tg(lang,gk).q)))
+          React.createElement("div",{className:"tg-wizard-option-content",style:{display:"flex",alignItems:"flex-start",gap:10,minWidth:0}},React.createElement(GoalIcon,{goalKey:gk,color:goal===gk?"#f98012":"#353535",size:22}),React.createElement("div",{style:{minWidth:0,flex:1}},React.createElement("strong",{style:{color:"#194866"}},tg(lang,gk).label),React.createElement("br"),React.createElement("span",{style:{display:"block",fontSize:12,color:"#707070",overflowWrap:"anywhere"}},tg(lang,gk).q)))
         ))
       )
     ),
@@ -1497,7 +1583,8 @@ function Footer({lang}) {
   const linkSty = {color:"#194866",textDecoration:"underline"};
   return React.createElement("footer",{
     role:"contentinfo",
-    style:{background:"#FFECDB",color:"#194866",padding:"14px 24px",fontSize:11,lineHeight:1.55,borderTop:"1px solid #FCBC82"}
+    className:"tg-footer",
+    style:{background:"#FFECDB",color:"#194866",padding:"14px 24px",fontSize:11,lineHeight:1.55,borderTop:"1px solid #FCBC82",marginTop:"auto",flexShrink:0}
   },
     React.createElement("div",{
       style:{maxWidth:1100,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:20,flexWrap:"wrap"}
@@ -1557,7 +1644,11 @@ function Footer({lang}) {
 }
 
 function App() {
-  const [view,setView]=React.useState("matrix");
+  const [view,setView]=React.useState(()=>(
+    typeof window !== "undefined" && window.matchMedia && window.matchMedia("(max-width: 640px)").matches
+      ? "cards"
+      : "matrix"
+  ));
   const [selectedTool,setSelectedTool]=React.useState(null);
   const [compareIds,setCompareIds]=React.useState([]);
   const [showCompare,setShowCompare]=React.useState(false);
@@ -1569,6 +1660,7 @@ function App() {
 
   const resetFilters = () => setFilters({setup:null,support:null,bloomMin:0,goal:null,onlyGreen:false});
   const toggleCompare = id => setCompareIds(p=>p.includes(id)?p.filter(x=>x!==id):p.length>=4?p:[...p,id]);
+  const resetCompare = () => { setCompareIds([]); setShowCompare(false); };
   const localizedTools = useMemo(()=>TOOLS.map(t2=>localizeTool(t2,lang)),[lang]);
   const filteredTools = localizedTools.filter(t2=>!search||t2.name.toLowerCase().includes(search.toLowerCase())||t2.desc.toLowerCase().includes(search.toLowerCase()));
   const localizedSelectedTool = selectedTool ? localizedTools.find(t2=>t2.id===selectedTool.id) || selectedTool : null;
@@ -1577,8 +1669,8 @@ function App() {
 
   const langBtn = (code, label) => React.createElement("button",{key:code,onClick:()=>setLang(code),"aria-pressed":lang===code,style:{padding:"4px 10px",borderRadius:6,border:"none",background:lang===code?"#194866":"transparent",color:lang===code?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:lang===code?700:400}},label);
 
-  return React.createElement("div",{style:{fontFamily:"Inter, system-ui, -apple-system, sans-serif",background:"#F3F5F8",minHeight:"100vh",zoom:fontScale}},
-    React.createElement("a",{href:"#main",style:{position:"absolute",left:"-9999px",top:0,padding:8,background:"#194866",color:"white",zIndex:200},onFocus:e=>e.currentTarget.style.left="0",onBlur:e=>e.currentTarget.style.left="-9999px"},"Zum Inhalt springen"),
+  return React.createElement("div",{className:"tg-app-shell",style:{fontFamily:"Inter, system-ui, -apple-system, sans-serif",background:"#F3F5F8",minHeight:"100vh",display:"flex",flexDirection:"column",zoom:fontScale}},
+    React.createElement("a",{href:"#main",style:{position:"absolute",left:"-9999px",top:0,padding:8,background:"#194866",color:"white",zIndex:200},onFocus:e=>e.currentTarget.style.left="0",onBlur:e=>e.currentTarget.style.left="-9999px"},t(lang,"skip_to_content")),
     React.createElement("header",{className:"tg-header",style:{background:"#FFECDB",color:"#194866",padding:"20px 24px",borderBottom:"1px solid #FCBC82"}},
       React.createElement("div",{style:{maxWidth:1200,margin:"0 auto"}},
         React.createElement("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",gap:16,flexWrap:"wrap"}},
@@ -1591,30 +1683,30 @@ function App() {
             React.createElement("p",{style:{margin:0,fontSize:13,color:"#267372"}},t(lang,"subtitle"))
           ),
           React.createElement("div",{style:{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}},
-            React.createElement("div",{role:"group","aria-label":"Schriftgröße",style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
+            React.createElement("div",{role:"group","aria-label":t(lang,"a11y_font_group"),style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
               React.createElement("button",{onClick:()=>setFontScale(s=>Math.max(0.85,Math.round((s-0.1)*100)/100)),title:t(lang,"a11y_font_smaller"),"aria-label":t(lang,"a11y_font_smaller"),"aria-pressed":fontScale<0.999,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale<0.999?"#194866":"transparent",color:fontScale<0.999?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:fontScale<0.999?700:400}},"A−"),
               React.createElement("button",{onClick:()=>setFontScale(1),title:t(lang,"a11y_font_reset"),"aria-label":t(lang,"a11y_font_reset"),"aria-pressed":Math.abs(fontScale-1)<0.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:Math.abs(fontScale-1)<0.001?"#194866":"transparent",color:Math.abs(fontScale-1)<0.001?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:Math.abs(fontScale-1)<0.001?700:400}},"A"),
               React.createElement("button",{onClick:()=>setFontScale(s=>Math.min(1.4,Math.round((s+0.1)*100)/100)),title:t(lang,"a11y_font_larger"),"aria-label":t(lang,"a11y_font_larger"),"aria-pressed":fontScale>1.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale>1.001?"#194866":"transparent",color:fontScale>1.001?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:fontScale>1.001?700:400}},"A+")
             ),
-            React.createElement("div",{role:"group","aria-label":"Sprache",style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
+            React.createElement("div",{role:"group","aria-label":t(lang,"language"),style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
               langBtn("de","DE"), langBtn("en","EN"), langBtn("fr","FR"), langBtn("es","ES")
             )
           )
         )
       )
     ),
-    React.createElement("nav",{className:"tg-nav","aria-label":"Ansichten",style:{background:"#F3F5F8",borderBottom:"1px solid #E9E9E9",padding:"8px 24px",position:"sticky",top:0,zIndex:50}},
-      React.createElement("div",{style:{maxWidth:1200,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}},
+    React.createElement("nav",{className:"tg-nav","aria-label":t(lang,"views"),style:{background:"#F3F5F8",borderBottom:"1px solid #E9E9E9",padding:"8px 24px",position:"sticky",top:0,zIndex:50}},
+      React.createElement("div",{className:"tg-nav-row",style:{maxWidth:1200,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}},
         React.createElement("div",{style:{display:"flex",gap:4,flexWrap:"wrap"}},
           navBtn("matrix",t(lang,"nav_matrix"),IconLayoutGrid),
           navBtn("cards",t(lang,"nav_cards"),IconStickyNote),
           navBtn("wizard",t(lang,"nav_wizard"),IconBotMessageSquare)
         ),
-        React.createElement("div",{style:{display:"flex",gap:8,alignItems:"flex-start",justifyContent:"flex-end",flexWrap:"wrap"}},
+        React.createElement("div",{className:"tg-nav-actions",style:{display:"flex",gap:8,alignItems:"flex-start",justifyContent:"flex-end",flexWrap:"wrap"}},
           view!=="wizard"&&React.createElement(InfoDisclosure,{label:t(lang,"info_toolguide"),text:t(lang,"guide_intro"),lang:lang,maxWidth:420}),
           view!=="wizard"&&React.createElement(InfoDisclosure,{label:t(lang,"info_bloom"),text:t(lang,"bloom_intro"),lang:lang,maxWidth:420}),
-          React.createElement("div",{style:{display:"flex",gap:8,alignItems:"center",justifyContent:"flex-end",flexWrap:"wrap"}},
-            view!=="wizard"&&React.createElement("input",{value:search,onChange:e=>setSearch(e.target.value),placeholder:t(lang,"search_placeholder"),"aria-label":"Suche",style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:13,width:160}}),
+          React.createElement("div",{className:"tg-nav-search-wrap",style:{display:"flex",gap:8,alignItems:"center",justifyContent:"flex-end",flexWrap:"wrap"}},
+            view!=="wizard"&&React.createElement("input",{className:"tg-tool-search",value:search,onChange:e=>setSearch(e.target.value),placeholder:t(lang,"search_placeholder"),"aria-label":t(lang,"search"),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:13,width:160}}),
             compareIds.length>=2&&React.createElement("button",{onClick:()=>setShowCompare(true),style:{padding:"6px 14px",borderRadius:8,background:"#b85a00",color:"white",border:"none",cursor:"pointer",fontSize:13,fontWeight:600}},t(lang,"compare_btn")+" ("+compareIds.length+")")
           )
         )
@@ -1644,13 +1736,13 @@ function App() {
           React.createElement("option",{value:""},t(lang,"filter_goal_default")),
           ["info","bewerten","komm","collab"].map(gk=>React.createElement("option",{key:gk,value:gk},"\u2714 "+tg(lang,gk).label))
         ),
-        React.createElement("select",{value:filters.bloomMin||"","aria-label":"Bloom",onChange:e=>setFilters(f=>({...f,bloomMin:parseInt(e.target.value)||0})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
+        React.createElement("select",{value:filters.bloomMin||"","aria-label":t(lang,"bloom_short"),onChange:e=>setFilters(f=>({...f,bloomMin:parseInt(e.target.value)||0})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
           React.createElement("option",{value:""},t(lang,"filter_bloom_all")),
           I18N[lang].bloom_levels.map((name,i)=>React.createElement("option",{key:i,value:i+1},t(lang,"filter_bloom_from")+" "+(i+1)+": "+name))
         )
       )
     ),
-    React.createElement("main",{id:"main",className:"tg-main-pad",style:{maxWidth:1200,margin:"0 auto",padding:"16px 24px 40px"}},
+    React.createElement("main",{id:"main",className:"tg-main-pad",style:{maxWidth:1200,width:"100%",margin:"0 auto",padding:"16px 24px 40px",flex:"1 0 auto"}},
       view==="matrix"&&React.createElement("section",{"aria-labelledby":"view-matrix-title"},React.createElement("h2",{id:"view-matrix-title",className:"sr-only"},t(lang,"nav_matrix")),React.createElement(MatrixView,{tools:filteredTools,onSelect:setSelectedTool,filters:filters,onResetFilters:resetFilters,lang:lang})),
       view==="cards"&&React.createElement("section",{"aria-labelledby":"view-cards-title"},React.createElement("h2",{id:"view-cards-title",className:"sr-only"},t(lang,"nav_cards")),(filteredTools.filter(t2=>{
         if(filters.setup&&t2.setup!==filters.setup) return false;
@@ -1678,7 +1770,7 @@ function App() {
       view==="wizard"&&React.createElement("section",{"aria-labelledby":"view-wizard-title"},React.createElement("h2",{id:"view-wizard-title",className:"sr-only"},t(lang,"nav_wizard")),React.createElement(WizardView,{tools:localizedTools,onSelect:setSelectedTool,lang:lang}))
     ),
     localizedSelectedTool&&React.createElement(DetailModal,{tool:localizedSelectedTool,onClose:()=>setSelectedTool(null),lang:lang}),
-    showCompare&&React.createElement(CompareView,{toolIds:compareIds,tools:localizedTools,onClose:()=>setShowCompare(false),lang:lang}),
+    showCompare&&React.createElement(CompareView,{toolIds:compareIds,tools:localizedTools,onClose:()=>setShowCompare(false),onReset:resetCompare,lang:lang}),
     React.createElement(Footer,{lang:lang})
   );
 }
