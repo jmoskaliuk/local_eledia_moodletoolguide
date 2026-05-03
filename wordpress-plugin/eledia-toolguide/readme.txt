@@ -2,9 +2,9 @@
 Contributors: eledia, jmoskaliuk
 Tags: moodle, elearning, shortcode, tool-guide, didactics
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.27
+Stable tag: 1.1.28
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ The tool data is currently hard-coded in the JavaScript bundle. An admin editor 
 No. The plugin is 100% self-contained and does not call home.
 
 == Changelog ==
+
+= 1.1.28 =
+* Updated WordPress.org compatibility metadata for Plugin Check and removed the no longer needed manual textdomain loading hook.
 
 = 1.1.27 =
 * Removed the deprecated Survey activity from the synced Moodle 5 tool data and aligned the activity list with the updated source spreadsheet.

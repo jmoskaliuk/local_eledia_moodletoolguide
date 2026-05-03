@@ -2,9 +2,9 @@
 Contributors: eledia, jmoskaliuk
 Tags: moodle, elearning, shortcode, tool-guide, didactique
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.27
+Stable tag: 1.1.28
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Les données des outils sont actuellement codées en dur dans le bundle JavaScri
 Non. Le plugin est 100 % autonome et ne communique avec aucun serveur externe.
 
 == Journal des modifications ==
+
+= 1.1.28 =
+* Mise à jour des métadonnées de compatibilité WordPress.org pour Plugin Check et suppression du hook manuel de chargement du textdomain devenu inutile.
 
 = 1.1.27 =
 * Suppression de l'activité Sondage obsolète des données Moodle 5 synchronisées et alignement de la liste des activités sur le tableau source mis à jour.
