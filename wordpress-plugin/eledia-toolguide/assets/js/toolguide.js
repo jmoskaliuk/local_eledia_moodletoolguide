@@ -2,15 +2,29 @@
 /* Auto-generated from Prototyp_ToolGuide.html — do not edit by hand. */
 (function() {
   "use strict";
-  if (typeof React === "undefined" || typeof ReactDOM === "undefined") {
-    console.error("[eledia-toolguide] React/ReactDOM not loaded");
-    return;
-  }
   const __elediaToolguideRoot = document.querySelector(".eledia-toolguide-root");
   if (!__elediaToolguideRoot) {
     // Shortcode not present on this page — nothing to do.
     return;
   }
+  const __elediaToolguideEnsureReact = () => {
+    const wpElement = window.wp && window.wp.element ? window.wp.element : null;
+    window.React = window.React || wpElement;
+    if (!window.ReactDOM && wpElement) {
+      window.ReactDOM = {
+        render(element, container) {
+          if (typeof wpElement.render === "function") {
+            return wpElement.render(element, container);
+          }
+          if (typeof wpElement.createRoot === "function") {
+            return wpElement.createRoot(container).render(element);
+          }
+        }
+      };
+    }
+    return !!(window.React && window.ReactDOM && typeof window.ReactDOM.render === "function");
+  };
+  const __elediaToolguideStart = () => {
   const __elediaToolguideLangAttr = __elediaToolguideRoot.getAttribute("data-lang") || "de";
   const __elediaToolguideInitialLang = /^(de|en|fr|es)$/.test(__elediaToolguideLangAttr) ? __elediaToolguideLangAttr : "de";
   const __elediaToolguideConfig = window.elediaToolguideConfig || {};
@@ -1766,4 +1780,17 @@ if (__elediaToolguideLoading) {
 }
 ReactDOM.render(React.createElement(App), __elediaToolguideRoot);
 
+  };
+  const __elediaToolguideBoot = attempt => {
+    if (__elediaToolguideEnsureReact()) {
+      __elediaToolguideStart();
+      return;
+    }
+    if (attempt < 60) {
+      window.setTimeout(() => __elediaToolguideBoot(attempt + 1), 100);
+      return;
+    }
+    console.error("[eledia-toolguide] React/ReactDOM not available after waiting");
+  };
+  __elediaToolguideBoot(0);
 })();

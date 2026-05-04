@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactique
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.29
+Stable tag: 1.1.30
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,9 @@ Les données des outils sont actuellement codées en dur dans le bundle JavaScri
 Non. Le plugin est 100 % autonome et ne communique avec aucun serveur externe.
 
 == Journal des modifications ==
+
+= 1.1.30 =
+* Démarrage renforcé contre les problèmes d'ordre liés à l'optimisation JavaScript : le Tool Guide attend désormais le runtime React de WordPress avant le rendu.
 
 = 1.1.29 =
 * Ajout des métadonnées demandées pour la revue WordPress.org : identifiant contributeur du propriétaire du plugin et documentation publique du code source et de la génération du bundle JavaScript.

@@ -3,7 +3,7 @@
  * Plugin Name:       eLeDia Moodle Tool Guide
  * Plugin URI:        https://github.com/jmoskaliuk/local_eledia_moodletoolguide
  * Description:       Interaktiver Wegweiser durch die Aktivitäten von Moodle 5 — Matrix, Karten und Assistent-Ansicht. Einbindung per Shortcode [eledia_toolguide].
- * Version:           1.1.29
+ * Version:           1.1.30
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            eLeDia GmbH
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'ELEDIA_TOOLGUIDE_VERSION', '1.1.29' );
+define( 'ELEDIA_TOOLGUIDE_VERSION', '1.1.30' );
 define( 'ELEDIA_TOOLGUIDE_FILE', __FILE__ );
 define( 'ELEDIA_TOOLGUIDE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ELEDIA_TOOLGUIDE_URL', plugin_dir_url( __FILE__ ) );
@@ -101,12 +101,17 @@ function eledia_toolguide_enqueue_assets() {
     $enqueued = true;
 
     $react_bridge  = '// nowprocket' . "\n";
-    $react_bridge .= 'window.React = window.React || window.wp.element;';
+    $react_bridge .= '(function(){';
+    $react_bridge .= 'var wpElement = window.wp && window.wp.element ? window.wp.element : null;';
+    $react_bridge .= 'if (!wpElement) { return; }';
+    $react_bridge .= 'window.React = window.React || wpElement;';
     $react_bridge .= 'window.ReactDOM = window.ReactDOM || {';
-    $react_bridge .= 'render: window.wp.element.render || function(element, container) {';
-    $react_bridge .= 'window.wp.element.createRoot(container).render(element);';
+    $react_bridge .= 'render: function(element, container) {';
+    $react_bridge .= 'if (typeof wpElement.render === "function") { return wpElement.render(element, container); }';
+    $react_bridge .= 'if (typeof wpElement.createRoot === "function") { return wpElement.createRoot(container).render(element); }';
     $react_bridge .= '}';
     $react_bridge .= '};';
+    $react_bridge .= '}());';
 
     wp_enqueue_script( 'wp-element' );
     wp_add_inline_script(
@@ -125,7 +130,7 @@ function eledia_toolguide_enqueue_assets() {
     wp_enqueue_script(
         'eledia-toolguide',
         ELEDIA_TOOLGUIDE_URL . 'assets/js/toolguide.js',
-        array( 'wp-element', 'wp-i18n' ),
+        array( 'wp-element', 'wp-i18n', 'wp-hooks', 'react', 'react-dom' ),
         ELEDIA_TOOLGUIDE_VERSION,
         true
     );
@@ -157,7 +162,7 @@ function eledia_toolguide_enqueue_assets() {
  * @return string Possibly modified script tag.
  */
 function eledia_toolguide_script_loader_tag( $tag, $handle ) {
-    $toolguide_handles = array( 'wp-element', 'wp-i18n', 'eledia-toolguide' );
+    $toolguide_handles = array( 'react', 'react-dom', 'wp-element', 'wp-hooks', 'wp-i18n', 'eledia-toolguide' );
 
     if ( in_array( $handle, $toolguide_handles, true ) && false === strpos( $tag, ' data-nowprocket' ) ) {
         $tag = str_replace( '<script ', '<script data-nowprocket ', $tag );
