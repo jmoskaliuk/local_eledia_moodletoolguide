@@ -269,24 +269,11 @@ final class lib_test extends \advanced_testcase {
         $this->assertSame('', local_toolguide_before_footer());
     }
 
-    /**
-     * Navigation node is added when the user has local/toolguide:view.
+    /*
+     * The previous test_extend_navigation_adds_node_for_capable_user() test
+     * was removed in v1.1.37 alongside the legacy
+     * local_toolguide_extend_navigation() callback. The Tool Guide is now
+     * reached exclusively via the floating quick-access button (covered by
+     * tests above) and via direct URL.
      */
-    public function test_extend_navigation_adds_node_for_capable_user(): void {
-        global $PAGE;
-        $this->resetAfterTest();
-
-        $user = $this->setup_page_for_user('standard', '/my/index.php', 'editingteacher');
-
-        // The navigation rendering is sensitive to $PAGE state; build a
-        // global_navigation directly and exercise the extension.
-        $navigation = new \global_navigation($PAGE);
-        local_toolguide_extend_navigation($navigation);
-
-        $node = $navigation->find('local_toolguide', \navigation_node::TYPE_CUSTOM);
-        $this->assertNotEmpty(
-            $node,
-            'extend_navigation should add a node when the user has local/toolguide:view.'
-        );
-    }
 }

@@ -24,25 +24,19 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Add navigation node to the main navigation.
+/*
+ * Note on navigation:
  *
- * @param global_navigation $navigation
+ * Earlier versions exposed a `local_toolguide_extend_navigation()` callback
+ * that injected a node into Moodle's `global_navigation`. As of v1.1.37 that
+ * callback has been removed. The floating Tool Guide quick-access button
+ * (rendered by `local_toolguide_before_footer()` and the typed
+ * `\core\hook\output\before_footer_html_generation` hook) is the single,
+ * theme-agnostic entry point and avoids tying the plugin to Moodle's
+ * legacy navigation API, which is being deprecated piece by piece in 5.x.
+ * The capability `local/toolguide:view` is still enforced at
+ * `index.php` to gate access.
  */
-function local_toolguide_extend_navigation(global_navigation $navigation) {
-    $context = \core\context\system::instance();
-    if (has_capability('local/toolguide:view', $context)) {
-        $node = $navigation->add(
-            get_string('toolguide', 'local_toolguide'),
-            new moodle_url('/local/toolguide/index.php'),
-            navigation_node::TYPE_CUSTOM,
-            null,
-            'local_toolguide',
-            new pix_icon('i/info', '')
-        );
-        $node->showinflatnavigation = true;
-    }
-}
 
 /**
  * Map the current Moodle locale to a language code supported by the React

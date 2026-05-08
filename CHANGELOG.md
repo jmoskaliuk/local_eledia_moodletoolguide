@@ -9,6 +9,51 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.37] – 2026-05-08
+
+### Moodle-Plugin
+- **M5: Legacy `local_toolguide_extend_navigation()`-Callback entfernt.**
+  Die Funktion fügte einen Knoten in Moodles `global_navigation` ein —
+  ein API-Pfad, der in 5.x stückweise deprecated wird. Da der
+  schwebende Tool-Guide-Button (`local-toolguide-fab`) seit v1.1.13
+  themenagnostisch denselben Zweck erfüllt, ist die Funktion ersatzlos
+  raus. `index.php` enforceert weiterhin die Capability
+  `local/toolguide:view`. Der zugehörige PHPUnit-Test
+  `test_extend_navigation_adds_node_for_capable_user` ist mit entfernt.
+- **N3, N4: Behat-Tests an Moodle 4.5/5-Realität angepasst.** Alle
+  `I am on the "<url>" page`-Steps (kein Standard-Step in der
+  moodle-plugin-ci-Lib) sind ersetzt durch `I visit "<url>"`. Das
+  Szenario „Tool Guide is reachable from the navigation" mit
+  `I expand "Site pages" node` ist gestrichen — Boost 4.5/5 hat die
+  Primary-Navigation grundlegend umstrukturiert. Die FAB-Szenarien
+  decken die Erreichbarkeit jetzt vollständig ab. Zusätzlicher
+  Sanity-Check: `body.local-toolguide-page` muss gesetzt sein.
+- **N6: Translator-Credit i18n-clean.** Im SoT
+  `moodle-tool-guide.html` ist die Zusatz-Credit-Zeile
+  „, Susanne Gebauer und Gerald Hartwig" jetzt als i18n-Key
+  `credit_translators_extras` in allen vier Sprachen (de, en, fr, es)
+  hinterlegt. Der React-Render verwendet `t(lang,
+  "credit_translators_extras")` statt einer hardcodierten Zeichenkette.
+  Funktional unverändert — die Credit-Zeile zeigt sich weiterhin nur
+  im Deutsch-Modus (`lang === "de"`-Gate). Der Refactor macht spätere
+  Sprach-Erweiterungen sauber.
+- **N1: SVG-Inline in `lib.php` bewusst belassen.** Der life-buoy-
+  SVG-String könnte in eine `pix/life-buoy.svg`-Datei ausgelagert
+  werden, würde dann aber per `<img>`-Tag die `currentColor`-Stroke-
+  Vererbung verlieren — der Button wäre nicht mehr automatisch weiß
+  auf orangem Hintergrund. Die 13 inline-SVG-Zeilen sind weiterhin
+  die zweckmäßigste Lösung.
+
+### Notes
+- Plugin-Bundle (Moodle-AMD-Source) hat sich um ca. 290 Bytes durch
+  die vier neuen i18n-Strings vergrößert.
+- WP-Plugin bleibt vorerst auf 1.1.33 — die N6-i18n-Strings landen
+  bei der nächsten WP-Synchronisation, sind aber funktional identisch
+  (kein User-sichtbarer Unterschied, da der Credit nur für
+  `lang === "de"` rendert).
+- `version.php`: `$plugin->version = 2026050810` (vorher 2026050809),
+  `$plugin->release = '1.1.37'`.
+
 ## [1.1.36] – 2026-05-08
 
 ### Moodle-Plugin

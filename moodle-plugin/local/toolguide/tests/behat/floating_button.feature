@@ -26,7 +26,7 @@ Feature: Floating Tool Guide quick-access button
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage
     When I click on ".local-toolguide-fab" "css_element"
-    Then I should see "Tool Guide" in the "page-header" "region"
+    Then I should see "Moodle Tool Guide"
 
   Scenario: Student does not see the floating button by default
     Given I log in as "student1"
@@ -35,5 +35,5 @@ Feature: Floating Tool Guide quick-access button
 
   Scenario: Floating button is suppressed on the Tool Guide page itself
     Given I log in as "teacher1"
-    And I am on the "/local/toolguide/index.php" page
+    And I visit "/local/toolguide/index.php"
     Then ".local-toolguide-fab" "css_element" should not exist

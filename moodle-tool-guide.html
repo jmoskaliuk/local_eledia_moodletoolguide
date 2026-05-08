@@ -316,6 +316,8 @@ const I18N = {
   ,
     credit_translation: "Basiert auf einer Übersetzung von"
   ,
+    credit_translators_extras: ", Susanne Gebauer und Gerald Hartwig"
+  ,
     dialog_close: "Schließen"
   ,
     credit_license: "Lizenz"
@@ -436,6 +438,8 @@ const I18N = {
     credit_original: "Original concept"
   ,
     credit_translation: "Based on a translation by"
+  ,
+    credit_translators_extras: ", Susanne Gebauer and Gerald Hartwig"
   ,
     dialog_close: "Close"
   ,
@@ -558,6 +562,8 @@ const I18N = {
   ,
     credit_translation: "Basé sur une traduction de"
   ,
+    credit_translators_extras: ", Susanne Gebauer et Gerald Hartwig"
+  ,
     dialog_close: "Fermer"
   ,
     credit_license: "Licence"
@@ -678,6 +684,8 @@ const I18N = {
     credit_original: "Concepto original"
   ,
     credit_translation: "Basado en una traducción de"
+  ,
+    credit_translators_extras: ", Susanne Gebauer y Gerald Hartwig"
   ,
     dialog_close: "Cerrar"
   ,
@@ -1601,7 +1609,7 @@ function Footer({lang}) {
         lang==="de"?React.createElement("p",{style:{margin:"0 0 4px"}},
           t(lang,"credit_translation")," ",
           React.createElement("a",{href:"https://www.linkedin.com/in/ralfhilgenstock/",target:"_blank",rel:"noopener",style:linkSty},"Ralf Hilgenstock"),
-          ", Susanne Gebauer und Gerald Hartwig"
+          t(lang,"credit_translators_extras")
         ):null,
         React.createElement("p",{style:{margin:"0 0 6px"}},
           t(lang,"credit_eledia")," ",

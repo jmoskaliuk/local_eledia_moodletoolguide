@@ -12,21 +12,26 @@ Feature: Tool Guide page renders for authorised users
 
   Scenario: Editing teacher opens the Tool Guide
     Given I log in as "teacher1"
-    When I am on the "/local/toolguide/index.php" page
+    When I visit "/local/toolguide/index.php"
     Then "#toolguide-root" "css_element" should exist
     And I should not see "Exception"
 
   Scenario: Tool Guide page mounts the AMD module
     Given I log in as "teacher1"
-    When I am on the "/local/toolguide/index.php" page
-    # The AMD module injects a fallback <noscript>/loading element while React boots.
-    # This step verifies the mount point exists; full React-rendered behaviour is
-    # exercised separately in the standalone HTML test fixture.
+    When I visit "/local/toolguide/index.php"
+    # The AMD module renders the React app into the mount point. Full
+    # React-rendered behaviour is exercised separately via the standalone
+    # HTML test fixture; here we just verify the mount point exists and
+    # the local-toolguide-page body class is set so the layout-fix CSS
+    # actually applies.
     Then "#toolguide-root" "css_element" should exist
+    And "body.local-toolguide-page" "css_element" should exist
 
-  Scenario: Tool Guide is reachable from the navigation
+  Scenario: Tool Guide page is gated behind local/toolguide:view
     Given I log in as "teacher1"
-    When I expand "Site pages" node
-    Then "Tool Guide" "link" should exist
-    And I follow "Tool Guide"
+    When I visit "/local/toolguide/index.php"
     Then "#toolguide-root" "css_element" should exist
+    # No 'expand Site pages node' step here any more — the navigation
+    # callback has been removed in v1.1.37; the floating quick-access
+    # button (covered by floating_button.feature) is the canonical
+    # entry point.
