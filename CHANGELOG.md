@@ -9,6 +9,24 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.36] – 2026-05-08
+
+### Moodle-Plugin
+- **Vertikaler Leerraum zwischen Boost-Navigation und React-Header
+  geschlossen.** Nachdem in 1.1.34 die doppelte H1 ausgeblendet wurde,
+  blieb der von Boost reservierte Padding-Bereich (`#page-header`,
+  `#region-main`) als breite leere Fläche stehen. `styles.css`
+  setzt jetzt unter `body.local-toolguide-page` die Top/Bottom-
+  Paddings und Margins von `#page-header`, `#region-main`,
+  `#region-main-box > section` und `#toolguide-root` auf 0 — die
+  React-App sitzt direkt unter der Primary-Navigation.
+
+### Notes
+- Reines CSS-Patch — keine PHP-Änderungen, keine Plugin-Logik
+  angefasst, AMD-Bundle unverändert.
+- `version.php`: `$plugin->version = 2026050809` (vorher 2026050808),
+  `$plugin->release = '1.1.36'`.
+
 ## [1.1.35] – 2026-05-08
 
 ### Moodle-Plugin (Code-Review-Approval-Blocker behoben)

@@ -78,6 +78,30 @@ body.local-toolguide-page .page-header-headings {
     display: none;
 }
 
+/* Tighten the empty space between Boost's primary nav and the React
+   app header now that we hide the H1. Boost reserves vertical room for
+   #page-header padding/margins and #region-main top padding; with no
+   visible heading those translate into a large grey gap. We zero them
+   out for this page only. */
+body.local-toolguide-page #page-header {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+body.local-toolguide-page #region-main,
+body.local-toolguide-page #region-main-box,
+body.local-toolguide-page .pagelayout-report #region-main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+body.local-toolguide-page #region-main-box > section,
+body.local-toolguide-page #region-main > [role="main"] {
+    padding-top: 0 !important;
+}
+body.local-toolguide-page #toolguide-root {
+    margin-top: 0 !important;
+}
+
 /* Reduced motion preference (WCAG 2.3.3). */
 @media (prefers-reduced-motion: reduce) {
     #toolguide-root *,
