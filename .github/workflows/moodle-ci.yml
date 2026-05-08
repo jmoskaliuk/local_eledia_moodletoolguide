@@ -1,0 +1,135 @@
+# ===========================================================================
+# moodle-ci.yml — moodle-plugin-ci ^4 matrix for local_toolguide.
+# ===========================================================================
+# Mirrors moodle-plugin/bin/precheck.sh. Same checks, same flags, run against
+# four matrix cells (4.5 LTS / 5.0 / 5.1, pgsql + mariadb). PHP version
+# follows what each Moodle branch supports.
+#
+# Triggered on push and pull_request to main.
+# ===========================================================================
+
+name: moodle-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: 'postgres'
+          POSTGRES_HOST_AUTH_METHOD: 'trust'
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      mariadb:
+        image: mariadb:10.6
+        env:
+          MYSQL_USER: 'root'
+          MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+          MYSQL_CHARACTER_SET_SERVER: "utf8mb4"
+          MYSQL_COLLATION_SERVER: "utf8mb4_unicode_ci"
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { moodle-branch: 'MOODLE_405_STABLE', php: '8.1', db: 'pgsql' }
+          - { moodle-branch: 'MOODLE_405_STABLE', php: '8.2', db: 'mariadb' }
+          - { moodle-branch: 'MOODLE_500_STABLE', php: '8.2', db: 'pgsql' }
+          - { moodle-branch: 'MOODLE_501_STABLE', php: '8.3', db: 'pgsql' }
+
+    steps:
+      - name: Check out plugin source
+        uses: actions/checkout@v4
+        with:
+          path: plugin
+
+      - name: Set up PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, pgsql, mysqli, gd, zip, soap, xml, intl
+          ini-values: max_input_vars=5000, memory_limit=512M
+          coverage: none
+
+      - name: Set up Node 18 (for grunt)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install moodle-plugin-ci
+        run: |
+          composer create-project -n --no-dev --no-progress --prefer-dist \
+              moodlehq/moodle-plugin-ci ci ^4
+          echo "$(cd ci/bin; pwd)" >> $GITHUB_PATH
+          echo "$(cd ci/vendor/bin; pwd)" >> $GITHUB_PATH
+
+      - name: moodle-plugin-ci install
+        env:
+          DB: ${{ matrix.db }}
+          MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+          IGNORE_PATHS: 'lib/'   # vendored React 18.3.1, MIT-licensed
+        run: |
+          moodle-plugin-ci install --plugin plugin/moodle-plugin/local/toolguide --db-host=127.0.0.1
+
+      - name: phplint
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci phplint
+
+      - name: phpmd
+        if: ${{ !cancelled() }}
+        continue-on-error: true   # WARN
+        run: moodle-plugin-ci phpmd
+
+      - name: phpcs
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci phpcs --max-warnings 0
+
+      - name: phpdoc
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci phpdoc --max-warnings 0
+
+      - name: validate
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci validate
+
+      - name: savepoints
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci savepoints
+
+      - name: mustache
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci mustache
+
+      - name: grunt
+        if: ${{ !cancelled() }}
+        continue-on-error: true   # WARN
+        run: moodle-plugin-ci grunt --max-lint-warnings 0
+
+      - name: phpunit
+        if: ${{ !cancelled() }}
+        run: moodle-plugin-ci phpunit --fail-on-warning
+
+      # Behat is heavy; keep it on the 5.0 / pgsql cell only to save time.
+      - name: behat
+        if: ${{ !cancelled() && matrix.moodle-branch == 'MOODLE_500_STABLE' && matrix.db == 'pgsql' }}
+        run: moodle-plugin-ci behat --profile chrome

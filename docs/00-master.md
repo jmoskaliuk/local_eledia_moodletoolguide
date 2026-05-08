@@ -646,3 +646,70 @@ jedem `Stable tag`-Bump synchron sein.
 > `01-features.md` denkbar, heute aber nicht implementiert.
 
 ---
+
+## 24. Lokaler Precheck (`moodle-plugin-ci ^4`)
+
+Zwei-Pipelines-Architektur: derselbe Befehlssatz lokal (Host) und remote
+(GitHub Actions). „Lokal grün" == „Remote grün".
+
+### Einmalige Einrichtung
+
+```bash
+bash moodle-plugin/bin/setup-plugin-ci.sh
+```
+
+Installiert `moodle-plugin-ci ^4` unter `~/.moodle-plugin-ci/`. Bedingung:
+PHP 8.1+ und Composer auf `$PATH`.
+
+### Precheck-Lauf
+
+```bash
+# Defaults: Moodle 4.5 LTS, PostgreSQL, alle Checks außer Behat
+bash moodle-plugin/bin/precheck.sh
+
+# Andere Moodle-Version
+bash moodle-plugin/bin/precheck.sh --moodle 5.0
+bash moodle-plugin/bin/precheck.sh --moodle 5.1
+
+# Einzelner Check
+bash moodle-plugin/bin/precheck.sh --only phpcs
+
+# Mit Behat (langsam, opt-in)
+bash moodle-plugin/bin/precheck.sh --with-behat
+
+# Volle Ausgabe statt Zusammenfassung
+bash moodle-plugin/bin/precheck.sh --verbose
+```
+
+### Was geprüft wird
+
+| Check        | Modus | Was es prüft                                     |
+|--------------|-------|--------------------------------------------------|
+| `phplint`    | FAIL  | PHP-Syntaxfehler                                 |
+| `phpmd`      | WARN  | Mess Detector (Komplexität)                      |
+| `phpcs`      | FAIL  | Moodle Coding Standards (`--max-warnings 0`)     |
+| `phpdoc`     | FAIL  | PHPDoc-Vollständigkeit                           |
+| `validate`   | FAIL  | Plugin-Manifest-Konsistenz                       |
+| `savepoints` | FAIL  | `version.php` ↔ `upgrade.php`-Savepoints         |
+| `mustache`   | FAIL  | Mustache-Template-Syntax                         |
+| `grunt`      | WARN  | grunt amd / grunt css                            |
+| `phpunit`    | FAIL  | Unit-Tests (`--fail-on-warning`)                 |
+| `behat`      | FAIL  | Acceptance-Tests (opt-in, Selenium nötig)        |
+
+**Zielzustand:** PASS:8 WARN:0 FAIL:0 SKIP:1 (Behat).
+
+### Multi-Moodle-Version-Matrix
+
+GitHub-Actions-Workflow `.github/workflows/moodle-ci.yml` läuft auf jedem
+Push und PR gegen `main` mit **vier Matrix-Zellen**:
+
+- 4.5 LTS × PHP 8.1 × pgsql
+- 4.5 LTS × PHP 8.2 × mariadb
+- 5.0 × PHP 8.2 × pgsql
+- 5.1 × PHP 8.3 × pgsql
+
+Behat läuft nur in der 5.0-pgsql-Zelle (Zeitersparnis). Lokal kann jede
+Matrix-Zelle einzeln durchgespielt werden mit `--moodle <ver>` und
+`MOODLE_DB_TYPE=mariadb` als Env-Variable.
+
+---

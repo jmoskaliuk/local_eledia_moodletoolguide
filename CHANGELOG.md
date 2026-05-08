@@ -9,6 +9,26 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.40] – 2026-05-08
+
+### CI / Precheck
+- **`moodle-plugin/bin/setup-plugin-ci.sh`** installiert
+  `moodle-plugin-ci ^4` einmalig unter `~/.moodle-plugin-ci/`.
+- **`moodle-plugin/bin/precheck.sh`** läuft denselben Check-Satz wie
+  die GitHub-Actions-Matrix lokal (phplint, phpmd, phpcs, phpdoc,
+  validate, savepoints, mustache, grunt, phpunit; Behat opt-in).
+  Optionen: `--moodle 4.5|5.0|5.1`, `--db pgsql|mariadb`,
+  `--only <check>`, `--with-behat`, `--verbose`.
+- **`.github/workflows/moodle-ci.yml`** läuft auf jedem Push/PR
+  gegen `main` mit vier Matrix-Zellen: 4.5 LTS × pgsql/PHP 8.1, 4.5 LTS
+  × mariadb/PHP 8.2, 5.0 × pgsql/PHP 8.2, 5.1 × pgsql/PHP 8.3. Behat
+  nur in der 5.0/pgsql-Zelle. `lib/`-Verzeichnis (vendoriertes React)
+  via `IGNORE_PATHS` aus phpcs/phpmd ausgenommen.
+
+### Doku
+- `docs/00-master.md` §24 dokumentiert Setup, lokalen Precheck-Lauf
+  und die GH-Actions-Matrix.
+
 ## [1.1.39] – 2026-05-08
 
 ### Moodle-Plugin
