@@ -2,9 +2,9 @@
 Contributors: eledia, jmoskaliuk
 Tags: moodle, elearning, shortcode, tool-guide, didactique
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.13
+Stable tag: 1.1.31
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Guide interactif des activités de Moodle 5 — vues matrice, cartes et assistan
 
 == Description ==
 
-Le **eLeDia Moodle Tool Guide** aide les enseignants et concepteurs de cours à choisir la bonne activité Moodle pour leur objectif didactique. Le guide rassemble un savoir organisé sur environ 25 activités Moodle avec des métadonnées sur l'effort de mise en place, l'effort d'accompagnement, la pertinence pour quatre catégories d'objectifs d'apprentissage (informer, évaluer, communiquer, collaborer) et le niveau de la taxonomie de Bloom.
+Le **eLeDia Moodle Tool Guide** aide les enseignants et concepteurs de cours à choisir la bonne activité Moodle pour leur objectif didactique. Le guide rassemble un savoir organisé sur 22 activités Moodle avec des métadonnées sur l'effort de mise en place, l'effort d'accompagnement, la pertinence pour quatre catégories d'objectifs d'apprentissage (informer, évaluer, communiquer, collaborer) et le niveau de la taxonomie de Bloom.
 
 Trois vues sur le même jeu de données :
 
@@ -47,7 +47,7 @@ Exemples :
 
 = Le plugin charge-t-il React depuis un CDN externe ? =
 
-Par défaut, oui — React 18.3.1 est chargé depuis unpkg.com. Pour des installations conformes au RGPD sans requêtes externes, vous pouvez héberger React vous-même : placez `react.production.min.js` et `react-dom.production.min.js` de la distribution React dans `assets/js/vendor/`. Le plugin détecte automatiquement les fichiers locaux et les utilise à la place du CDN.
+Non. Le plugin utilise le paquet `wp-element` fourni avec WordPress et ne charge pas React depuis un CDN externe.
 
 = Le plugin fonctionne-t-il avec l'éditeur de blocs Gutenberg ? =
 
@@ -59,14 +59,62 @@ Les données des outils sont actuellement codées en dur dans le bundle JavaScri
 
 = Y a-t-il du tracking ou de la télémétrie ? =
 
-Non. Le plugin est 100 % autonome (à l'exception du CDN React optionnel) et ne communique avec aucun serveur externe.
+Non. Le plugin est 100 % autonome et ne communique avec aucun serveur externe.
 
 == Journal des modifications ==
 
+= 1.1.31 =
+* Logo du partenaire mis à jour vers le badge officiel « Premium Moodle Partner Trademark™ » (Primary Colour RGB).
+* Ajout de la documentation DevFlow sous docs/ selon le standard eLeDia.OS_DevFlow.
+* Nettoyage du dépôt : suppression des notes de prototype obsolètes (IconPreview, Konzept) et de l'ancien Prototyp_ToolGuide.jsx ; la source de vérité est le bloc Babel dans Prototyp_ToolGuide.html.
+
+= 1.1.28 =
+* Mise à jour des métadonnées de compatibilité WordPress.org pour Plugin Check et suppression du hook manuel de chargement du textdomain devenu inutile.
+
+= 1.1.27 =
+* Suppression de l'activité Sondage obsolète des données Moodle 5 synchronisées et alignement de la liste des activités sur le tableau source mis à jour.
+
+= 1.1.26 =
+* Suppression de l'activité Chat obsolète des données Moodle 5 synchronisées et alignement de la liste des activités sur le tableau source.
+
+= 1.1.25 =
+* Scripts Tool Guide et code d'amorçage inline marqués avec les exclusions WP Rocket `nowprocket` afin que l'application démarre sans interaction de défilement.
+
+= 1.1.24 =
+* Ajout d'indications tactiles pour les en-têtes de matrice et affichage des indications de matrice en bas du viewport pour les appareils tactiles comme l'iPad.
+
+= 1.1.23 =
+* Ajout d'une action « Commencer une nouvelle comparaison » dans la vue de comparaison et alignement des boutons de comparaison en bas des cartes.
+
+= 1.1.22 =
+* Les objectifs d'apprentissage Bloom sont affichés de manière neutre dans les détails des cartes au lieu d'une adéquation bon/partiel/mauvais.
+
+= 1.1.21 =
+* Ajout d'indications adaptées au toucher dans la matrice mobile pour les points d'effort et les icônes d'adéquation.
+
+= 1.1.20 =
+* Sur mobile, l'affichage démarre désormais par les cartes et l'indicateur de chargement est supprimé explicitement avant le rendu de l'application.
+
+= 1.1.19 =
+* Correction de l'icône « partiellement adapté » afin que le pouce pointe vers la gauche.
+
+= 1.1.18 =
+* Ajout d'un indicateur de chargement accessible pendant le démarrage du bundle WordPress et synchronisation de la matrice mobile compacte du prototype HTML.
+
+= 1.1.17 =
+* Mise en page mobile améliorée : les flèches de lecture de la matrice sont masquées sur petits écrans, le champ de recherche est aligné à gauche et les choix de l'assistant restent dans la largeur du viewport.
+
+= 1.1.16 =
+* Cartes de matrice mobile améliorées pour iPhone : les pastilles des objectifs didactiques passent sur deux colonnes et les libellés longs ne se chevauchent plus.
+
+= 1.1.15 =
+* Intégration aux thèmes WordPress améliorée : le Tool Guide s'étend désormais sur toute la largeur du viewport pour l'en-tête, la navigation, l'arrière-plan du contenu et le pied de page. Le pied de page reste en bas lorsque les résultats sont courts.
+
+= 1.1.14 =
+* Prise en charge de l'internationalisation JavaScript WordPress pour les textes d'interface via `wp-i18n`, `wp_set_script_translations()`, des traductions JSON intégrées et un modèle POT. Les données d'outils restent disponibles via le sélecteur de langue intégré DE/EN/FR/ES.
+
 = 1.1.13 =
-* Correction des boutons invisibles dans l'assistant : tous les boutons (options, Retour, Peu importe, Recommencer) ont désormais une couleur de texte explicite, pour rester lisibles même quand un thème WP définit `button { color: white }`.
-* Logo Moodle Partner mis à jour : badge « Premium Certified Services Provider » avec sous-titre sombre, lisible sur le pied de page beige.
-* Susanne Gebauer et Gerald Hartwig ajoutés aux crédits de traduction dans le pied de page.
+* Synchronisation du prototype HTML actuel dans le plugin WordPress : aide de lecture de la matrice, panneaux d'information, filtrage amélioré de l'assistant, cartes de matrice adaptées au mobile et améliorations d'accessibilité pour contraste, focus et sémantique de tableau. React est désormais chargé via le paquet `wp-element` fourni avec WordPress au lieu d'un CDN externe.
 
 = 1.1.12 =
 * Pied de page redessiné pour s'harmoniser avec le nouvel en-tête : beige clair chaleureux (#FFECDB) avec texte et liens soulignés en bleu foncé, au lieu de la bande bleu foncé avec liens orange. Les logos eLeDia et Moodle Partner, le badge CC-BY-NC-SA et l'icône GitHub restent lisibles sur le nouveau fond.
@@ -94,7 +142,7 @@ Non. Le plugin est 100 % autonome (à l'exception du CDN React optionnel) et ne 
 = 1.1.6 =
 * Port WordPress initial depuis le plugin Moodle local_toolguide 1.1.6.
 * Intégration par shortcode.
-* React 18 via CDN ou auto-hébergé.
+* React via le paquet `wp-element` fourni avec WordPress.
 * WCAG 2.2 AA : contraste, utilisation au clavier, gestion du focus, live regions.
 
 == Crédits ==

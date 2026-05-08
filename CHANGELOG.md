@@ -9,6 +9,35 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.31] – 2026-05-08
+
+### Changed
+- **Partner-Logo aktualisiert** auf das offizielle „Premium Moodle Partner
+  Trademark™" Badge (Primary Colour RGB). Das Logo erscheint im Footer
+  des Standalone-HTML, des Moodle-Plugins und des WordPress-Plugins
+  einheitlich. Die alte „Moodle Premium Certified Services Provider"-PNG-
+  Vorlage (600 × 196 px) wurde durch das neue, höher aufgelöste Asset
+  (4877 × 1232 px) ersetzt.
+
+### Added
+- **DevFlow-Dokumentation** unter `docs/` nach dem
+  [eLeDia.OS_DevFlow](https://github.com/jmoskaliuk/eLeDia.OS_DevFlow)-
+  Standard: `00-master.md`, `01-features.md`, `02-user-doc.md`,
+  `03-dev-doc.md`, `04-tasks.md`, `05-quality.md` und
+  `Playbooks/local_toolguide.md`.
+
+### Removed / Cleanup
+- Obsolete Prototyp-Notizen aus dem Repo entfernt
+  (`IconPreview_ToolGuide.html`, `Konzept_ToolGuide_Webapp.md`).
+- `Prototyp_ToolGuide.jsx` entfernt — Source of Truth ist seit 2026-04-22
+  der Babel-Block in `Prototyp_ToolGuide.html`.
+
+### Notes
+- Hinweis auf Bundle-Größe: das neue Partner-Badge inflatiert das
+  unkomprimierte JS um ca. 123 KB Base64. Optimierungs-Optionen
+  (statisches Asset statt Data-URI, separater Sprite-Service) sind als
+  `taskXX` in `docs/04-tasks.md` aufgeführt.
+
 ## [1.1.13] – 2026-04-10
 
 ### Added

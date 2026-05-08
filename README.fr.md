@@ -7,16 +7,16 @@ Un Tool Guide interactif pour Moodle 5 — basé sur le classique *Moodle Tool G
 Trois canaux de livraison depuis une source unique :
 
 1. **Page web autonome** — `Prototyp_ToolGuide.html` : fichier HTML/React unique, intégrable directement via `<iframe>`.
-2. **Plugin local Moodle** — `moodle-plugin/local/toolguide/` / `moodle-plugin/local_toolguide.zip` : plugin local installable pour Moodle 4.1+ / 5.x.
-3. **Plugin WordPress** — `wordpress-plugin/eledia-toolguide/` / `wordpress-plugin/eledia-toolguide.zip` : shortcode `[eledia_toolguide]` pour tout site WordPress.
+2. **Plugin local Moodle** — `moodle-plugin/local/toolguide/` / `local_toolguide.zip` : plugin local installable pour Moodle 4.5 / 5.x.
+3. **Plugin WordPress** — `wordpress-plugin/eledia-toolguide/` / `eledia-toolguide.zip` : shortcode `[eledia_toolguide]` pour tout site WordPress.
 
 ## Fonctionnalités
 
-- **22 activités Moodle** avec des recommandations didactiques pour cinq objectifs pédagogiques
-- **Vue Matrice** avec icônes pouce vers le haut / latéral / vers le bas et infobulles au survol ou au toucher pour ordinateur, tablette et mobile
+- **25 activités Moodle** avec des recommandations didactiques pour cinq objectifs pédagogiques
+- **Vue Matrice** avec icônes pouce en haut / cercle barré / pouce en bas et infobulles
 - **Vue Cartes** avec descriptions détaillées et filtres (effort de mise en place, effort d'accompagnement, objectif, niveau de Bloom)
 - **Assistant** — assistant guidé en 5 étapes qui recommande des activités selon les réponses
-- **Mode Comparaison** pour comparer jusqu'à quatre outils côte à côte, avec redémarrage rapide d'une nouvelle comparaison
+- **Mode Comparaison** pour comparer jusqu'à trois outils côte à côte
 - **Effort bidimensionnel** : mise en place et accompagnement continu
 - **Taxonomie de Bloom** (niveaux 1–6) par activité
 - **4 langues d'interface** : anglais, allemand, français, espagnol
@@ -26,7 +26,7 @@ Trois canaux de livraison depuis une source unique :
 
 ## Source de données
 
-`Datenbank_ToolGuide.xlsx` est la source des données d'outils sélectionnées (descriptions, pertinence par objectif, effort, Bloom). `Prototyp_ToolGuide.html` est la source actuelle de l'interface ; le JS du plugin Moodle et le JS du plugin WordPress sont générés depuis ce fichier via `sync_plugin_js.py` et `sync_wordpress_js.py`.
+`Datenbank_ToolGuide.xlsx` est la source unique de vérité pour toutes les données des outils (descriptions, pertinence par objectif, effort, Bloom). Le HTML autonome, le JS du plugin Moodle et le JS du plugin WordPress sont tous synchronisés depuis ce fichier via `sync_plugin_js.py` et `sync_wordpress_js.py`.
 
 ## Utiliser la page autonome
 
@@ -42,7 +42,7 @@ Trois canaux de livraison depuis une source unique :
 Depuis la racine de Moodle :
 
 ```bash
-unzip /chemin/vers/local_toolguide.zip
+unzip local_toolguide.zip -d local/
 php admin/cli/upgrade.php
 ```
 
@@ -67,7 +67,7 @@ Exemples :
 [eledia_toolguide height="auto"]
 ```
 
-Le plugin WordPress utilise l'abstraction React fournie par WordPress (`wp-element`) et ne charge pas React depuis un CDN externe. Le bundle Tool Guide est marqué avec `nowprocket` pour WP Rocket afin que les optimisations de délai JavaScript ne laissent pas l'indicateur de chargement visible jusqu'au premier défilement.
+Par défaut, le plugin WordPress charge React 18.3.1 depuis unpkg.com. Pour des installations conformes au RGPD sans requêtes externes, vous pouvez héberger React vous-même : placez `react.production.min.js` et `react-dom.production.min.js` dans `assets/js/vendor/` — le plugin détecte automatiquement les fichiers locaux.
 
 ## Licence
 
