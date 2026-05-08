@@ -24,7 +24,7 @@
 
 require_once(__DIR__ . '/../../config.php');
 
-$context = context_system::instance();
+$context = \core\context\system::instance();
 require_login();
 require_capability('local/toolguide:view', $context);
 
@@ -32,6 +32,12 @@ $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/toolguide/index.php'));
 $PAGE->set_title(get_string('pagetitle', 'local_toolguide'));
 $PAGE->set_heading(get_string('pagetitle', 'local_toolguide'));
+// The React app inside the page renders its own decorated heading
+// ("Moodle Tool Guide" with the Moodle 5 badge and a subtitle), so we hide
+// Moodle's auto-generated <h1> via this body class. The set_heading() call
+// stays in place so screen readers, breadcrumbs and the browser tab title
+// remain accurate.
+$PAGE->add_body_class('local-toolguide-page');
 // Wider Boost layout — 'standard' caps the content area at ~960 px which
 // truncates the right-most matrix column on common 14-inch laptops. 'report'
 // gives the React app more horizontal room while keeping the nav drawer,

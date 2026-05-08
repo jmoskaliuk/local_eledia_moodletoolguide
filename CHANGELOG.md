@@ -9,6 +9,40 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.34] – 2026-05-08
+
+### Moodle-Plugin
+- **Doppelte H1-Überschrift auf der Tool-Guide-Seite entfernt.** Boost
+  rendert automatisch eine `<h1>` aus `$PAGE->set_heading()`; gleichzeitig
+  hat die React-App eine eigene dekorierte Überschrift mit „Moodle 5"-
+  Badge und Untertitel. `index.php` setzt jetzt
+  `$PAGE->add_body_class('local-toolguide-page')`, `styles.css`
+  versteckt damit die Moodle-`<h1>` (`.page-header-headings`).
+  `set_heading()` bleibt erhalten — Screenreader, Breadcrumb und
+  Browser-Tab-Title bleiben korrekt.
+
+### Code-Review-Quick-Wins (Moodle-Konventionen)
+- **`\core\context\*` statt `context_system`** (Moodle 4.2+-Form):
+  `index.php` und `lib.php` rufen jetzt
+  `\core\context\system::instance()` auf. Der alte globale Klassenname
+  ist seit 4.2 deprecated und löst in 5.x stille Warnings aus.
+- **`MATURITY_STABLE` statt `MATURITY_BETA`.** Plugin ist seit 1.1.13
+  produktiv und durchläuft kontinuierliche Releases — der BETA-Status
+  passt nicht mehr.
+- **`$plugin->requires = 2024100700` (Moodle 4.5 LTS).** Die Moodle
+  Plugins Directory akzeptiert seit Anfang 2026 nur noch Plugins mit
+  Mindest-Version 4.5. Davor war 4.1 (`2022112800`) eingetragen, was
+  den Submission-Bot blockt. Moodle 4.5 hat zudem die typisierte
+  Hook-API stabilisiert, sodass die Legacy-`local_toolguide_before_footer()`-
+  Funktion in `lib.php` nun rein für Backward-Compat existiert (4.1–4.4
+  werden offiziell nicht mehr unterstützt, aber der Hook-Manager
+  überspringt die Legacy-Form sowieso, wenn der typisierte Hook
+  registriert ist).
+
+- `version.php`: `$plugin->version = 2026050807` (vorher 2026050806),
+  `$plugin->release = '1.1.34'`, `$plugin->requires = 2024100700`,
+  `$plugin->maturity = MATURITY_STABLE`.
+
 ## [1.1.33] – 2026-05-08
 
 ### Changed (alle drei Tracks)

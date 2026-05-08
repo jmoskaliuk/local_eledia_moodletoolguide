@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param global_navigation $navigation
  */
 function local_toolguide_extend_navigation(global_navigation $navigation) {
-    $context = context_system::instance();
+    $context = \core\context\system::instance();
     if (has_capability('local/toolguide:view', $context)) {
         $node = $navigation->add(
             get_string('toolguide', 'local_toolguide'),
@@ -119,7 +119,7 @@ function local_toolguide_before_footer() {
     }
 
     // Capability check — the whole point of the feature.
-    $context = context_system::instance();
+    $context = \core\context\system::instance();
     if (!has_capability('local/toolguide:viewfab', $context)) {
         return '';
     }

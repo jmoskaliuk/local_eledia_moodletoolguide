@@ -65,6 +65,19 @@
     outline-offset: 2px;
 }
 
+/* --------------------------------------------------------------------- */
+/* Hide Moodle's auto-rendered <h1> on the Tool Guide page only.         */
+/* The React app provides its own decorated heading ("Moodle Tool Guide" */
+/* + Moodle 5 badge + subtitle), so the duplicate Boost page-header-     */
+/* headings block is suppressed via the body class added in index.php.   */
+/* set_heading() stays in place so screen readers, breadcrumbs and the   */
+/* browser tab title remain accurate.                                    */
+/* --------------------------------------------------------------------- */
+body.local-toolguide-page #page-header .page-header-headings,
+body.local-toolguide-page .page-header-headings {
+    display: none;
+}
+
 /* Reduced motion preference (WCAG 2.3.3). */
 @media (prefers-reduced-motion: reduce) {
     #toolguide-root *,
