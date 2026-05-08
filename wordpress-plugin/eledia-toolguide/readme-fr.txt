@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactique
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.32
+Stable tag: 1.1.33
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ Non. Le plugin est 100 % autonome et ne communique avec aucun serveur externe.
 
 == Journal des modifications ==
 
+
+= 1.1.33 =
+* Les quatre en-têtes de la matrice (« Information & Transfert » etc.) ont désormais une largeur identique, indépendamment de la longueur du texte. Réalisé avec CSS table-layout:fixed et largeur calculée identique pour les quatre colonnes d'objectifs.
 = 1.1.32 =
 * Bundle JavaScript du plugin WordPress aligné sur la source standalone actuelle (moodle-tool-guide.html). Apporte la matrice responsive mobile, des ajustements supplémentaires de l'interface React et le dernier jeu de données.
 * Crédit de traduction dans le pied de page allemand : Susanne Gebauer et Gerald Hartwig ajoutés à côté de Ralf Hilgenstock.

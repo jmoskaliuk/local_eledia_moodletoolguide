@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.33] – 2026-05-08
 
+### Changed (alle drei Tracks)
+- **Matrix-Spalten gleich breit.** Die vier didaktischen Ziel-Spalten
+  („Information & Transfer", „Bewerten", „Kommunikation & Interaktion",
+  „Gemeinsam Inhalte erstellen") waren bisher content-getrieben
+  unterschiedlich breit, weil ihre Header-Texte verschieden lang sind.
+  Fix in `moodle-tool-guide.html`: `tableLayout: "fixed"` auf der
+  Desktop-Matrix-Tabelle plus `width: calc((100% - 390px) / 4)` pro
+  Goal-Spalte. Activity-Spalte hat fix 210 px, Setup/Support je 90 px.
+  Wirkt automatisch in allen drei Tracks via Sync-Skripte.
+
+### WordPress-Plugin
+- **`eledia-toolguide` ebenfalls auf 1.1.33** durch den Matrix-Spalten-
+  Fix oben. `eledia-toolguide.php` Plugin-Header und
+  `ELEDIA_TOOLGUIDE_VERSION` auf 1.1.33; Stable tag in allen vier
+  Readmes; Changelog-Einträge in en/de/fr/es. ZIP neu gebaut.
+
 ### Moodle-Plugin
 - **FAB-Icon ist jetzt das offizielle Lucide-`life-buoy`-Glyph**
   (Lucide v1.8.0, ISC). Inline-SVG, erbt die Strichfarbe vom Button
@@ -45,14 +61,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   drei nicht-unterstützten Locales pl, it, ja → en).
 
 ### Notes
-- Bundle bleibt zum Stand von 1.1.32 (`moodle-tool-guide.html` hat
-  inhaltlich nichts neues bekommen außer den drei Sync-Skript-Patches,
-  die nur das Moodle-Plugin-JS betreffen).
-- WP-Plugin steht unverändert auf 1.1.32 — die Idee "Sprache aus
-  Host-System" ist dort schon seit 1.1.14 (`wp.i18n` + Site-Locale-
-  Detection) implementiert.
-- `version.php`: `$plugin->version = 2026050805` (vorher 2026050804),
-  `$plugin->release = '1.1.33'`.
+- `moodle-tool-guide.html` hat inhaltlich die Matrix-Layout-Anpassung
+  bekommen; die Sync-Skript-Patches für FAB / Locale-Sync sind
+  Moodle-spezifisch.
+- Die Idee "Sprache aus Host-System" ist im WP-Plugin schon seit
+  1.1.14 (`wp.i18n` + Site-Locale-Detection) implementiert.
+- Moodle `version.php`: `$plugin->version = 2026050805` (vorher
+  2026050804), `$plugin->release = '1.1.33'`.
 
 ## [1.1.32] – 2026-05-08
 

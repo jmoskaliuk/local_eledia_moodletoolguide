@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactics
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.32
+Stable tag: 1.1.33
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ No. The plugin is 100% self-contained and does not call home.
 
 == Changelog ==
 
+
+= 1.1.33 =
+* Matrix headers ("Information & Transfer" etc.) are now equal-width regardless of their text length. Enabled CSS table-layout:fixed and gave the four didactic-goal columns the same calculated width.
 = 1.1.32 =
 * Synced WordPress plugin JavaScript bundle with the current standalone source (moodle-tool-guide.html). Pulls in mobile-responsive matrix layout, additional UI polish from the React app and the latest tool dataset.
 * Translation credit in the German footer now reads "Ralf Hilgenstock, Susanne Gebauer und Gerald Hartwig" (previously only Ralf Hilgenstock).

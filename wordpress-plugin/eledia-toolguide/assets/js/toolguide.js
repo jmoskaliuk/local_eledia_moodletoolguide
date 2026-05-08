@@ -1198,23 +1198,23 @@ function MatrixView({tools, onSelect, filters, onResetFilters, lang}) {
           React.createElement("div",{style:{minWidth:900,flex:"1 0 900px"}},
             showReadingGuide?React.createElement(MatrixReadGuide,{lang:lang}):null,
             React.createElement("div",{style:{borderRadius:12,boxShadow:"0 1px 3px rgba(0,0,0,0.05)",overflow:"hidden"}},
-            React.createElement("table",{style:{width:"100%",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":t(lang,"matrix_aria")},
+            React.createElement("table",{style:{width:"100%",tableLayout:"fixed",borderCollapse:"separate",borderSpacing:0,fontSize:13,background:"white"},"aria-label":t(lang,"matrix_aria")},
               React.createElement("thead",null,
                 React.createElement("tr",null,
-                  React.createElement("th",{scope:"col",style:{position:"sticky",left:0,background:"#194866",color:"white",padding:"12px 14px",textAlign:"left",zIndex:2,minWidth:210}},
+                  React.createElement("th",{scope:"col",style:{position:"sticky",left:0,background:"#194866",color:"white",padding:"12px 14px",textAlign:"left",zIndex:2,width:210}},
                     t(lang,"activity")
                   ),
-                  React.createElement("th",{scope:"col",title:t(lang,"setup_help"),"aria-label":t(lang,"setup")+". "+t(lang,"setup_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
+                  React.createElement("th",{scope:"col",title:t(lang,"setup_help"),"aria-label":t(lang,"setup")+". "+t(lang,"setup_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",width:90,cursor:"help"}},
                     tipButton(t(lang,"setup")+". "+t(lang,"setup_help"),React.createElement(IconMonitorCog,{size:16,color:"white"}),{width:28,height:22,opacity:0.9}),
                     React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"setup"))
                   ),
-                  React.createElement("th",{scope:"col",title:t(lang,"support_help"),"aria-label":t(lang,"support")+". "+t(lang,"support_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",minWidth:90,cursor:"help"}},
+                  React.createElement("th",{scope:"col",title:t(lang,"support_help"),"aria-label":t(lang,"support")+". "+t(lang,"support_help"),style:{background:"#194866",color:"white",padding:"12px 8px",textAlign:"center",width:90,cursor:"help"}},
                     tipButton(t(lang,"support")+". "+t(lang,"support_help"),React.createElement(IconUsers,{size:16,color:"white"}),{width:28,height:22,opacity:0.9}),
                     React.createElement("div",{style:{fontSize:12,marginTop:4}},t(lang,"support"))
                   ),
-                  goalKeys.map(gk=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).q,"aria-label":tg(lang,gk).label+". "+tg(lang,gk).q,style:{background:"#194866",color:"white",padding:"12px 10px",textAlign:"center",minWidth:80,cursor:"help"}},
+                  goalKeys.map(gk=>React.createElement("th",{key:gk,scope:"col",title:tg(lang,gk).q,"aria-label":tg(lang,gk).label+". "+tg(lang,gk).q,style:{background:"#194866",color:"white",padding:"12px 10px",textAlign:"center",width:"calc((100% - 390px) / 4)",cursor:"help"}},
                     tipButton(tg(lang,gk).label+". "+tg(lang,gk).q,React.createElement(GoalIcon,{goalKey:gk,color:"white",size:18}),{width:30,height:24}),
-                    React.createElement("div",{style:{fontSize:11,marginTop:4,maxWidth:90,margin:"4px auto 0"}},tg(lang,gk).label)
+                    React.createElement("div",{style:{fontSize:11,marginTop:4,margin:"4px auto 0",overflowWrap:"break-word",hyphens:"auto"}},tg(lang,gk).label)
                   ))
                 )
               ),

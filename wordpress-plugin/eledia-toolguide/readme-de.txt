@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didaktik
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.32
+Stable tag: 1.1.33
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ Nein. Das Plugin ist zu 100 % self-contained und telefoniert nicht nach Hause.
 
 == Changelog ==
 
+
+= 1.1.33 =
+* Die vier Matrix-Spaltenköpfe („Information & Transfer" usw.) sind jetzt unabhängig vom Header-Text gleich breit. Erreicht durch CSS table-layout:fixed und identische berechnete Breite für die vier Ziel-Spalten.
 = 1.1.32 =
 * WordPress-Plugin-JavaScript an die aktuelle Standalone-Quelle (moodle-tool-guide.html) angeglichen. Bringt das Mobile-Responsive-Matrix-Layout, zusätzlichen UI-Feinschliff aus der React-App und den aktuellen Tool-Datensatz mit.
 * Übersetzungsvermerk im deutschen Footer ergänzt: „Basiert auf einer Übersetzung von Ralf Hilgenstock, Susanne Gebauer und Gerald Hartwig“ (vorher nur Ralf Hilgenstock).
