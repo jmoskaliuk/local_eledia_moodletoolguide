@@ -26,10 +26,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Gebauer und Gerald Hartwig" — vorher war nur Ralf Hilgenstock
   genannt.
 
-### Notes
-- Moodle-Plugin (`local_toolguide`) bleibt vorerst auf 1.1.31 — der
-  identische Sync-Lauf für das AMD-Modul folgt in einem eigenen
-  Release, sobald der Stand getestet ist.
+### Moodle-Plugin
+- **`local_toolguide` jetzt ebenfalls auf 1.1.32.** Identischer
+  Sync-Lauf für `amd/src/toolguide.js`, `amd/build/toolguide.min.js`
+  ist auf demselben Stand.
+- **Hook-Migration für Moodle 4.4+** (behebt `Callback before_footer in
+  local_toolguide component should be migrated…` Debug-Warnung in
+  Moodle 5.x): `db/hooks.php` registriert den neuen typisierten Hook
+  `core\hook\output\before_footer_html_generation`, die Logik liegt
+  in `classes/hook_callbacks.php` als
+  `\local_toolguide\hook_callbacks::before_footer_html_generation`.
+  Die alte `local_toolguide_before_footer()`-Funktion in `lib.php`
+  bleibt für ältere Moodle-Versionen (4.1–4.3) erhalten — Moodles
+  Hook-Manager überspringt sie auf 4.4+ automatisch.
+- **PHPUnit- und Behat-Tests neu** unter `tests/`:
+  - `tests/lib_test.php` — Capability-Filter, Pagelayout-Filter,
+    Login/Toolguide/Path-Filter, FAB-HTML-Markup, Navigation-Node.
+  - `tests/hook_callbacks_test.php` — neuer 4.4+-Hook gibt HTML
+    durch, kein Output für Gäste; übersprungen auf Moodle < 4.4.
+  - `tests/privacy_provider_test.php` — Provider implementiert
+    `null_provider`, `privacy:metadata` ist in EN und DE definiert.
+  - `tests/behat/floating_button.feature` — FAB für Editing Teacher
+    sichtbar, für Studierende nicht, klickbar zur Tool-Guide-Seite,
+    auf der Seite selbst suppressed.
+  - `tests/behat/tool_guide_page.feature` — Tool-Guide-Seite mountet
+    AMD-Modul (`#toolguide-root`), erreichbar via Site-Navigation.
+- `version.php`: `$plugin->version = 2026050803` (vorher 2026050802),
+  `$plugin->release = '1.1.32'`.
 
 ## [1.1.31] – 2026-05-08
 

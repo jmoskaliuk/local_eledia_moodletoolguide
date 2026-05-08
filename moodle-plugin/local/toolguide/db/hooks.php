@@ -15,7 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data.
+ * Hook callback registrations for local_toolguide.
+ *
+ * Moodle 4.4+ replaces several legacy lib.php callbacks (before_footer,
+ * before_http_headers, ...) with a typed hook system. This file registers
+ * the modern hook callback for the floating Moodle Tool Guide quick-access
+ * button. The legacy local_toolguide_before_footer() function in lib.php
+ * is retained for older Moodle versions; on 4.4+, Moodle's hook manager
+ * automatically skips the legacy callback once the modern hook is present
+ * (see core\hook\manager::is_deprecating_hook_present()).
  *
  * @package    local_toolguide
  * @copyright  2026 eLeDia GmbH
@@ -24,8 +32,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_toolguide';
-$plugin->version   = 2026050803;
-$plugin->requires  = 2022112800; // Moodle 4.1+
-$plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '1.1.32';
+$callbacks = [
+    [
+        'hook' => \core\hook\output\before_footer_html_generation::class,
+        'callback' => '\local_toolguide\hook_callbacks::before_footer_html_generation',
+    ],
+];
