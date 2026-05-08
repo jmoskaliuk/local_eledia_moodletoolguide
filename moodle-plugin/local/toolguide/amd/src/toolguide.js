@@ -1,11 +1,19 @@
 /* eslint-disable */
 /* Auto-generated from moodle-tool-guide.html — do not edit by hand. */
-(function() {
+define([], function() {
   "use strict";
-  if (typeof React === "undefined" || typeof ReactDOM === "undefined") {
-    console.error("[local_toolguide] React/ReactDOM not loaded");
-    return;
-  }
+  return {
+    init: function(initialLang) {
+      if (typeof React === "undefined" || typeof ReactDOM === "undefined") {
+        console.error("[local_toolguide] React/ReactDOM not loaded");
+        return;
+      }
+      // Hand the Moodle locale to the React app via the global the
+      // useState patch below reads. Using a global rather than a closure
+      // variable so the existing patch in this script keeps working.
+      if (typeof window !== "undefined") {
+        window.__toolguideMoodleLang = initialLang || "en";
+      }
 
 const { useState, useMemo } = React;
 
@@ -1720,4 +1728,6 @@ function App() {
 
 ReactDOM.render(React.createElement(App), document.getElementById("toolguide-root"));
 
-})();
+    }
+  };
+});

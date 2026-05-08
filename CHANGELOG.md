@@ -9,6 +9,43 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.35] – 2026-05-08
+
+### Moodle-Plugin (Code-Review-Approval-Blocker behoben)
+Drei zusammenhängende Architektur-Fixes, die das Plugin Plugin-Directory-
+fähig machen:
+
+- **C1: Externe React-CDN entfernt.** React 18.3.1 + ReactDOM (UMD,
+  MIT-Lizenz) sind jetzt unter `lib/react.production.min.js` und
+  `lib/react-dom.production.min.js` lokal mit dem Plugin
+  ausgeliefert. `index.php` lädt sie über `$PAGE->requires->js()`.
+  Kein `cdnjs.cloudflare.com`-Drittanbieter-Request mehr — DSGVO-
+  sauber, Reviewer-Policy-konform.
+- **C2: Inline-`<script>`-Tags entfernt.** Statt `echo '<script>...'`
+  wird die Locale jetzt als Argument an die AMD-Init-Funktion
+  weitergereicht: `$PAGE->requires->js_call_amd('local_toolguide/
+  toolguide', 'init', [$initiallang])`. Die AMD-Funktion legt sie
+  intern als `window.__toolguideMoodleLang` ab, damit die bestehenden
+  Sync-Skript-Patches in `sync_plugin_js.py` weiter greifen.
+- **C3: Bundle ist jetzt ein echtes AMD-Modul.** `sync_plugin_js.py`
+  wickelt den React-App-Code in `define([], function(){ return {
+  init: function(initialLang) { ... } }; })` statt in eine IIFE.
+  Damit greift Moodles RequireJS-Infrastruktur korrekt: `amd/build/`-
+  Caching, On-Demand-Loading, CSP-Kompatibilität.
+- **M2: Mount-Container im Mustache-Template.** Der `<div
+  id="toolguide-root">` lebt nun in `templates/main.mustache` und
+  wird über `$OUTPUT->render_from_template('local_toolguide/main',
+  [])` gerendert. Inline-HTML in `index.php` ist weg, Inline-`style="
+  min-height:600px"` ebenfalls (steht schon seit 1.1.13 in
+  `styles.css`).
+
+### Notes
+- Plugin-ZIP wuchs ca. 50 KB auf ~452 KB durch das vendorierte
+  React-Bundle. Trade-off gegen DSGVO und Plugin-Directory-Approval —
+  klare Entscheidung.
+- `version.php`: `$plugin->version = 2026050808` (vorher 2026050807),
+  `$plugin->release = '1.1.35'`.
+
 ## [1.1.34] – 2026-05-08
 
 ### Moodle-Plugin

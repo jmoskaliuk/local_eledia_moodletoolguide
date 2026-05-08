@@ -52,18 +52,31 @@ if LANG_SWITCHER_BLOCK not in app:
     )
 app = app.replace(LANG_SWITCHER_BLOCK, 'null')
 
-# Wrap in IIFE so vars don't leak
+# Wrap as a proper AMD module exposing init(initialLang).
+# This is what $PAGE->requires->js_call_amd('local_toolguide/toolguide',
+# 'init', [$initiallang]) calls in index.php.
 out = '/* eslint-disable */\n'
 out += '/* Auto-generated from moodle-tool-guide.html — do not edit by hand. */\n'
-out += '(function() {\n'
+out += 'define([], function() {\n'
 out += '  "use strict";\n'
-out += '  if (typeof React === "undefined" || typeof ReactDOM === "undefined") {\n'
-out += '    console.error("[local_toolguide] React/ReactDOM not loaded");\n'
-out += '    return;\n'
-out += '  }\n'
+out += '  return {\n'
+out += '    init: function(initialLang) {\n'
+out += '      if (typeof React === "undefined" || typeof ReactDOM === "undefined") {\n'
+out += '        console.error("[local_toolguide] React/ReactDOM not loaded");\n'
+out += '        return;\n'
+out += '      }\n'
+out += '      // Hand the Moodle locale to the React app via the global the\n'
+out += '      // useState patch below reads. Using a global rather than a closure\n'
+out += '      // variable so the existing patch in this script keeps working.\n'
+out += '      if (typeof window !== "undefined") {\n'
+out += '        window.__toolguideMoodleLang = initialLang || "en";\n'
+out += '      }\n'
 out += '\n'
 out += app
-out += '\n})();\n'
+out += '\n'
+out += '    }\n'
+out += '  };\n'
+out += '});\n'
 
 PLUGIN_JS.write_text(out, encoding="utf-8")
 print(f"Wrote {len(out)} chars to {PLUGIN_JS}")

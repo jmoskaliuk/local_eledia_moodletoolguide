@@ -46,26 +46,24 @@ $PAGE->add_body_class('local-toolguide-page');
 // makes available.
 $PAGE->set_pagelayout('report');
 
-// Load React (no Babel needed — the bundled JS uses React.createElement directly).
-$PAGE->requires->js(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js'), true);
-$PAGE->requires->js(new moodle_url('https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js'), true);
+// React + ReactDOM 18.3.1 (UMD, MIT-licensed) shipped with the plugin under
+// lib/. Loaded as plain global libs so the AMD module below can rely on
+// window.React / window.ReactDOM. This avoids the previous CDN dependency
+// (cdnjs.cloudflare.com), which was both a DSGVO concern and a Moodle
+// Plugins Directory reviewer policy violation.
+$PAGE->requires->js(new moodle_url('/local/toolguide/lib/react.production.min.js'), true);
+$PAGE->requires->js(new moodle_url('/local/toolguide/lib/react-dom.production.min.js'), true);
 
-// Hand the current Moodle locale to the React app via a global, so the
-// language switcher disappears and the app follows Moodle's user-level
-// language preference (see sync_plugin_js.py for the patches that consume
-// this variable).
+// Pull the current Moodle locale through to the React app. The AMD module
+// consumes it as init() argument and stashes it on window.__toolguideMoodleLang
+// for the synced React code to pick up.
 require_once(__DIR__ . '/lib.php');
 $initiallang = local_toolguide_get_locale_lang();
 
+// Mount the React app via the AMD module — proper Moodle pattern, no inline
+// <script> tags, RequireJS-cached, fully CSP-friendly.
+$PAGE->requires->js_call_amd('local_toolguide/toolguide', 'init', [$initiallang]);
+
 echo $OUTPUT->header();
-
-// Container for the React app. Heading is rendered inside the React app itself.
-echo '<div id="toolguide-root" style="min-height:600px;"></div>';
-
-// Inject the Moodle locale before the AMD module reads it.
-echo '<script>window.__toolguideMoodleLang = ' . json_encode($initiallang) . ';</script>';
-
-// Load the auto-generated app bundle (synced from moodle-tool-guide.html).
-echo '<script src="' . (new moodle_url('/local/toolguide/amd/src/toolguide.js'))->out() . '"></script>';
-
+echo $OUTPUT->render_from_template('local_toolguide/main', []);
 echo $OUTPUT->footer();

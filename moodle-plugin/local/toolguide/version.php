@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_toolguide';
-$plugin->version   = 2026050807;
+$plugin->version   = 2026050808;
 $plugin->requires  = 2024100700; // Moodle 4.5+ (LTS) — current Plugin-Directory minimum.
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.1.34';
+$plugin->release   = '1.1.35';

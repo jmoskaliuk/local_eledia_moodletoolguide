@@ -1,0 +1,33 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_toolguide/main
+
+    Mount container for the Tool Guide React app. The app is loaded via the
+    AMD module local_toolguide/toolguide and rendered into the #toolguide-root
+    element below. CSS in styles.css scopes the layout breakout to this id,
+    so the matrix and cards span the full Boost viewport width.
+
+    Context variables: none (the React app pulls all data from the bundled
+    JavaScript, the Moodle locale is passed to the AMD init() function from
+    index.php).
+
+    Example context (json):
+    {
+    }
+}}
+<div id="toolguide-root" class="local-toolguide-mount"></div>
