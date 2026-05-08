@@ -79,26 +79,63 @@ body.local-toolguide-page .page-header-headings {
 }
 
 /* Tighten the empty space between Boost's primary nav and the React
-   app header now that we hide the H1. Boost reserves vertical room for
-   #page-header padding/margins and #region-main top padding; with no
-   visible heading those translate into a large grey gap. We zero them
-   out for this page only. */
-body.local-toolguide-page #page-header {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
-}
-body.local-toolguide-page #region-main,
-body.local-toolguide-page #region-main-box,
-body.local-toolguide-page .pagelayout-report #region-main {
+   app header now that we hide the H1. Boost has a stack of vertical-
+   space layers between the fixed top nav and the content; we zero
+   ALL of them out for this page only — no single selector covers all
+   Boost variants (Boost, Adaptable, Snap, Trema), so we go broad.
+   IMPORTANT: we never touch <body> padding-top, because that's what
+   reserves room for the fixed top nav itself. */
+
+/* Layer 1 — outer page wrappers. */
+body.local-toolguide-page #page,
+body.local-toolguide-page #page-wrapper,
+body.local-toolguide-page #page-content,
+body.local-toolguide-page #topofscroll {
     padding-top: 0 !important;
     margin-top: 0 !important;
 }
-body.local-toolguide-page #region-main-box > section,
-body.local-toolguide-page #region-main > [role="main"] {
+
+/* Layer 2 — page header band (heading + breadcrumb wrapper). */
+body.local-toolguide-page #page-header,
+body.local-toolguide-page .page-header,
+body.local-toolguide-page .pagelayout-report #page-header {
     padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
+
+/* Layer 3 — Boost auxiliary chrome that's irrelevant for this
+   self-contained page. */
+body.local-toolguide-page .secondary-navigation,
+body.local-toolguide-page .activity-header,
+body.local-toolguide-page .context-header-settings-menu,
+body.local-toolguide-page .page-context-header,
+body.local-toolguide-page nav.tertiary-navigation {
+    display: none !important;
+}
+
+/* Layer 4 — region-main (the box that holds [role=main]). */
+body.local-toolguide-page #region-main-box,
+body.local-toolguide-page #region-main,
+body.local-toolguide-page .pagelayout-report #region-main,
+body.local-toolguide-page .pagelayout-report #region-main-box {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Layer 5 — the [role=main] inner element and any direct section/div. */
+body.local-toolguide-page #region-main-box > section,
+body.local-toolguide-page #region-main > [role="main"],
+body.local-toolguide-page main[role="main"],
+body.local-toolguide-page main[role="main"] > div:first-child {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Layer 6 — the React mount point itself. */
 body.local-toolguide-page #toolguide-root {
+    padding-top: 0 !important;
     margin-top: 0 !important;
 }
 

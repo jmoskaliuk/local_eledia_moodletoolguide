@@ -9,6 +9,36 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.38] – 2026-05-08
+
+### Moodle-Plugin
+- **Header-Abstand robuster geschlossen.** Die in 1.1.36 eingeführten
+  CSS-Regeln deckten in der Praxis nicht alle Spacing-Layer ab, die
+  Boost zwischen der Primary-Navigation und dem Inhalt aufmacht.
+  `styles.css` zielt jetzt unter `body.local-toolguide-page` auf
+  sechs Layer:
+    1. `#page`, `#page-wrapper`, `#page-content`, `#topofscroll`
+    2. `#page-header`, `.page-header`, `.pagelayout-report #page-header`
+    3. `.secondary-navigation`, `.activity-header`,
+       `.context-header-settings-menu`, `.page-context-header`,
+       `nav.tertiary-navigation` (display:none)
+    4. `#region-main-box`, `#region-main` (auch unter
+       `.pagelayout-report`)
+    5. `#region-main-box > section`, `[role=main]` und dessen erstes
+       Kind
+    6. `#toolguide-root` selbst
+  Body `padding-top` (das den Platz für die fixe Top-Nav reserviert)
+  bleibt bewusst unangetastet.
+- **Hinweis Cache.** Wenn der Abstand auch nach dem Update bleibt:
+  `php admin/cli/purge_caches.php` und Browser-Hard-Reload
+  (Ctrl+Shift+R / Cmd+Shift+R), weil Moodle CSS in den Theme-Cache
+  packt und Browser sie zusätzlich aggressive cachen.
+
+### Notes
+- Reines CSS-Patch — keine PHP-/JS-/AMD-/SoT-Änderung.
+- `version.php`: `$plugin->version = 2026050811` (vorher 2026050810),
+  `$plugin->release = '1.1.38'`.
+
 ## [1.1.37] – 2026-05-08
 
 ### Moodle-Plugin
