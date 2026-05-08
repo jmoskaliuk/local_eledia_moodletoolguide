@@ -9,6 +9,51 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.33] – 2026-05-08
+
+### Moodle-Plugin
+- **FAB-Icon ist jetzt das offizielle Lucide-`life-buoy`-Glyph**
+  (Lucide v1.8.0, ISC). Inline-SVG, erbt die Strichfarbe vom Button
+  (`stroke="currentColor"`) und braucht damit keinen
+  `filter: brightness(0) invert(1)`-Hack mehr — das alte „Moodle-M" mit
+  PNG-Filter ist raus. Pfade sind aus dem npm-Paket extrahiert (siehe
+  `CLAUDE.md` Lucide-Note: nicht raten).
+- **Position der schwebenden Schaltfläche per Site-Setting wählbar.**
+  Neue Datei `settings.php` registriert eine Verwaltungsseite unter
+  *Site administration → Plugins → Local plugins → Tool Guide* mit der
+  Option **Bottom right** (Default) / **Bottom left**. Gespeichert
+  unter `local_toolguide | fab_position`. `lib.php` setzt eine
+  Modifier-Klasse `local-toolguide-fab--bottomleft` bzw.
+  `--bottomright`; `styles.css` erhält die zwei Positions-Varianten,
+  inklusive Mobile-Anpassung. Lang-Strings in DE / EN / FR / ES.
+- **Sprache folgt jetzt Moodles Spracheinstellung.** Die vier
+  Sprachbuttons (DE / EN / FR / ES) sind im Moodle-Track ausgeblendet.
+  `index.php` injiziert `window.__toolguideMoodleLang` aus
+  `current_language()` über den neuen Helper
+  `local_toolguide_get_locale_lang()` (Mapping wie WP-Plugin: `de|en|
+  fr|es`, sonst Fallback auf `en`). `sync_plugin_js.py` bekommt zwei
+  zusätzliche Patches: `useState("de")` →
+  `useState(window.__toolguideMoodleLang || "en")`, und der
+  `<div role="group">`-Block mit den vier `langBtn(...)`-Aufrufen wird
+  durch `null` ersetzt.
+
+### Tests (erweitert)
+- `tests/lib_test.php`: drei zusätzliche Test-Fälle für die FAB-
+  Position (Default, gesetzt auf `bottomleft`, defensive Fallback bei
+  ungültigem Wert) sowie eine `dataProvider`-getriebene Suite für
+  `local_toolguide_get_locale_lang()` (10 Locale-Mappings inkl. der
+  drei nicht-unterstützten Locales pl, it, ja → en).
+
+### Notes
+- Bundle bleibt zum Stand von 1.1.32 (`moodle-tool-guide.html` hat
+  inhaltlich nichts neues bekommen außer den drei Sync-Skript-Patches,
+  die nur das Moodle-Plugin-JS betreffen).
+- WP-Plugin steht unverändert auf 1.1.32 — die Idee "Sprache aus
+  Host-System" ist dort schon seit 1.1.14 (`wp.i18n` + Site-Locale-
+  Detection) implementiert.
+- `version.php`: `$plugin->version = 2026050805` (vorher 2026050804),
+  `$plugin->release = '1.1.33'`.
+
 ## [1.1.32] – 2026-05-08
 
 ### Changed
@@ -51,7 +96,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     auf der Seite selbst suppressed.
   - `tests/behat/tool_guide_page.feature` — Tool-Guide-Seite mountet
     AMD-Modul (`#toolguide-root`), erreichbar via Site-Navigation.
-- `version.php`: `$plugin->version = 2026050803` (vorher 2026050802),
+- **Boost-Layout-Fix für Tool-Guide-Seite:** `index.php` setzt
+  `$PAGE->set_pagelayout('report')` statt `'standard'` (mehr
+  Horizontal-Platz im Boost-Theme), und `styles.css` ergänzt einen
+  `#region-main #toolguide-root`-Breakout, der die Seite auf volle
+  Viewport-Breite zieht. Behebt die abgeschnittene rechte
+  Matrix-Spalte auf gängigen 14"-Laptops.
+- `version.php`: `$plugin->version = 2026050804` (vorher 2026050803),
   `$plugin->release = '1.1.32'`.
 
 ## [1.1.31] – 2026-05-08

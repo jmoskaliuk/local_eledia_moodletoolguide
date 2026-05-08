@@ -1598,7 +1598,7 @@ function App() {
   const [compareIds,setCompareIds]=React.useState([]);
   const [showCompare,setShowCompare]=React.useState(false);
   const [search,setSearch]=React.useState("");
-  const [lang,setLang]=React.useState("de");
+  const [lang,setLang]=React.useState(typeof window !== "undefined" && window.__toolguideMoodleLang ? window.__toolguideMoodleLang : "en");
   const [fontScale,setFontScale]=React.useState(1);
   React.useEffect(()=>{ document.documentElement.lang = lang; },[lang]);
   const [filters,setFilters]=React.useState({setup:null,support:null,bloomMin:0,goal:null,onlyGreen:false});
@@ -1633,9 +1633,7 @@ function App() {
               React.createElement("button",{onClick:()=>setFontScale(1),title:t(lang,"a11y_font_reset"),"aria-label":t(lang,"a11y_font_reset"),"aria-pressed":Math.abs(fontScale-1)<0.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:Math.abs(fontScale-1)<0.001?"#194866":"transparent",color:Math.abs(fontScale-1)<0.001?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:Math.abs(fontScale-1)<0.001?700:400}},"A"),
               React.createElement("button",{onClick:()=>setFontScale(s=>Math.min(1.4,Math.round((s+0.1)*100)/100)),title:t(lang,"a11y_font_larger"),"aria-label":t(lang,"a11y_font_larger"),"aria-pressed":fontScale>1.001,style:{padding:"4px 10px",borderRadius:6,border:"none",background:fontScale>1.001?"#194866":"transparent",color:fontScale>1.001?"white":"#194866",cursor:"pointer",fontSize:12,fontWeight:fontScale>1.001?700:400}},"A+")
             ),
-            React.createElement("div",{role:"group","aria-label":t(lang,"language"),style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},
-              langBtn("de","DE"), langBtn("en","EN"), langBtn("fr","FR"), langBtn("es","ES")
-            )
+            null
           )
         )
       )

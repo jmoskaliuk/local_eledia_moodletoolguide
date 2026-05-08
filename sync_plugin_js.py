@@ -24,6 +24,34 @@ app = app.replace(
     'document.getElementById("toolguide-root")'
 )
 
+# Moodle-specific: take the initial language from Moodle's current_language(),
+# injected as window.__toolguideMoodleLang from index.php. Falls back to "en"
+# when the global is missing (e.g. when the AMD module is loaded outside the
+# Tool Guide page itself).
+app = app.replace(
+    'const [lang,setLang]=React.useState("de");',
+    'const [lang,setLang]=React.useState('
+    'typeof window !== "undefined" && window.__toolguideMoodleLang ? '
+    'window.__toolguideMoodleLang : "en");'
+)
+
+# Moodle-specific: hide the in-app language switcher buttons. Moodle has its
+# own user-level language preference that drives current_language(), so we
+# follow it strictly. The whole grouped <div> with the four DE/EN/FR/ES
+# buttons becomes `null` so React renders nothing in its place.
+LANG_SWITCHER_BLOCK = (
+    'React.createElement("div",{role:"group","aria-label":t(lang,"language"),'
+    'style:{display:"flex",gap:2,background:"rgba(25,72,102,0.08)",padding:3,borderRadius:8}},\n'
+    '              langBtn("de","DE"), langBtn("en","EN"), langBtn("fr","FR"), langBtn("es","ES")\n'
+    '            )'
+)
+if LANG_SWITCHER_BLOCK not in app:
+    raise SystemExit(
+        "Could not find the language switcher block to suppress for the Moodle "
+        "track. Has the source markup in moodle-tool-guide.html changed?"
+    )
+app = app.replace(LANG_SWITCHER_BLOCK, 'null')
+
 # Wrap in IIFE so vars don't leak
 out = '/* eslint-disable */\n'
 out += '/* Auto-generated from moodle-tool-guide.html — do not edit by hand. */\n'

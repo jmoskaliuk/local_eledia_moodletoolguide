@@ -31,3 +31,10 @@ $string['pagedesc'] = 'Trouvez la bonne activité Moodle pour votre objectif did
 $string['fab_title'] = 'Ouvrir le Moodle Tool Guide';
 $string['fab_label'] = 'Moodle Tool Guide';
 $string['privacy:metadata'] = 'Le plugin Moodle Tool Guide ne stocke aucune donnée personnelle.';
+
+// Paramètres du site (Administration du site → Plugins → Plugins locaux → Tool Guide).
+$string['settings_pagetitle'] = 'Moodle Tool Guide';
+$string['settings_fab_position'] = 'Position du bouton flottant';
+$string['settings_fab_position_desc'] = 'Où le bouton flottant d\'accès rapide au Tool Guide est ancré sur chaque page. Visible uniquement pour les utilisateurs disposant de la capacité local/toolguide:viewfab.';
+$string['settings_fab_position_bottomright'] = 'En bas à droite';
+$string['settings_fab_position_bottomleft'] = 'En bas à gauche';

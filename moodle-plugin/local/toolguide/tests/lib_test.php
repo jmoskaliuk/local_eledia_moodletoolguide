@@ -173,6 +173,89 @@ final class lib_test extends \advanced_testcase {
         $this->assertStringContainsString('local-toolguide-fab__icon', $html);
         $this->assertStringContainsString('/local/toolguide/index.php', $html);
         $this->assertStringContainsString('aria-label=', $html);
+        // Lucide life-buoy markers — outer + inner circle plus the four spokes.
+        $this->assertStringContainsString('<svg', $html);
+        $this->assertStringContainsString('<circle cx="12" cy="12" r="10"', $html);
+        $this->assertStringContainsString('<circle cx="12" cy="12" r="4"', $html);
+    }
+
+    /**
+     * Default FAB position is bottom-right when the site setting is unset.
+     */
+    public function test_fab_default_position_is_bottomright(): void {
+        $this->resetAfterTest();
+
+        $this->setup_page_for_user('standard', '/course/view.php', 'editingteacher');
+
+        $html = local_toolguide_before_footer();
+
+        $this->assertStringContainsString('local-toolguide-fab--bottomright', $html);
+        $this->assertStringNotContainsString('local-toolguide-fab--bottomleft', $html);
+    }
+
+    /**
+     * Setting fab_position to 'bottomleft' flips the modifier class.
+     */
+    public function test_fab_position_setting_bottomleft(): void {
+        $this->resetAfterTest();
+
+        set_config('fab_position', 'bottomleft', 'local_toolguide');
+
+        $this->setup_page_for_user('standard', '/course/view.php', 'editingteacher');
+
+        $html = local_toolguide_before_footer();
+
+        $this->assertStringContainsString('local-toolguide-fab--bottomleft', $html);
+        $this->assertStringNotContainsString('local-toolguide-fab--bottomright', $html);
+    }
+
+    /**
+     * An invalid fab_position value falls back to bottom-right (defensive).
+     */
+    public function test_fab_position_invalid_falls_back_to_bottomright(): void {
+        $this->resetAfterTest();
+
+        set_config('fab_position', 'topcentre-something-bogus', 'local_toolguide');
+
+        $this->setup_page_for_user('standard', '/course/view.php', 'editingteacher');
+
+        $html = local_toolguide_before_footer();
+
+        $this->assertStringContainsString('local-toolguide-fab--bottomright', $html);
+    }
+
+    /**
+     * local_toolguide_get_locale_lang() maps current_language() to the four
+     * supported app codes; anything unsupported falls back to 'en'.
+     *
+     * @dataProvider locale_lang_provider
+     */
+    public function test_get_locale_lang(string $forcedlocale, string $expected): void {
+        $this->resetAfterTest();
+
+        // current_language() honours $SESSION->lang in tests.
+        global $SESSION;
+        $SESSION->lang = $forcedlocale;
+
+        $this->assertSame($expected, local_toolguide_get_locale_lang());
+    }
+
+    /**
+     * @return array<string, array{string,string}>
+     */
+    public static function locale_lang_provider(): array {
+        return [
+            'de'           => ['de', 'de'],
+            'de_du'        => ['de_du', 'de'],
+            'en'           => ['en', 'en'],
+            'en_us'        => ['en_us', 'en'],
+            'fr'           => ['fr', 'fr'],
+            'es'           => ['es', 'es'],
+            'es_mx'        => ['es_mx', 'es'],
+            'unsupported_pl' => ['pl', 'en'],
+            'unsupported_it' => ['it', 'en'],
+            'unsupported_ja' => ['ja', 'en'],
+        ];
     }
 
     /**

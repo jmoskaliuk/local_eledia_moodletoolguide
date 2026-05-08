@@ -45,11 +45,30 @@ function local_toolguide_extend_navigation(global_navigation $navigation) {
 }
 
 /**
- * Inject the floating "Moodle M" quick-access button into the page footer.
+ * Map the current Moodle locale to a language code supported by the React
+ * Tool Guide app.
+ *
+ * Mirrors the mapping used by the WordPress plugin so the three delivery
+ * tracks behave consistently. Supported codes: de, en, fr, es. Anything
+ * else falls back to en (per PO decision, v1.1.33).
+ *
+ * @return string One of 'de', 'en', 'fr', 'es'.
+ */
+function local_toolguide_get_locale_lang() {
+    $locale = function_exists('current_language') ? current_language() : 'en';
+    $lang   = substr(strtolower((string) $locale), 0, 2);
+
+    return preg_match('/^(de|en|fr|es)$/', $lang) ? $lang : 'en';
+}
+
+/**
+ * Inject the floating Tool Guide quick-access button into the page footer.
  *
  * Called automatically by Moodle's core_renderer::standard_footer_html() via
- * get_plugins_with_function('before_footer'). Returns HTML that is appended
- * right before the closing </body> tag on every rendered page.
+ * get_plugins_with_function('before_footer') in Moodle < 4.4 and via the
+ * core\hook\output\before_footer_html_generation hook in Moodle 4.4+
+ * (see classes/hook_callbacks.php and db/hooks.php). Returns HTML that is
+ * appended right before the closing </body> tag on every rendered page.
  *
  * The button is only rendered when:
  *  - the user is logged in (and not a guest);
@@ -58,10 +77,14 @@ function local_toolguide_extend_navigation(global_navigation $navigation) {
  *  - the current page is not the Tool Guide itself (avoid self-link);
  *  - the page has a full HTML layout (suppressed on CLI, print, secure layouts).
  *
+ * The icon is the Lucide `life-buoy` glyph (ISC-licensed, v1.8.0). The
+ * button position is controlled by the `local_toolguide | fab_position`
+ * site setting (`bottomright` default, `bottomleft` opt-in).
+ *
  * @return string HTML to inject before the footer, or empty string.
  */
 function local_toolguide_before_footer() {
-    global $PAGE, $OUTPUT;
+    global $PAGE;
 
     // Bail out early on non-page contexts (CLI, cron, install, upgrade, AJAX).
     if (during_initial_install()) {
@@ -101,26 +124,37 @@ function local_toolguide_before_footer() {
         return '';
     }
 
+    // Read the position setting (bottomright | bottomleft).
+    $position = get_config('local_toolguide', 'fab_position');
+    if ($position !== 'bottomleft') {
+        $position = 'bottomright';
+    }
+
     $url    = new moodle_url('/local/toolguide/index.php');
     $title  = get_string('fab_title', 'local_toolguide');
     $label  = get_string('fab_label', 'local_toolguide');
 
-    // Moodle's monochrome "M" logo — consistent across themes.
-    $iconurl = $OUTPUT->image_url('monologo', 'core');
-
-    $icon = html_writer::empty_tag('img', [
-        'src'   => $iconurl->out(false),
-        'alt'   => '',
-        'class' => 'local-toolguide-fab__icon',
-        'aria-hidden' => 'true',
-    ]);
+    // Lucide v1.8.0 "life-buoy" icon. Inline SVG so it inherits the
+    // theme-agnostic stroke-currentColor behaviour and stays crisp at any
+    // resolution; ISC-licensed, see https://lucide.dev.
+    $icon = '<svg class="local-toolguide-fab__icon" xmlns="http://www.w3.org/2000/svg" '
+          . 'width="24" height="24" viewBox="0 0 24 24" fill="none" '
+          . 'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+          . 'stroke-linejoin="round" aria-hidden="true" focusable="false">'
+          . '<circle cx="12" cy="12" r="10"/>'
+          . '<path d="m4.93 4.93 4.24 4.24"/>'
+          . '<path d="m14.83 9.17 4.24-4.24"/>'
+          . '<path d="m14.83 14.83 4.24 4.24"/>'
+          . '<path d="m9.17 14.83-4.24 4.24"/>'
+          . '<circle cx="12" cy="12" r="4"/>'
+          . '</svg>';
 
     $srlabel = html_writer::tag('span', $label, [
         'class' => 'local-toolguide-fab__label',
     ]);
 
     return html_writer::link($url, $icon . $srlabel, [
-        'class'      => 'local-toolguide-fab',
+        'class'      => 'local-toolguide-fab local-toolguide-fab--' . $position,
         'title'      => $title,
         'aria-label' => $title,
         'role'       => 'button',

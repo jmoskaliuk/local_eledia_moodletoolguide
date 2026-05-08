@@ -14,6 +14,33 @@
     min-height: 600px;
 }
 
+/*
+ * Boost-Layout-Breakout: brich aus #region-main aus und nutze die
+ * komplette Viewport-Breite. Boost kappt den Content-Container auf
+ * ~960 px ('standard') bzw. ~1140 px ('report') — der Tool-Guide
+ * profitiert sichtbar, sobald die Matrix-Spalten nicht mehr
+ * abgeschnitten werden.
+ *
+ * Selektor `#region-main #toolguide-root` greift NUR im Moodle-Plugin
+ * (im Standalone-HTML und in WP gibt es kein `#region-main`).
+ */
+#region-main #toolguide-root {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+    #region-main #toolguide-root {
+        overflow-x: hidden;
+    }
+}
+
 #toolguide-root ::selection {
     background: #F98012;
     color: white;
@@ -70,7 +97,10 @@
 }
 
 /* --------------------------------------------------------------------- */
-/* Floating "Moodle M" quick-access button (v1.1.13+)                    */
+/* Floating Tool Guide quick-access button (v1.1.13+, redesigned 1.1.33). */
+/* Icon: Lucide v1.8.0 "life-buoy" (ISC) inline SVG.                      */
+/* Position controlled by site-setting local_toolguide | fab_position    */
+/* (bottomright | bottomleft) → modifier class --bottomright/--bottomleft */
 /* Rendered by local_toolguide_before_footer() in lib.php.               */
 /* Visible only to users with local/toolguide:viewfab (teacher/manager). */
 /* --------------------------------------------------------------------- */
@@ -79,7 +109,6 @@ a.local-toolguide-fab,
 a.local-toolguide-fab:link,
 a.local-toolguide-fab:visited {
     position: fixed;
-    right: 24px;
     bottom: 24px;
     z-index: 1040; /* below Bootstrap modals (1050), above most content */
     display: inline-flex;
@@ -100,6 +129,21 @@ a.local-toolguide-fab:visited {
         background-color 150ms ease-out;
 }
 
+/* Position variants — placed via the modifier classes set by lib.php. */
+a.local-toolguide-fab--bottomright,
+a.local-toolguide-fab--bottomright:link,
+a.local-toolguide-fab--bottomright:visited {
+    right: 24px;
+    left: auto;
+}
+
+a.local-toolguide-fab--bottomleft,
+a.local-toolguide-fab--bottomleft:link,
+a.local-toolguide-fab--bottomleft:visited {
+    left: 24px;
+    right: auto;
+}
+
 a.local-toolguide-fab:hover,
 a.local-toolguide-fab:focus {
     background: #FF8C1F;
@@ -116,12 +160,18 @@ a.local-toolguide-fab:focus-visible {
     outline-offset: 3px;
 }
 
+/*
+ * Inline SVG icon (Lucide life-buoy). Inherits stroke from currentColor,
+ * so the white fill comes for free via the link's `color: #FFFFFF`.
+ * No filter/invert hacks needed any more.
+ */
 .local-toolguide-fab__icon {
-    width: 34px;
-    height: 34px;
-    /* Force the monologo SVG to render white regardless of its source color. */
-    filter: brightness(0) invert(1);
+    width: 28px;
+    height: 28px;
     pointer-events: none;
+    color: inherit;
+    fill: none;
+    stroke: currentColor;
 }
 
 /* Visually-hidden label for screen readers. */
@@ -149,14 +199,23 @@ a.local-toolguide-fab:focus-visible {
     a.local-toolguide-fab,
     a.local-toolguide-fab:link,
     a.local-toolguide-fab:visited {
-        right: 16px;
         bottom: 16px;
         width: 48px;
         height: 48px;
     }
+    a.local-toolguide-fab--bottomright,
+    a.local-toolguide-fab--bottomright:link,
+    a.local-toolguide-fab--bottomright:visited {
+        right: 16px;
+    }
+    a.local-toolguide-fab--bottomleft,
+    a.local-toolguide-fab--bottomleft:link,
+    a.local-toolguide-fab--bottomleft:visited {
+        left: 16px;
+    }
     .local-toolguide-fab__icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
     }
 }
 

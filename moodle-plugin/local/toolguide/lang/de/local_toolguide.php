@@ -31,3 +31,10 @@ $string['pagedesc'] = 'Finden Sie die passende Moodle-Aktivität für Ihr didakt
 $string['fab_title'] = 'Moodle Tool Guide öffnen';
 $string['fab_label'] = 'Moodle Tool Guide';
 $string['privacy:metadata'] = 'Das Plugin Moodle Tool Guide speichert keine personenbezogenen Daten.';
+
+// Site-Einstellungen (Site administration → Plugins → Lokale Plugins → Tool Guide).
+$string['settings_pagetitle'] = 'Moodle Tool Guide';
+$string['settings_fab_position'] = 'Position der schwebenden Schaltfläche';
+$string['settings_fab_position_desc'] = 'Wo die schwebende Tool-Guide-Schaltfläche auf jeder Seite verankert wird. Sichtbar nur für Personen mit der Berechtigung local/toolguide:viewfab.';
+$string['settings_fab_position_bottomright'] = 'Unten rechts';
+$string['settings_fab_position_bottomleft'] = 'Unten links';
