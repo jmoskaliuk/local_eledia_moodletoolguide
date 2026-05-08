@@ -210,7 +210,7 @@ Nach dem Release v1.1.31 zu prüfen — danach in den jeweiligen Task „PO Sign
 - **Feature:** feat05 (Doku-Track)
 
 **Ergebnis**
-- `docs/00-master.md` … `docs/05-quality.md` und `docs/Playbooks/local_toolguide.md` nach dem [eLeDia.OS_DevFlow](https://github.com/jmoskaliuk/eLeDia.OS_DevFlow)-Standard angelegt.
+- `docs/00-master.md` … `docs/05-quality.md` nach dem [eLeDia.OS_DevFlow](https://github.com/jmoskaliuk/eLeDia.OS_DevFlow)-Standard angelegt; Playbook-Inhalt seit v1.1.40 in `docs/00-master.md` §14–§23 konsolidiert.
 - ID-System (`featXX`/`taskXX`/`qXX`/`bugXX`/`testXX`/`adrXX`/`relXX`) etabliert.
 - ADRs `adr01`–`adr03` befüllt.
 

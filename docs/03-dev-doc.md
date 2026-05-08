@@ -60,7 +60,7 @@ Drei Auslieferungswege auf gemeinsamer Codebasis:
 | `moodle-plugin/local/toolguide/amd/build/toolguide.min.js` | Minifizierte Auslieferungsversion des AMD-Moduls (von Moodle bei Cache-Aufbau erzeugt). |
 | `wordpress-plugin/eledia-toolguide/eledia-toolguide.php` | Plugin-Bootstrap, Shortcode-Registrierung, Asset-Enqueue, Privacy-API, lokaler React-Fallback-Detect. |
 | `Datenbank_ToolGuide.xlsx` | Tool-Datenbank — manuell gepflegt, in den Prototyp einkopiert (kein Live-Sync). |
-| `moodle-plugin/deploy.sh` | Deploy in lokales Orb-Docker-Moodle (siehe Playbook). |
+| `moodle-plugin/deploy.sh` | Deploy in lokales Orb-Docker-Moodle (siehe `00-master.md` §17). |
 | `assets/` | Logos, Favicons, Cc-by-nc-sa-Badge — als Data-URIs in den Prototyp einkopiert. |
 
 ---

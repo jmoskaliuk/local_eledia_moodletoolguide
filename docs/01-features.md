@@ -264,15 +264,90 @@ Plugin-Output bleibt in jedem WordPress-Theme konsistent.
 - **Datum:** 2026-04-26
 - **Status:** freigegeben
 - **Enthaltene Features:** feat04 (FR/ES), feat05 (AMD-Build), feat06 (Privacy)
-- **Bekannte Einschränkungen:** offene Cleanup-Tasks (siehe `04-tasks.md`)
 - **Release-Notes:** siehe `CHANGELOG.md` und `wordpress-plugin/eledia-toolguide/readme.txt`
 
-#### rel02 v1.1.14 — Premium Moodle Partner Logo *(geplant)*
+#### rel02 v1.1.31 — Premium Moodle Partner Logo + DevFlow + Cleanup
 
-- **Datum:** TBD
-- **Status:** in Arbeit
-- **Enthaltene Features:** Logo-Update auf offizielles Premium-Moodle-Partner-Trademark-Badge (Primary Colour RGB)
-- **Migrations-Hinweis:** keine
-- **Release-Notes:** „Footer-Partner-Logo aktualisiert auf das aktuelle „Premium Moodle Partner Trademark"-Badge."
+- **Datum:** 2026-05-08
+- **Status:** freigegeben
+- **Enthaltene Features:** feat01, feat05
+- **Release-Notes:** Offizielles „Premium Moodle Partner Trademark™" Badge
+  (4877 × 1232 px) ersetzt das alte 600 × 196-Asset; Repo-Cleanup
+  (`IconPreview_ToolGuide.html`, `Konzept_ToolGuide_Webapp.md`,
+  `Prototyp_ToolGuide.jsx` entfernt); DevFlow-Doku unter `docs/` angelegt.
+
+#### rel03 v1.1.32 — WP-JS resync, Hook-Migration, Tests, Boost-Layout
+
+- **Datum:** 2026-05-08
+- **Status:** freigegeben
+- **Enthaltene Features:** feat04 (WP-i18n), feat05 (Sync), feat06 (Tests)
+- **Release-Notes:** WP-Plugin-JS an die aktuelle Standalone-Quelle
+  angeglichen (+84 KB App-Code: Mobile-Matrix, UI-Polish, neuer
+  Tool-Datensatz); Hook-Migration `core\hook\output\
+  before_footer_html_generation` (behebt Moodle-5.x-Debug-Warning);
+  PHPUnit + Behat-Tests neu unter `tests/`; `pagelayout='report'` und
+  CSS-Breakout für volle Boost-Viewport-Breite; Translator-Credits
+  „Susanne Gebauer und Gerald Hartwig" ergänzt.
+
+#### rel04 v1.1.33 — FAB-Icon, Position, Locale-Sync, Matrix-Layout
+
+- **Datum:** 2026-05-08
+- **Status:** freigegeben (Moodle: be258f7, WP: 69de1fa)
+- **Enthaltene Features:** feat01, feat04, feat05
+- **Release-Notes:** Lucide v1.8.0 `life-buoy` als FAB-Icon;
+  Site-Setting `fab_position` (bottomright/bottomleft); Sprache folgt
+  Moodles `current_language()` (Sprach-Buttons im Moodle-Track aus);
+  Matrix-Goal-Spalten gleich breit (`tableLayout: fixed`,
+  `width: calc((100% - 390px) / 4)`).
+
+#### rel05 v1.1.34 — Doppelte H1, Code-Review-Quick-Wins
+
+- **Datum:** 2026-05-08
+- **Status:** freigegeben (Moodle nur)
+- **Release-Notes:** Doppelte H1 auf der Tool-Guide-Seite ausgeblendet
+  via Body-Class; M1 (`\core\context\system::instance()`),
+  M3 (`MATURITY_STABLE`), M4 (`requires = 2024100700`, Moodle 4.5 LTS).
+
+#### rel06 v1.1.35 — Vendored React, AMD-Modul, Mustache (C1+C2+C3+M2)
+
+- **Datum:** 2026-05-08
+- **Status:** freigegeben (Moodle nur)
+- **Release-Notes:** React 18.3.1 + ReactDOM lokal vendoriert in
+  `lib/` (kein `cdnjs.cloudflare.com`-CDN-Request mehr — DSGVO-clean);
+  AMD-Bundle ist jetzt `define([], function(){return{init:fn}})`,
+  geladen via `$PAGE->requires->js_call_amd()`; Mount-Container in
+  `templates/main.mustache`. Damit sind alle drei Plugin-Directory-
+  Approval-Blocker aus dem Code-Review behoben.
+
+#### rel07 v1.1.36 — Boost-Header-Abstand schließen (Pass 1)
+
+- **Datum:** 2026-05-08
+- **Status:** freigegeben (Moodle nur)
+- **Release-Notes:** Erste Runde CSS-Padding-Resets auf
+  `body.local-toolguide-page` für `#page-header` und `#region-main`.
+
+#### rel08 v1.1.37 — M5 + N3/N4 + N6 cleanups
+
+- **Datum:** 2026-05-08
+- **Status:** freigegeben (Moodle nur)
+- **Release-Notes:** Legacy `local_toolguide_extend_navigation()`
+  entfernt — der FAB ersetzt die Site-Pages-Nav-Node;
+  Behat-Tests auf Moodle-4.5/5-Realität umgestellt
+  (`I visit ...` statt `I am on the ... page`, „Site pages"-Szenario
+  entfernt); Translator-Credit-Zusatz als i18n-Key
+  `credit_translators_extras` in allen vier Sprachen.
+
+#### rel09 v1.1.38 — Boost-Header-Abstand schließen (Pass 2, robust)
+
+- **Datum:** 2026-05-08
+- **Status:** freigegeben (Moodle nur)
+- **Release-Notes:** Aggressivere Padding-Resets in `styles.css` für
+  sechs Boost-Spacing-Layer (`#page`, `#page-wrapper`, `#page-content`,
+  `#topofscroll`, `#region-main-box`, `[role=main]`). Nebenbei werden
+  `.secondary-navigation`, `.activity-header`,
+  `.context-header-settings-menu`, `.page-context-header` und
+  `nav.tertiary-navigation` auf der Tool-Guide-Seite per
+  `display: none` ausgeblendet, da auf einer self-contained
+  React-Seite irrelevant.
 
 ---

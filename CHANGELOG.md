@@ -9,6 +9,28 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.39] – 2026-05-08
+
+### Moodle-Plugin
+- **Layer-1-Resets aus 1.1.38 zurückgerollt.** Die in 1.1.38
+  ergänzten Padding-Resets auf den Outer-Page-Wrappern
+  (`#page`, `#page-wrapper`, `#page-content`, `#topofscroll`) haben
+  auch den Reservepuffer für die Fixed-Top-Navbar mitgekillt — die
+  React-App rutschte dadurch unter die Boost-Navigation. `styles.css`
+  setzt jetzt nur noch die inneren Layer auf 0:
+  `#page-header`/`.page-header`, `#region-main(-box)`,
+  `#region-main-box > section`, `[role=main]`, `main[role=main] >
+  div:first-child` und `#toolguide-root`. Damit bleibt der Platz für
+  die Navbar erhalten und der unsichtbare Header-Spacing-Block ist
+  trotzdem zu.
+
+### Notes
+- Reines CSS-Patch — keine PHP-/JS-/AMD-/SoT-Änderung.
+- Falls nach dem Update Abstand oder Überlapp wieder unsauber sind:
+  `php admin/cli/purge_caches.php` und Browser-Hard-Reload.
+- `version.php`: `$plugin->version = 2026050812` (vorher 2026050811),
+  `$plugin->release = '1.1.39'`.
+
 ## [1.1.38] – 2026-05-08
 
 ### Moodle-Plugin
