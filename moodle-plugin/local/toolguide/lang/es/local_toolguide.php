@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * German language strings.
+ * Spanish language strings.
  *
  * @package    local_toolguide
  * @copyright  2026 eLeDia GmbH
@@ -24,10 +24,10 @@
 
 $string['pluginname'] = 'Moodle Tool Guide';
 $string['toolguide'] = 'Tool Guide';
-$string['toolguide:view'] = 'Tool Guide anzeigen';
-$string['toolguide:viewfab'] = 'Schaltfläche „Tool Guide“ auf allen Seiten sehen';
-$string['pagetitle'] = 'Moodle Tool Guide – Interaktiv';
-$string['pagedesc'] = 'Finden Sie die passende Moodle-Aktivität für Ihr didaktisches Ziel.';
-$string['fab_title'] = 'Moodle Tool Guide öffnen';
+$string['toolguide:view'] = 'Ver el Tool Guide';
+$string['toolguide:viewfab'] = 'Ver el botón Tool Guide en todas las páginas';
+$string['pagetitle'] = 'Moodle Tool Guide – Interactivo';
+$string['pagedesc'] = 'Encuentre la actividad de Moodle adecuada para su objetivo didáctico.';
+$string['fab_title'] = 'Abrir el Moodle Tool Guide';
 $string['fab_label'] = 'Moodle Tool Guide';
-$string['privacy:metadata'] = 'Das Plugin Moodle Tool Guide speichert keine personenbezogenen Daten.';
+$string['privacy:metadata'] = 'El plugin Moodle Tool Guide no almacena ningún dato personal.';

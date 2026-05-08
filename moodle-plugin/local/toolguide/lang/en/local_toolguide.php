@@ -25,5 +25,9 @@
 $string['pluginname'] = 'Moodle Tool Guide';
 $string['toolguide'] = 'Tool Guide';
 $string['toolguide:view'] = 'View Tool Guide';
+$string['toolguide:viewfab'] = 'See the floating Tool Guide button on every page';
 $string['pagetitle'] = 'Moodle Tool Guide – Interactive';
 $string['pagedesc'] = 'Find the right Moodle activity for your didactic goal.';
+$string['fab_title'] = 'Open the Moodle Tool Guide';
+$string['fab_label'] = 'Moodle Tool Guide';
+$string['privacy:metadata'] = 'The Moodle Tool Guide plugin does not store any personal data.';

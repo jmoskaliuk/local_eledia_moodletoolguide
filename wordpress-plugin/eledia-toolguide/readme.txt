@@ -1,10 +1,10 @@
 === eLeDia Moodle Tool Guide ===
-Contributors: elediamoodle
+Contributors: eledia, jmoskaliuk
 Tags: moodle, elearning, shortcode, tool-guide, didactics
 Requires at least: 6.0
-Tested up to: 6.9
+Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.30
+Stable tag: 1.1.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Interactive guide to the activities of Moodle 5 — matrix, cards and wizard vie
 
 == Description ==
 
-The **eLeDia Moodle Tool Guide** helps teachers and course designers pick the right Moodle activity for their didactic goal. The guide bundles curated knowledge about 22 Moodle activities with metadata on setup effort, ongoing support effort, suitability for four learning goal categories (inform, assess, communicate, collaborate) and Bloom taxonomy level.
+The **eLeDia Moodle Tool Guide** helps teachers and course designers pick the right Moodle activity for their didactic goal. The guide bundles curated knowledge about around 25 Moodle activities with metadata on setup effort, ongoing support effort, suitability for four learning goal categories (inform, assess, communicate, collaborate) and Bloom taxonomy level.
 
 Three views on the same dataset:
 
@@ -25,26 +25,6 @@ The guide is multilingual (English, German, French, Spanish), WCAG 2.2 AA compli
 This plugin is a lightweight wrapper around the standalone HTML Tool Guide — the JavaScript payload is synced from the canonical prototype. The plugin ships one shortcode, no admin UI, no database tables, no tracking.
 
 Translated plugin readmes are available in the plugin folder: `readme-de.txt` (Deutsch), `readme-fr.txt` (Français), `readme-es.txt` (Español).
-
-== Source Code ==
-
-The distributed JavaScript file `assets/js/toolguide.js` is generated from the human-readable HTML/React prototype in the public repository:
-
-https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/Prototyp_ToolGuide.html
-
-The generation script is also public:
-
-https://github.com/jmoskaliuk/local_eledia_moodletoolguide/blob/main/sync_wordpress_js.py
-
-To rebuild the WordPress JavaScript bundle from the repository root, run:
-
-`python3 sync_wordpress_js.py`
-
-To rebuild the installable plugin ZIP, run:
-
-`cd wordpress-plugin && zip -qr eledia-toolguide.zip eledia-toolguide -x '*/.DS_Store'`
-
-The stylesheet `assets/css/toolguide.css` is distributed as uncompressed source CSS.
 
 == Installation ==
 
@@ -67,7 +47,7 @@ Examples:
 
 = Does the plugin load React from an external CDN? =
 
-No. The plugin uses WordPress' bundled `wp-element` package and does not load React from an external CDN.
+By default, yes — React 18.3.1 is loaded from unpkg.com. For GDPR-compliant installations without external requests you can self-host React: drop `react.production.min.js` and `react-dom.production.min.js` from the React distribution into `assets/js/vendor/`. The plugin detects the local files automatically and uses them instead of the CDN.
 
 = Does the plugin work with the Gutenberg block editor? =
 
@@ -79,63 +59,14 @@ The tool data is currently hard-coded in the JavaScript bundle. An admin editor 
 
 = Is tracking or telemetry included? =
 
-No. The plugin is 100% self-contained and does not call home.
+No. The plugin is 100% self-contained (except for the optional React CDN) and does not call home.
 
 == Changelog ==
 
-= 1.1.30 =
-* Hardened startup against JavaScript optimization order issues by waiting for WordPress' React runtime before rendering the Tool Guide.
-
-= 1.1.29 =
-* Added WordPress.org review metadata: plugin owner contributor username and public source/build documentation for the generated JavaScript bundle.
-
-= 1.1.28 =
-* Updated WordPress.org compatibility metadata for Plugin Check and removed the no longer needed manual textdomain loading hook.
-
-= 1.1.27 =
-* Removed the deprecated Survey activity from the synced Moodle 5 tool data and aligned the activity list with the updated source spreadsheet.
-
-= 1.1.26 =
-* Removed the deprecated Chat activity from the synced Moodle 5 tool data and aligned the activity list with the source spreadsheet.
-
-= 1.1.25 =
-* Marked Tool Guide scripts and inline bootstrap code with WP Rocket `nowprocket` exclusions so the app starts without waiting for scroll interaction.
-
-= 1.1.24 =
-* Added tap-friendly matrix header hints and fixed matrix tooltip hints to the bottom of the viewport for touch devices such as iPad.
-
-= 1.1.23 =
-* Added a "Start new comparison" action in the comparison dialog and aligned compare buttons to the bottom of cards.
-
-= 1.1.22 =
-* Bloom learning goals are shown neutrally in card details instead of as good/partial/bad suitability.
-
-= 1.1.21 =
-* Added tap-friendly mobile matrix hints for effort dots and suitability icons.
-
-= 1.1.20 =
-* Mobile users now start in the cards view by default, and the loading indicator is removed explicitly before the app renders.
-
-= 1.1.19 =
-* Corrected the partial-suitability thumb icon so it points left.
-
-= 1.1.18 =
-* Added an accessible loading indicator while the WordPress bundle starts and synced the compact mobile matrix from the HTML prototype.
-
-= 1.1.17 =
-* Improved mobile layout: matrix reading arrows are hidden on small screens, the search field aligns left, and wizard option boxes are constrained to the viewport.
-
-= 1.1.16 =
-* Improved iPhone matrix cards: didactic-goal chips now wrap in a two-column mobile layout so long labels no longer overlap.
-
-= 1.1.15 =
-* Improved WordPress theme integration: the Tool Guide now breaks out to full viewport width for header, navigation, content background and footer bands, and the footer stays at the bottom on short result pages.
-
-= 1.1.14 =
-* Added WordPress JavaScript internationalization support for UI strings via `wp-i18n`, `wp_set_script_translations()`, bundled JSON translations and a POT template. The curated tool data remains available in the built-in DE/EN/FR/ES language switcher.
-
 = 1.1.13 =
-* Synced the current HTML prototype into the WordPress plugin: updated matrix help, info panels, formal German wording, improved assistant filtering, mobile-friendly matrix cards and accessibility refinements for contrast, focus and table semantics. React is now loaded through WordPress' bundled `wp-element` package instead of an external CDN.
+* Fixed invisible wizard buttons: all Wizard option, Back, Skip and Restart buttons now set an explicit text color so they remain readable when a WordPress theme sets `button { color: white }`.
+* Updated Moodle Partner logo to the "Premium Certified Services Provider" badge with dark subtitle text (readable on the beige footer).
+* Added Susanne Gebauer and Gerald Hartwig to the translation credits in the footer.
 
 = 1.1.12 =
 * Footer redesigned to match the new header: warm light beige (#FFECDB) background with dark blue text and dark blue underlined links instead of the dark blue bar with orange links. The eLeDia and Moodle Partner logos, CC-BY-NC-SA badge and GitHub icon all read clearly on the new background.
@@ -163,7 +94,7 @@ No. The plugin is 100% self-contained and does not call home.
 = 1.1.6 =
 * Initial WordPress port from the Moodle plugin local_toolguide 1.1.6.
 * Shortcode-based embedding.
-* React via WordPress' bundled `wp-element` package.
+* React 18 via CDN or self-hosted.
 * WCAG 2.2 AA: contrast, keyboard operation, focus management, live regions.
 
 == Credits ==

@@ -12,12 +12,6 @@
     font-family: Inter, system-ui, -apple-system, sans-serif;
     color: #353535;
     min-height: 600px;
-    background: #F3F5F8;
-}
-
-#toolguide-root > .tg-app-shell {
-    width: 100%;
-    min-height: inherit;
 }
 
 #toolguide-root ::selection {
@@ -44,10 +38,6 @@
     outline-offset: 2px;
 }
 
-#toolguide-root select {
-    max-width: 100%;
-}
-
 /* Reduced motion preference (WCAG 2.3.3). */
 @media (prefers-reduced-motion: reduce) {
     #toolguide-root *,
@@ -62,110 +52,131 @@
 
 /* Mobile tweaks. */
 @media (max-width: 640px) {
-    #toolguide-root .tg-desktop-matrix {
-        display: none !important;
+    #toolguide-root h1 {
+        font-size: 18px !important;
     }
-
-    #toolguide-root .tg-mobile-matrix {
-        display: grid !important;
+    #toolguide-root nav button {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
     }
-
-    #toolguide-root .tg-main-pad {
-        padding: 12px 12px 28px !important;
+    #toolguide-root table th,
+    #toolguide-root table td {
+        padding: 6px !important;
+        font-size: 11px !important;
     }
-
-    #toolguide-root .tg-filterbar {
-        padding: 10px 12px !important;
-    }
-
-    #toolguide-root .tg-filterbar label,
-    #toolguide-root .tg-filterbar select {
-        width: 100% !important;
-    }
-
     #toolguide-root .tg-grid-cards {
         grid-template-columns: 1fr !important;
     }
+}
 
-    #toolguide-root .tg-header {
-        padding: 16px 14px !important;
-    }
+/* --------------------------------------------------------------------- */
+/* Floating "Moodle M" quick-access button (v1.1.13+)                    */
+/* Rendered by local_toolguide_before_footer() in lib.php.               */
+/* Visible only to users with local/toolguide:viewfab (teacher/manager). */
+/* --------------------------------------------------------------------- */
 
-    #toolguide-root .tg-nav {
-        padding: 8px 12px !important;
-    }
+a.local-toolguide-fab,
+a.local-toolguide-fab:link,
+a.local-toolguide-fab:visited {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1040; /* below Bootstrap modals (1050), above most content */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #F98012; /* eLeDia/Moodle orange */
+    color: #FFFFFF;
+    text-decoration: none;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        0 2px 4px rgba(0, 0, 0, 0.15);
+    transition:
+        transform 150ms ease-out,
+        box-shadow 150ms ease-out,
+        background-color 150ms ease-out;
+}
 
-    #toolguide-root .tg-nav-row {
-        justify-content: flex-start !important;
-        align-items: flex-start !important;
-    }
+a.local-toolguide-fab:hover,
+a.local-toolguide-fab:focus {
+    background: #FF8C1F;
+    color: #FFFFFF;
+    text-decoration: none;
+    transform: scale(1.08);
+    box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.30),
+        0 3px 6px rgba(0, 0, 0, 0.18);
+}
 
-    #toolguide-root .tg-nav-actions {
-        justify-content: flex-start !important;
-        width: 100% !important;
-    }
+a.local-toolguide-fab:focus-visible {
+    outline: 3px solid #194866; /* eLeDia CI dark blue */
+    outline-offset: 3px;
+}
 
-    #toolguide-root .tg-nav-search-wrap {
-        justify-content: flex-start !important;
-        width: 100% !important;
-    }
+.local-toolguide-fab__icon {
+    width: 34px;
+    height: 34px;
+    /* Force the monologo SVG to render white regardless of its source color. */
+    filter: brightness(0) invert(1);
+    pointer-events: none;
+}
 
-    #toolguide-root .tg-tool-search {
-        width: 100% !important;
-        max-width: 220px !important;
-    }
+/* Visually-hidden label for screen readers. */
+.local-toolguide-fab__label {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 
-    #toolguide-root .tg-filterbar > div {
-        width: 100% !important;
-    }
-
-    #toolguide-root .tg-mobile-goals {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-
-    #toolguide-root .tg-mobile-goal {
-        min-height: 62px !important;
-        overflow: hidden !important;
-    }
-
-    #toolguide-root .tg-mobile-goal-label {
-        display: block !important;
-        width: 100% !important;
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-        word-break: normal !important;
-        hyphens: auto !important;
-        font-size: 11px !important;
-        line-height: 1.15 !important;
-    }
-
-    #toolguide-root .tg-wizard {
-        max-width: 100% !important;
-        width: 100% !important;
-    }
-
-    #toolguide-root .tg-wizard-option {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 12px !important;
-    }
-
-    #toolguide-root .tg-wizard-option-content {
-        align-items: flex-start !important;
-    }
-
-    #toolguide-root .tg-wizard-option-content > div {
-        min-width: 0 !important;
-    }
-
-    #toolguide-root .tg-wizard-option-content span {
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
+/* Do not print the FAB. */
+@media print {
+    a.local-toolguide-fab {
+        display: none !important;
     }
 }
 
-@media (min-width: 641px) {
-    #toolguide-root .tg-mobile-matrix {
-        display: none !important;
+/* Smaller on narrow screens, tucked into the safe area. */
+@media (max-width: 600px) {
+    a.local-toolguide-fab,
+    a.local-toolguide-fab:link,
+    a.local-toolguide-fab:visited {
+        right: 16px;
+        bottom: 16px;
+        width: 48px;
+        height: 48px;
+    }
+    .local-toolguide-fab__icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Honour reduced-motion preference (WCAG 2.3.3). */
+@media (prefers-reduced-motion: reduce) {
+    a.local-toolguide-fab {
+        transition: none;
+    }
+    a.local-toolguide-fab:hover,
+    a.local-toolguide-fab:focus {
+        transform: none;
+    }
+}
+
+/* High-contrast mode: stronger border, no shadow. */
+@media (prefers-contrast: more), (-ms-high-contrast: active) {
+    a.local-toolguide-fab,
+    a.local-toolguide-fab:link,
+    a.local-toolguide-fab:visited {
+        border: 2px solid #FFFFFF;
+        box-shadow: 0 0 0 2px #194866;
     }
 }
