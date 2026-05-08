@@ -4,7 +4,7 @@ Tags: moodle, elearning, shortcode, tool-guide, didactica
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.31
+Stable tag: 1.1.32
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,10 @@ Los datos de las herramientas están actualmente codificados en el bundle JavaSc
 No. El plugin es 100 % autónomo y no se comunica con servidores externos.
 
 == Registro de cambios ==
+
+= 1.1.32 =
+* Bundle JavaScript del plugin de WordPress alineado con la fuente standalone actual (moodle-tool-guide.html). Incorpora la matriz responsiva móvil, retoques adicionales de la interfaz React y el último conjunto de datos.
+* Créditos de traducción ampliados en el pie alemán: Susanne Gebauer y Gerald Hartwig junto a Ralf Hilgenstock.
 
 = 1.1.31 =
 * Logotipo de partner actualizado al insignia oficial «Premium Moodle Partner Trademark™» (Primary Colour RGB).

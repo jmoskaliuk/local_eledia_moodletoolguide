@@ -9,6 +9,28 @@ three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.32] – 2026-05-08
+
+### Changed
+- **WordPress-Plugin-JavaScript an die aktuelle Standalone-Quelle
+  angeglichen.** Mit dem Umbenennen von `Prototyp_ToolGuide.html` zu
+  `moodle-tool-guide.html` wurde der Babel-Block der Standalone-HTML
+  zur einzigen Quelle für alle drei Tracks. Das WP-Plugin-JS
+  (`wordpress-plugin/eledia-toolguide/assets/js/toolguide.js`) hat damit
+  ca. 84 KB zusätzlichen App-Code übernommen, der bisher nur in der
+  Standalone-Datei vorhanden war: Mobile-Responsive-Matrix-Layout,
+  zusätzlicher UI-Feinschliff in der React-App und der aktuelle
+  Tool-Datensatz.
+- **Übersetzungs-Credits ergänzt.** Der deutsche Footer-Vermerk lautet
+  ab jetzt „Basiert auf einer Übersetzung von Ralf Hilgenstock, Susanne
+  Gebauer und Gerald Hartwig" — vorher war nur Ralf Hilgenstock
+  genannt.
+
+### Notes
+- Moodle-Plugin (`local_toolguide`) bleibt vorerst auf 1.1.31 — der
+  identische Sync-Lauf für das AMD-Modul folgt in einem eigenen
+  Release, sobald der Stand getestet ist.
+
 ## [1.1.31] – 2026-05-08
 
 ### Changed
