@@ -6,7 +6,7 @@ Un Tool Guide interactif pour Moodle 5 — basé sur le classique *Moodle Tool G
 
 Trois canaux de livraison depuis une source unique :
 
-1. **Page web autonome** — `Prototyp_ToolGuide.html` : fichier HTML/React unique, intégrable directement via `<iframe>`.
+1. **Page web autonome** — `moodle-tool-guide.html` : fichier HTML/React unique, intégrable directement via `<iframe>`.
 2. **Plugin local Moodle** — `moodle-plugin/local/toolguide/` / `local_toolguide.zip` : plugin local installable pour Moodle 4.5 / 5.x.
 3. **Plugin WordPress** — `wordpress-plugin/eledia-toolguide/` / `eledia-toolguide.zip` : shortcode `[eledia_toolguide]` pour tout site WordPress.
 
@@ -30,10 +30,10 @@ Trois canaux de livraison depuis une source unique :
 
 ## Utiliser la page autonome
 
-`Prototyp_ToolGuide.html` est un fichier HTML autonome. Ouvrez-le directement dans un navigateur, ou intégrez-le via une iframe :
+`moodle-tool-guide.html` est un fichier HTML autonome. Ouvrez-le directement dans un navigateur, ou intégrez-le via une iframe :
 
 ```html
-<iframe src="/wp-content/uploads/Prototyp_ToolGuide.html"
+<iframe src="/wp-content/uploads/moodle-tool-guide.html"
         width="100%" height="900" style="border:0"></iframe>
 ```
 

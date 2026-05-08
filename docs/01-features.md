@@ -35,7 +35,7 @@ Moodle-Lehrenden auf einer einzigen Oberfläche helfen, das passende Werkzeug f�
 
 ### Constraints
 
-- Single-File-Source-of-Truth (`Prototyp_ToolGuide.html`) → Sync in beide Plugin-Tracks.
+- Single-File-Source-of-Truth (`moodle-tool-guide.html`) → Sync in beide Plugin-Tracks.
 - BFSG/WCAG 2.2 AA verbindlich.
 - React 18.x, kein Build-Schritt zur Laufzeit (Babel-in-Browser im Prototyp; AMD-Modul im Moodle-Plugin; vorgemounteter Bundle im WP-Plugin).
 - WordPress-Theme-Isolation (Scoped CSS Reset).
@@ -164,7 +164,7 @@ Standalone-HTML, Moodle-Plugin und WordPress-Plugin verhalten sich identisch und
 
 **Verhalten**
 
-- `Prototyp_ToolGuide.html` ist Source of Truth.
+- `moodle-tool-guide.html` ist Source of Truth.
 - `sync_plugin_js.py` baut Moodle-AMD-Modul.
 - `sync_wordpress_js.py` baut WP-Asset-JS inkl. `wp.i18n`-Patch.
 - Versionen, Stable-Tags und Changelogs in allen Tracks im Lockstep.

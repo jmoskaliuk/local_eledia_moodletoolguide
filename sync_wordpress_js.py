@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract React app from Prototyp_ToolGuide.html and write it as the
+"""Extract React app from moodle-tool-guide.html and write it as the
 WordPress plugin's assets/js/toolguide.js, mounting to .eledia-toolguide-root.
 
 The standalone HTML uses #root, Moodle uses #toolguide-root, WordPress uses
@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-HTML = ROOT / "Prototyp_ToolGuide.html"
+HTML = ROOT / "moodle-tool-guide.html"
 WP_JS = ROOT / "wordpress-plugin/eledia-toolguide/assets/js/toolguide.js"
 
 html = HTML.read_text(encoding="utf-8")
@@ -85,7 +85,7 @@ app = app.replace('I18N[lang].bloom_levels', 'ta(lang,"bloom_levels")')
 app = app.replace('I18N[lang].bloom_descs', 'ta(lang,"bloom_descs")')
 
 out = '/* eslint-disable */\n'
-out += '/* Auto-generated from Prototyp_ToolGuide.html — do not edit by hand. */\n'
+out += '/* Auto-generated from moodle-tool-guide.html — do not edit by hand. */\n'
 out += '(function() {\n'
 out += '  "use strict";\n'
 out += '  const __elediaToolguideRoot = document.querySelector(".eledia-toolguide-root");\n'

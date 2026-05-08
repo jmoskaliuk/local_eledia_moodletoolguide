@@ -14,7 +14,7 @@
 - **Aktuelle Version:** `1.1.13` (Stand: 2026-05-08; siehe `01-features.md` → Releases)
 - **Tech-Stack:**
   - React 18.3.1 + Babel-in-Browser (Standalone) bzw. AMD-Modul (Moodle) bzw. Enqueue (WordPress)
-  - Single-File-Source-of-Truth: `Prototyp_ToolGuide.html`
+  - Single-File-Source-of-Truth: `moodle-tool-guide.html`
   - Sync nach Plugins via `sync_plugin_js.py` (Moodle) und `sync_wordpress_js.py` (WordPress)
   - Deploy lokal via `moodle-plugin/deploy.sh` (Orb-Docker)
 
@@ -69,7 +69,7 @@ Idee → Feature → Task → Implementierung → Test → (Bug → Fix) → Don
 Iterativer Loop. Drei Auslieferungswege werden in **Lockschritt** gepflegt:
 
 ```
-Prototyp_ToolGuide.html  ── sync_plugin_js.py   ──► moodle-plugin/local/toolguide/amd/src/toolguide.js
+moodle-tool-guide.html  ── sync_plugin_js.py   ──► moodle-plugin/local/toolguide/amd/src/toolguide.js
                          └─ sync_wordpress_js.py ──► wordpress-plugin/eledia-toolguide/assets/js/toolguide.js
 ```
 
@@ -201,7 +201,7 @@ ADRs leben **inline hier**, nicht in separaten Dateien.
   - A) Drei separate Codebasen pflegen (manuell synchron halten)
   - B) Monorepo mit gemeinsamer Library und drei Hosts
   - C) Single-File-Prototyp + Sync-Skripte in beide Plugin-Tracks
-- **Entscheidung:** C — `Prototyp_ToolGuide.html` ist die Quelle, `sync_plugin_js.py` / `sync_wordpress_js.py` extrahieren den Babel-Block und passen den Mount-Punkt an.
+- **Entscheidung:** C — `moodle-tool-guide.html` ist die Quelle, `sync_plugin_js.py` / `sync_wordpress_js.py` extrahieren den Babel-Block und passen den Mount-Punkt an.
 - **Konsequenzen:** Nur eine Datei für inhaltliche Änderungen. Sync-Skripte müssen die Mount-Anpassungen (`#root` → `#toolguide-root` / `.eledia-toolguide-root`) und Track-spezifische Patches (z. B. WP-`wp.i18n`-Integration) verlässlich abbilden. Drift zwischen Tracks → fehlender Sync-Lauf.
 
 #### adr02 React via CDN, mit lokalem Fallback für DSGVO-sensitive Installationen

@@ -8,7 +8,7 @@ WordPress `eledia-toolguide`). Future Claude sessions should read this first.
 
 | Track | Source of truth | Entrypoint |
 | --- | --- | --- |
-| Standalone HTML | `Prototyp_ToolGuide.html` (React via Babel script tag) | open in browser |
+| Standalone HTML | `moodle-tool-guide.html` (React via Babel script tag) | open in browser |
 | Moodle plugin | `moodle-plugin/local/toolguide/` | `sync_plugin_js.py` pulls JS from prototype |
 | WordPress plugin | `wordpress-plugin/eledia-toolguide/` | `sync_wordpress_js.py` pulls JS from prototype |
 
@@ -16,7 +16,7 @@ Versions are kept in lockstep. When you bump the prototype, bump both plugin
 `version.php` / plugin header + both `readme*.txt` Stable tag entries.
 
 **Version bump checklist** (for each release):
-1. Edit `Prototyp_ToolGuide.html` and verify in a browser.
+1. Edit `moodle-tool-guide.html` and verify in a browser.
 2. Run `python3 sync_plugin_js.py` and `python3 sync_wordpress_js.py`.
 3. Bump `moodle-plugin/local/toolguide/version.php` (integer build + semver).
 4. Bump `wordpress-plugin/eledia-toolguide/eledia-toolguide.php` header

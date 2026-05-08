@@ -12,9 +12,8 @@ Projekt-spezifische Deploy-, Build- und Release-Mechanik. Generisches Wissen
 Drei Tracks im Lockstep:
 
 ```
-Prototyp_ToolGuide.html    (Source of Truth)
+moodle-tool-guide.html    (Source of Truth — auch direkt als Standalone-HTML auslieferbar)
         │
-        ├── python3 sync_html.py            ──► html-version/index.html
         ├── python3 sync_plugin_js.py       ──► moodle-plugin/local/toolguide/amd/src/toolguide.js
         └── python3 sync_wordpress_js.py    ──► wordpress-plugin/eledia-toolguide/assets/js/toolguide.js
                                                   │
@@ -36,13 +35,13 @@ Prototyp_ToolGuide.html    (Source of Truth)
 
 ## 2. Quelltext ändern
 
-Ändere immer zuerst `Prototyp_ToolGuide.html`. Wenn nur Plugin-Code geändert
+Ändere immer zuerst `moodle-tool-guide.html`. Wenn nur Plugin-Code geändert
 würde, geht der Lockstep verloren — beim nächsten Sync wäre die Änderung
 weg.
 
 ```bash
-# Editiere Prototyp_ToolGuide.html, verifiziere im Browser direkt
-open Prototyp_ToolGuide.html
+# Editiere moodle-tool-guide.html, verifiziere im Browser direkt
+open moodle-tool-guide.html
 ```
 
 ---
@@ -50,7 +49,6 @@ open Prototyp_ToolGuide.html
 ## 3. Sync in alle Tracks
 
 ```bash
-python3 sync_html.py            # Standalone deployable HTML
 python3 sync_plugin_js.py       # Moodle AMD source
 python3 sync_wordpress_js.py    # WordPress asset JS
 ```
@@ -144,8 +142,8 @@ Eine Release ist erst freigegeben, wenn alle Punkte erfüllt sind. PO-Sign-off
 erfolgt erst zum Abschluss.
 
 ```
-[ ] Prototyp_ToolGuide.html im Browser verifiziert
-[ ] sync_html.py / sync_plugin_js.py / sync_wordpress_js.py liefen ohne Fehler
+[ ] moodle-tool-guide.html im Browser verifiziert
+[ ] sync_plugin_js.py / sync_wordpress_js.py liefen ohne Fehler
 [ ] moodle-plugin/local/toolguide/version.php
        - $plugin->version  (YYYYMMDDxx-Build) bumpgleich erhöht
        - $plugin->release  (semver) gesetzt
@@ -238,7 +236,7 @@ Die WordPress-Variante wird als getrenntes Asset auf
 am Datenbestand:
 
 1. Excel-Datei öffnen, Zellen aktualisieren.
-2. Werte in den `TOOLS`-Array in `Prototyp_ToolGuide.html` einkopieren —
+2. Werte in den `TOOLS`-Array in `moodle-tool-guide.html` einkopieren —
    aktuell ist das ein **manueller** Schritt (kein Auto-Sync).
 3. Sync-Skripte laufen lassen.
 

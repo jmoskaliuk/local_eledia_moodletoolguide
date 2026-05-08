@@ -2,7 +2,7 @@
 
 All notable changes to the eLeDia Moodle Tool Guide are documented in this file.
 The project ships in three synchronized flavors: the standalone HTML prototype
-(`Prototyp_ToolGuide.html`), the Moodle local plugin (`local_toolguide`) and the
+(`moodle-tool-guide.html`), the Moodle local plugin (`local_toolguide`) and the
 WordPress plugin (`eledia-toolguide`). Versions are kept in lockstep across all
 three tracks via `sync_plugin_js.py` and `sync_wordpress_js.py`.
 
@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Obsolete Prototyp-Notizen aus dem Repo entfernt
   (`IconPreview_ToolGuide.html`, `Konzept_ToolGuide_Webapp.md`).
 - `Prototyp_ToolGuide.jsx` entfernt — Source of Truth ist seit 2026-04-22
-  der Babel-Block in `Prototyp_ToolGuide.html`.
+  der Babel-Block in `moodle-tool-guide.html`.
 
 ### Notes
 - Hinweis auf Bundle-Größe: das neue Partner-Badge inflatiert das

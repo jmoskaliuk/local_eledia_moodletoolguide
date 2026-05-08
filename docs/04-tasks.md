@@ -194,8 +194,7 @@ Aktuell hat das Moodle-Plugin nur `lang/de/` und `lang/en/`. Die UI selbst kann 
 
 Nach dem Release v1.1.31 zu prüfen — danach in den jeweiligen Task „PO Sign-off" abhaken.
 
-- [ ] Standalone `Prototyp_ToolGuide.html` lokal im Browser → Footer zeigt das neue Premium-Partner-Badge.
-- [ ] `html-version/index.html` separat — gleicher Sichtcheck.
+- [ ] Standalone `moodle-tool-guide.html` lokal im Browser → Footer zeigt das neue Premium-Partner-Badge.
 - [ ] Moodle-Plugin: ZIP `moodle-plugin/local_toolguide.zip` ins Test-Moodle hochgeladen, Cache geleert, Footer-Logo geladen.
 - [ ] WordPress-Plugin: ZIP `wordpress-plugin/eledia-toolguide.zip` in Test-WP installiert, Shortcode auf Twenty Twenty-Four → Footer-Logo erscheint.
 - [ ] WP-Theme-Matrix: Astra, OceanWP, GeneratePress.
@@ -224,7 +223,7 @@ Nach dem Release v1.1.31 zu prüfen — danach in den jeweiligen Task „PO Sign
 
 **Ergebnis**
 - `assets/PremiumMoodlePartner_TrademarkTM_PrimaryColour_RGB.png` als neues Bild abgelegt.
-- `MOODLE_PARTNER_DATA` als Data-URI in 6 Dateien ersetzt: `Prototyp_ToolGuide.html`, `html-version/index.html`, beide AMD-Sources, AMD-Build (`amd/build/toolguide.min.js`), WordPress `assets/js/toolguide.js`.
+- `MOODLE_PARTNER_DATA` als Data-URI in 5 Dateien ersetzt: `moodle-tool-guide.html`, beide AMD-Sources, AMD-Build (`amd/build/toolguide.min.js`), WordPress `assets/js/toolguide.js`.
 - Versionen auf 1.1.31 in allen sechs üblichen Stellen.
 - ZIPs neu gebaut.
 

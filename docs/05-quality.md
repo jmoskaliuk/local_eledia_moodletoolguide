@@ -135,19 +135,18 @@ Status:                 pass
 Letzter Lauf:           2026-05-08
 
 **Schritte**
-1. Neuen Partner-Badge in `Prototyp_ToolGuide.html` einsetzen.
+1. Neuen Partner-Badge in `moodle-tool-guide.html` einsetzen.
 2. Fingerprint des neuen Base64-Inhalts in allen abgeleiteten Dateien suchen:
-   - `html-version/index.html`
    - `moodle-plugin/local/toolguide/amd/src/toolguide.js`
    - `moodle-plugin/local/toolguide/amd/build/toolguide.min.js`
    - `wordpress-plugin/eledia-toolguide/assets/js/toolguide.js`
 3. Erwartung: jede Datei enthält genau 1× den neuen Fingerprint.
 
 **Erwartetes Ergebnis**
-6/6 Dateien haben das neue Logo (inkl. dem zwischenzeitlich noch existierenden `toolguide/amd/src/toolguide.js` am Repo-Root).
+5/5 Dateien haben das neue Logo (inkl. dem zwischenzeitlich noch existierenden `toolguide/amd/src/toolguide.js` am Repo-Root).
 
 **Beobachtetes Ergebnis**
-6/6 grün (siehe Cowork-Run vom 2026-05-08).
+5/5 grün (siehe Cowork-Run vom 2026-05-08).
 
 ---
 
