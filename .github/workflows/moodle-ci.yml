@@ -22,7 +22,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:14
+        image: postgres:15
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -76,6 +76,11 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Install required locale
+        run: |
+          sudo locale-gen en_AU.UTF-8
+          sudo update-locale
+
       - name: Install moodle-plugin-ci
         run: |
           composer create-project -n --no-dev --no-progress --prefer-dist \
@@ -93,43 +98,43 @@ jobs:
 
       - name: phplint
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phplint
+        run: moodle-plugin-ci phplint plugin/moodle-plugin/local/toolguide
 
       - name: phpmd
         if: ${{ !cancelled() }}
         continue-on-error: true   # WARN
-        run: moodle-plugin-ci phpmd
+        run: moodle-plugin-ci phpmd plugin/moodle-plugin/local/toolguide
 
       - name: phpcs
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpcs --max-warnings 0
+        run: moodle-plugin-ci phpcs --max-warnings 0 plugin/moodle-plugin/local/toolguide
 
       - name: phpdoc
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpdoc --max-warnings 0
+        run: moodle-plugin-ci phpdoc --max-warnings 0 plugin/moodle-plugin/local/toolguide
 
       - name: validate
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci validate
+        run: moodle-plugin-ci validate plugin/moodle-plugin/local/toolguide
 
       - name: savepoints
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci savepoints
+        run: moodle-plugin-ci savepoints plugin/moodle-plugin/local/toolguide
 
       - name: mustache
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci mustache
+        run: moodle-plugin-ci mustache plugin/moodle-plugin/local/toolguide
 
       - name: grunt
         if: ${{ !cancelled() }}
         continue-on-error: true   # WARN
-        run: moodle-plugin-ci grunt --max-lint-warnings 0
+        run: moodle-plugin-ci grunt --max-lint-warnings 0 plugin/moodle-plugin/local/toolguide
 
       - name: phpunit
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpunit --fail-on-warning
+        run: moodle-plugin-ci phpunit --fail-on-warning plugin/moodle-plugin/local/toolguide
 
       # Behat is heavy; keep it on the 5.0 / pgsql cell only to save time.
       - name: behat
         if: ${{ !cancelled() && matrix.moodle-branch == 'MOODLE_500_STABLE' && matrix.db == 'pgsql' }}
-        run: moodle-plugin-ci behat --profile chrome
+        run: moodle-plugin-ci behat --profile chrome plugin/moodle-plugin/local/toolguide

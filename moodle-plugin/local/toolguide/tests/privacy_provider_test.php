@@ -16,8 +16,6 @@
 
 namespace local_toolguide;
 
-defined('MOODLE_INTERNAL') || die();
-
 use core_privacy\local\metadata\null_provider;
 
 /**
@@ -34,7 +32,6 @@ use core_privacy\local\metadata\null_provider;
  * @covers     \local_toolguide\privacy\provider
  */
 final class privacy_provider_test extends \advanced_testcase {
-
     /**
      * Provider implements the null_provider interface.
      */

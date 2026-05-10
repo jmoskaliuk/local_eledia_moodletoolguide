@@ -28,7 +28,6 @@ namespace local_toolguide\privacy;
  * Privacy provider — this plugin does not store any personal data.
  */
 class provider implements \core_privacy\local\metadata\null_provider {
-
     /**
      * Get the reason why no data is stored.
      *

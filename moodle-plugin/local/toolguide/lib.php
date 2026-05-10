@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /*
  * Note on navigation:
  *
@@ -99,9 +97,11 @@ function local_toolguide_before_footer() {
     // Don't show the button on the Tool Guide page itself or the login/maintenance pages.
     if (isset($PAGE->url)) {
         $path = $PAGE->url->get_path();
-        if (strpos($path, '/local/toolguide/') !== false ||
+        if (
+            strpos($path, '/local/toolguide/') !== false ||
             strpos($path, '/login/') !== false ||
-            strpos($path, '/admin/tool/installaddon/') !== false) {
+            strpos($path, '/admin/tool/installaddon/') !== false
+        ) {
             return '';
         }
     }
@@ -112,8 +112,9 @@ function local_toolguide_before_footer() {
         return '';
     }
 
-    // Capability check — the whole point of the feature.
-    $context = \core\context\system::instance();
+    // Capability check: honour the current page context so course roles such
+    // as editingteacher can see the button on their course pages.
+    $context = $PAGE->context ?? \core\context\system::instance();
     if (!has_capability('local/toolguide:viewfab', $context)) {
         return '';
     }

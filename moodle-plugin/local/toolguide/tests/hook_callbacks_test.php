@@ -16,8 +16,6 @@
 
 namespace local_toolguide;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Tests for the typed Moodle 4.4+ hook callback.
  *
@@ -33,7 +31,6 @@ defined('MOODLE_INTERNAL') || die();
  * @covers     \local_toolguide\hook_callbacks
  */
 final class hook_callbacks_test extends \advanced_testcase {
-
     /**
      * Skip the entire suite when running against Moodle < 4.4 (the new
      * hook system is not yet present then).

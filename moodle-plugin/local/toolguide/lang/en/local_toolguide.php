@@ -23,18 +23,16 @@
  */
 
 $string['pluginname'] = 'Moodle Tool Guide';
+$string['fab_label'] = 'Moodle Tool Guide';
+$string['fab_title'] = 'Open the Moodle Tool Guide';
+$string['pagedesc'] = 'Find the right Moodle activity for your didactic goal.';
+$string['pagetitle'] = 'Moodle Tool Guide – Interactive';
+$string['privacy:metadata'] = 'The Moodle Tool Guide plugin does not store any personal data.';
+$string['settings_fab_position'] = 'Floating button position';
+$string['settings_fab_position_bottomleft'] = 'Bottom left';
+$string['settings_fab_position_bottomright'] = 'Bottom right';
+$string['settings_fab_position_desc'] = 'Where the floating Tool Guide quick-access button is anchored on every page. Visible only to users with the local/toolguide:viewfab capability.';
+$string['settings_pagetitle'] = 'Moodle Tool Guide';
 $string['toolguide'] = 'Tool Guide';
 $string['toolguide:view'] = 'View Tool Guide';
 $string['toolguide:viewfab'] = 'See the floating Tool Guide button on every page';
-$string['pagetitle'] = 'Moodle Tool Guide – Interactive';
-$string['pagedesc'] = 'Find the right Moodle activity for your didactic goal.';
-$string['fab_title'] = 'Open the Moodle Tool Guide';
-$string['fab_label'] = 'Moodle Tool Guide';
-$string['privacy:metadata'] = 'The Moodle Tool Guide plugin does not store any personal data.';
-
-// Site settings (admin → Plugins → Local plugins → Tool Guide).
-$string['settings_pagetitle'] = 'Moodle Tool Guide';
-$string['settings_fab_position'] = 'Floating button position';
-$string['settings_fab_position_desc'] = 'Where the floating Tool Guide quick-access button is anchored on every page. Visible only to users with the local/toolguide:viewfab capability.';
-$string['settings_fab_position_bottomright'] = 'Bottom right';
-$string['settings_fab_position_bottomleft'] = 'Bottom left';

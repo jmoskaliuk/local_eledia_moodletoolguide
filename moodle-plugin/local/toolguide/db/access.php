@@ -42,7 +42,7 @@ $capabilities = [
     // allowed implicitly, so they don't need to be listed here.
     'local/toolguide:viewfab' => [
         'captype' => 'read',
-        'contextlevel' => CONTEXT_SYSTEM,
+        'contextlevel' => CONTEXT_COURSE,
         'archetypes' => [
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
