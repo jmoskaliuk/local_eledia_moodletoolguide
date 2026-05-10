@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>lib/react.production.min.js</location>
+        <name>React</name>
+        <version>18.3.1</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>lib/react-dom.production.min.js</location>
+        <name>ReactDOM</name>
+        <version>18.3.1</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+</libraries>
