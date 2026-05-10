@@ -3,7 +3,7 @@
 define([], function() {
   "use strict";
   return {
-    init: function(initialLang) {
+    init: function(initialLang, appStrings) {
       if (typeof React === "undefined" || typeof ReactDOM === "undefined") {
         console.error("[local_toolguide] React/ReactDOM not loaded");
         return;
@@ -13,7 +13,9 @@ define([], function() {
       // variable so the existing patch in this script keeps working.
       if (typeof window !== "undefined") {
         window.__toolguideMoodleLang = initialLang || "en";
+        window.__toolguideMoodleStrings = appStrings || {};
       }
+      setMoodleI18n(initialLang || "en", appStrings || {});
 
 const { useState, useMemo } = React;
 
@@ -183,500 +185,18 @@ const GOAL_SVG = {
 // ============================================================================
 // i18n
 // ============================================================================
-const I18N = {
-  de: {
-    title: "Moodle Tool Guide",
-    subtitle: "Finden Sie das passende Werkzeug für Ihr didaktisches Ziel",
-    guide_intro: "Dieser Moodle Tool Guide bietet eine kompakte Übersicht und Vergleichsmöglichkeit der Aktivitäten und Materialien in Moodle. Er kann bei der Auswahl geeigneter Werkzeuge in Abhängigkeit von zum Beispiel didaktischen Zielsetzungen oder verfügbarer Zeit unterstützen. Dafür wurden alle Werkzeuge entsprechend der Lernzieltaxonomie von Benjamin Bloom eingeordnet. Er richtet sich an Lehrende, Trainer*innen sowie Fachkräfte im Bildungsbereich.",
-    bloom_intro: "Die sogenannte Lernzieltaxonomie von Benjamin Bloom ordnet Lernen in Stufen der kognitiven Tiefe ein. Sie hilft dabei, Lernziele klar zu formulieren, Kompetenzniveaus sichtbarer zu machen und Lerneinheiten gezielt danach zu strukturieren. Sie ist bis heute ein zentrales Referenzmodell in Didaktik und Bildung.",
-    info_toolguide: "Infos zum Tool Guide",
-    info_bloom: "Was bedeutet Bloom?",
-    matrix_goal_axis: "Was wollen Sie bewirken (didaktisch)?",
-    matrix_tool_axis: "Was können Sie verwenden (technisch)?",
-    matrix_reading_show: "Matrix lesen",
-    matrix_reading_hide: "Lesepfeile ausblenden",
-    matrix_reading_hint: "Blendet die Leserichtungen ein: didaktische Ziele waagerecht, technische Auswahl senkrecht.",
-    a11y_open_tool_details: "Details zu {name} öffnen",
-    nav_matrix: "Matrix",
-    nav_cards: "Karten",
-    nav_wizard: "Assistent",
-    search_placeholder: "Tool suchen…",
-    compare_btn: "Vergleichen",
-    compare_new: "Neuen Vergleich starten",
-    filter_setup_all: "Aufwand Einrichtung: alle",
-    filter_support_all: "Aufwand Betreuung: alle",
-    filter_goal_default: "Gut geeignet für …",
-    filter_bloom_all: "🎓 Bloom: Alle Stufen",
-    filter_bloom_from: "ab Stufe",
-    setup: "Einrichtung",
-    setup_help: "Wie viel Aufwand kostet es, diese Aktivität EINMALIG anzulegen und zu konfigurieren?",
-    support: "Betreuung",
-    support_help: "Wie viel laufender Aufwand entsteht WÄHREND der Nutzung – moderieren, bewerten, antworten?",
-    setup_einfach: "Einfach",
-    setup_mittel: "Mittel",
-    setup_komplex: "Komplex",
-    support_gering: "Gering",
-    support_mittel: "Mittel",
-    support_hoch: "Hoch",
-    activity: "Aktivität",
-    bloom_short: "Bloom",
-    bloom_help: "Welche kognitiven Lernzielstufen nach Bloom's Taxonomie deckt diese Aktivität typischerweise ab? 1=Wiedergeben, 6=Erschaffen.",
-    suit_good: "Gut geeignet",
-    suit_partial: "Teilweise geeignet",
-    suit_bad: "Ungeeignet",
-    empty_title: "Keine passenden Aktivitäten gefunden",
-    empty_text: "Zu der gewählten Kombination gibt es in Moodle keine passende Aktivität. Lockern Sie einen oder mehrere Filter, um Vorschläge zu erhalten – oder probieren Sie den Assistenten für eine geführte Auswahl.",
-    empty_reset: "Filter zurücksetzen",
-    wizard_step1: "Ziel",
-    wizard_step2: "Einrichtung",
-    wizard_step3: "Betreuung",
-    wizard_step4: "Bloom",
-    wizard_q1: "Was möchten Sie erreichen?",
-    wizard_q2: "Wie viel Aufwand für die Einrichtung darf es sein?",
-    wizard_q3: "Wie viel Aufwand für die laufende Betreuung darf es sein?",
-    wizard_results: "passende Tools gefunden",
-    wizard_back: "Zurück",
-    wizard_restart: "Neu starten",
-    wizard_skip: "Egal",
-    wizard_skip_desc: "Spielt keine Rolle",
-    overview: "Überblick",
-    suitability_header: "Eignung nach didaktischem Ziel",
-    docs_btn: "Moodle Docs",
-    community_btn: "Mehr Infos und Ideen in der eledia.community",
-    in_compare: "✓ Im Vergleich",
-    add_compare: "+ Vergleichen",
-    description: "Beschreibung",
-    repo_btn: "Quellcode auf GitHub",
-    footer: "Basierend auf dem Moodle Tool Guide · eLeDia · Idee: Joyce Seitzinger",
-    bloom_levels: ["Wiedergeben", "Verstehen", "Anwenden", "Analysieren", "Bewerten", "Erschaffen"],
-    bloom_descs: [
-      "Fakten und grundlegende Konzepte abrufen.",
-      "Ideen oder Konzepte in eigenen Worten wiedergeben.",
-      "Informationen in neuen Situationen nutzen.",
-      "Verbindungen zwischen Ideen herstellen.",
-      "Basierend auf den Lernmaterialien einen Standpunkt rechtfertigen.",
-      "Eine neue oder originelle Arbeit entwickeln."
-    ],
-    goals: {
-      info: { label: "Information & Transfer", q: "Ist es geeignet zur Weitergabe von Informationen?" },
-      bewerten: { label: "Bewerten", q: "Ermöglicht es, den Kenntnisstand zu erfassen?" },
-      komm: { label: "Kommunikation & Interaktion", q: "Kann es zur Kommunikation genutzt werden?" },
-      collab: { label: "Gemeinsam Inhalte erstellen", q: "Können Inhalte kooperativ erstellt werden?" },
-      bloomG: { label: "Bloom's Lernziele", q: "Welche Lernziele werden unterstützt?" }
-    }
-  ,
-    wizard_step5: "Ergebnis"
-  ,
-    wizard_q4: "Welche Bloom-Stufe mindestens?"
-  ,
-    credit_original: "Original-Konzept"
-  ,
-    credit_translation: "Basiert auf einer Übersetzung von"
-  ,
-    credit_translators_extras: ", Susanne Gebauer und Gerald Hartwig"
-  ,
-    dialog_close: "Schließen"
-  ,
-    credit_license: "Lizenz"
-  ,
-    credit_eledia: "Angepasst von den Moodle-Expert*innen von eLeDia | eLearning im Dialog. Mehr Moodle-Wissen auf"
-  ,
-    wizard_breadcrumb: "Assistent-Schritte"
-  ,
-    wizard_jump_to: "Zurück zu Schritt"
-  ,
-    a11y_font_larger: "Schrift größer"
-  ,
-    a11y_font_smaller: "Schrift kleiner"
-  ,
-    a11y_font_reset: "Schrift normal"
-  ,
-    alt_eledia_logo: "eLeDia – eLearning im Dialog"
-  ,
-    alt_eledia_favicon: "eLeDia Logo"
-  ,
-    alt_moodle_partner: "Moodle Premium Certified Services Provider"
-  ,
-    alt_github: "Quellcode auf GitHub"
-  ,
-    alt_cc_byncsa: "Lizenz: Creative Commons Namensnennung – Nicht-kommerziell – Weitergabe unter gleichen Bedingungen 4.0 International",
-    skip_to_content: "Zum Inhalt springen",
-    a11y_font_group: "Schriftgröße",
-    language: "Sprache",
-    views: "Ansichten",
-    search: "Suche",
-    matrix_aria: "Moodle Tool Guide Matrix"
-  },
-  en: {
-    title: "Moodle Tool Guide",
-    subtitle: "Find the right tool for your didactic goal",
-    guide_intro: "This Moodle Tool Guide provides a compact overview and comparison of activities and resources in Moodle. It supports the selection of suitable tools based on didactic goals or available time. All tools are classified according to Benjamin Bloom's taxonomy of learning objectives. It is intended for teachers, trainers and education professionals.",
-    bloom_intro: "Benjamin Bloom's taxonomy of learning objectives arranges learning into levels of cognitive depth. It helps formulate learning objectives clearly, make competence levels more visible and structure learning units accordingly. It remains a central reference model in didactics and education.",
-    info_toolguide: "About the Tool Guide",
-    info_bloom: "What does Bloom mean?",
-    matrix_goal_axis: "What do you want to achieve (didactically)?",
-    matrix_tool_axis: "What can you use (technically)?",
-    matrix_reading_show: "Read matrix",
-    matrix_reading_hide: "Hide reading arrows",
-    matrix_reading_hint: "Shows the reading directions: didactic goals horizontally, technical choice vertically.",
-    a11y_open_tool_details: "Open details for {name}",
-    nav_matrix: "Matrix",
-    nav_cards: "Cards",
-    nav_wizard: "Wizard",
-    search_placeholder: "Search tool…",
-    compare_btn: "Compare",
-    compare_new: "Start new comparison",
-    filter_setup_all: "Setup effort: all",
-    filter_support_all: "Support effort: all",
-    filter_goal_default: "Well suited for …",
-    filter_bloom_all: "🎓 Bloom: all levels",
-    filter_bloom_from: "from level",
-    setup: "Setup",
-    setup_help: "How much effort does it take to ONE-TIME create and configure this activity?",
-    support: "Support",
-    support_help: "How much ongoing effort is needed DURING use – moderating, grading, replying?",
-    setup_einfach: "Easy",
-    setup_mittel: "Medium",
-    setup_komplex: "Complex",
-    support_gering: "Low",
-    support_mittel: "Medium",
-    support_hoch: "High",
-    activity: "Activity",
-    bloom_short: "Bloom",
-    bloom_help: "Which cognitive learning levels of Bloom's Taxonomy does this activity typically support? 1=Remember, 6=Create.",
-    suit_good: "Well suited",
-    suit_partial: "Partially suited",
-    suit_bad: "Not suited",
-    empty_title: "No matching activities found",
-    empty_text: "There is no Moodle activity that matches the selected combination. Loosen one or more filters to see suggestions – or try the Wizard for a guided selection.",
-    empty_reset: "Reset filters",
-    wizard_step1: "Goal",
-    wizard_step2: "Setup",
-    wizard_step3: "Support",
-    wizard_step4: "Bloom",
-    wizard_q1: "What do you want to achieve?",
-    wizard_q2: "How much setup effort is acceptable?",
-    wizard_q3: "How much ongoing support effort is acceptable?",
-    wizard_results: "matching tools found",
-    wizard_back: "Back",
-    wizard_restart: "Start over",
-    wizard_skip: "Any",
-    wizard_skip_desc: "Doesn't matter",
-    overview: "Overview",
-    suitability_header: "Suitability by didactic goal",
-    docs_btn: "Moodle Docs",
-    community_btn: "More ideas at eledia.community",
-    in_compare: "✓ In comparison",
-    add_compare: "+ Compare",
-    description: "Description",
-    repo_btn: "Source on GitHub",
-    footer: "Based on the Moodle Tool Guide · eLeDia · Idea: Joyce Seitzinger",
-    bloom_levels: ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"],
-    bloom_descs: [
-      "Recall facts and basic concepts.",
-      "Explain ideas or concepts in your own words.",
-      "Use information in new situations.",
-      "Draw connections among ideas.",
-      "Justify a stand or decision based on the material.",
-      "Produce new or original work."
-    ],
-    goals: {
-      info: { label: "Information & Transfer", q: "Is it suitable for delivering information?" },
-      bewerten: { label: "Assessment", q: "Does it allow measuring knowledge?" },
-      komm: { label: "Communication & Interaction", q: "Can it be used for communication?" },
-      collab: { label: "Collaborative Creation", q: "Can content be created cooperatively?" },
-      bloomG: { label: "Bloom's Learning Goals", q: "Which learning goals are supported?" }
-    }
-  ,
-    wizard_step5: "Result"
-  ,
-    wizard_q4: "Minimum Bloom level?"
-  ,
-    credit_original: "Original concept"
-  ,
-    credit_translation: "Based on a translation by"
-  ,
-    credit_translators_extras: ", Susanne Gebauer and Gerald Hartwig"
-  ,
-    dialog_close: "Close"
-  ,
-    credit_license: "License"
-  ,
-    credit_eledia: "Adapted by the Moodle experts of eLeDia | eLearning im Dialog. More Moodle know-how at"
-  ,
-    wizard_breadcrumb: "Wizard steps"
-  ,
-    wizard_jump_to: "Back to step"
-  ,
-    a11y_font_larger: "Larger text"
-  ,
-    a11y_font_smaller: "Smaller text"
-  ,
-    a11y_font_reset: "Reset text size"
-  ,
-    alt_eledia_logo: "eLeDia – eLearning im Dialog"
-  ,
-    alt_eledia_favicon: "eLeDia logo"
-  ,
-    alt_moodle_partner: "Moodle Premium Certified Services Provider"
-  ,
-    alt_github: "Source on GitHub"
-  ,
-    alt_cc_byncsa: "License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
-    skip_to_content: "Skip to content",
-    a11y_font_group: "Text size",
-    language: "Language",
-    views: "Views",
-    search: "Search",
-    matrix_aria: "Moodle Tool Guide matrix"
-  },
-  fr: {
-    title: "Guide des outils Moodle",
-    subtitle: "Trouvez l'outil adapté à votre objectif didactique",
-    guide_intro: "Ce Moodle Tool Guide offre un aperçu compact et une possibilité de comparaison des activités et ressources dans Moodle. Il aide à choisir des outils adaptés en fonction, par exemple, des objectifs pédagogiques ou du temps disponible. Tous les outils sont classés selon la taxonomie des objectifs d'apprentissage de Benjamin Bloom. Il s'adresse aux enseignant·es, formateur·rices et professionnel·les de l'éducation.",
-    bloom_intro: "La taxonomie des objectifs d'apprentissage de Benjamin Bloom organise l'apprentissage en niveaux de profondeur cognitive. Elle aide à formuler clairement les objectifs, à rendre les niveaux de compétence plus visibles et à structurer les unités d'apprentissage en conséquence. Elle reste un modèle de référence central en didactique et en éducation.",
-    info_toolguide: "Infos sur le Tool Guide",
-    info_bloom: "Que signifie Bloom ?",
-    matrix_goal_axis: "Que voulez-vous produire (didactiquement) ?",
-    matrix_tool_axis: "Que pouvez-vous utiliser (techniquement) ?",
-    matrix_reading_show: "Lire la matrice",
-    matrix_reading_hide: "Masquer les flèches",
-    matrix_reading_hint: "Affiche les sens de lecture : objectifs didactiques à l'horizontale, choix technique à la verticale.",
-    a11y_open_tool_details: "Ouvrir les détails de {name}",
-    nav_matrix: "Matrice",
-    nav_cards: "Cartes",
-    nav_wizard: "Assistant",
-    search_placeholder: "Rechercher un outil…",
-    compare_btn: "Comparer",
-    compare_new: "Commencer une nouvelle comparaison",
-    filter_setup_all: "Effort de mise en place : tous",
-    filter_support_all: "Effort d'animation : tous",
-    filter_goal_default: "Bien adapté pour …",
-    filter_bloom_all: "🎓 Bloom : tous les niveaux",
-    filter_bloom_from: "à partir du niveau",
-    setup: "Mise en place",
-    setup_help: "Quel effort faut-il pour créer et configurer cette activité UNE FOIS ?",
-    support: "Animation",
-    support_help: "Quel effort continu est nécessaire PENDANT l'utilisation – modérer, évaluer, répondre ?",
-    setup_einfach: "Facile",
-    setup_mittel: "Moyen",
-    setup_komplex: "Complexe",
-    support_gering: "Faible",
-    support_mittel: "Moyen",
-    support_hoch: "Élevé",
-    activity: "Activité",
-    bloom_short: "Bloom",
-    bloom_help: "Quels niveaux cognitifs de la taxonomie de Bloom cette activité couvre-t-elle ? 1=Se souvenir, 6=Créer.",
-    suit_good: "Bien adapté",
-    suit_partial: "Partiellement adapté",
-    suit_bad: "Inadapté",
-    empty_title: "Aucune activité correspondante",
-    empty_text: "Il n'existe pas d'activité Moodle correspondant à cette combinaison. Assouplissez un ou plusieurs filtres pour voir des suggestions – ou essayez l'Assistant pour une sélection guidée.",
-    empty_reset: "Réinitialiser les filtres",
-    wizard_step1: "Objectif",
-    wizard_step2: "Mise en place",
-    wizard_step3: "Suivi",
-    wizard_step4: "Bloom",
-    wizard_q1: "Que voulez-vous accomplir ?",
-    wizard_q2: "Combien d'effort de mise en place est acceptable?",
-    wizard_q3: "Combien d'effort de suivi continu est acceptable?",
-    wizard_results: "outils correspondants trouvés",
-    wizard_back: "Retour",
-    wizard_restart: "Recommencer",
-    wizard_skip: "Peu importe",
-    wizard_skip_desc: "Aucune importance",
-    overview: "Aperçu",
-    suitability_header: "Adéquation par objectif didactique",
-    docs_btn: "Docs Moodle",
-    community_btn: "Plus d'idées sur eledia.community",
-    in_compare: "✓ Dans la comparaison",
-    add_compare: "+ Comparer",
-    description: "Description",
-    repo_btn: "Code source sur GitHub",
-    footer: "Basé sur le Moodle Tool Guide · eLeDia · Idée : Joyce Seitzinger",
-    bloom_levels: ["Se souvenir", "Comprendre", "Appliquer", "Analyser", "Évaluer", "Créer"],
-    bloom_descs: [
-      "Rappeler des faits et des concepts de base.",
-      "Expliquer des idées ou des concepts en ses propres mots.",
-      "Utiliser l'information dans de nouvelles situations.",
-      "Établir des liens entre les idées.",
-      "Justifier une position en s'appuyant sur le matériel.",
-      "Produire un travail nouveau ou original."
-    ],
-    goals: {
-      info: { label: "Information & Transfert", q: "Convient-il à la diffusion d'informations ?" },
-      bewerten: { label: "Évaluer", q: "Permet-il de mesurer les connaissances ?" },
-      komm: { label: "Communication & Interaction", q: "Peut-il être utilisé pour communiquer ?" },
-      collab: { label: "Création collaborative", q: "Le contenu peut-il être créé en coopération ?" },
-      bloomG: { label: "Objectifs de Bloom", q: "Quels objectifs d'apprentissage sont soutenus ?" }
-    }
-  ,
-    wizard_step5: "Résultat"
-  ,
-    wizard_q4: "Niveau Bloom minimum?"
-  ,
-    credit_original: "Concept original"
-  ,
-    credit_translation: "Basé sur une traduction de"
-  ,
-    credit_translators_extras: ", Susanne Gebauer et Gerald Hartwig"
-  ,
-    dialog_close: "Fermer"
-  ,
-    credit_license: "Licence"
-  ,
-    credit_eledia: "Adapté par les expert·e·s Moodle de eLeDia | eLearning im Dialog. Plus de savoir Moodle sur"
-  ,
-    wizard_breadcrumb: "Étapes de l'assistant"
-  ,
-    wizard_jump_to: "Retour à l'étape"
-  ,
-    a11y_font_larger: "Texte plus grand"
-  ,
-    a11y_font_smaller: "Texte plus petit"
-  ,
-    a11y_font_reset: "Taille normale"
-  ,
-    alt_eledia_logo: "eLeDia – eLearning im Dialog"
-  ,
-    alt_eledia_favicon: "Logo eLeDia"
-  ,
-    alt_moodle_partner: "Moodle Premium Certified Services Provider"
-  ,
-    alt_github: "Code source sur GitHub"
-  ,
-    alt_cc_byncsa: "Licence : Creative Commons Attribution – Pas d'utilisation commerciale – Partage dans les mêmes conditions 4.0 International",
-    skip_to_content: "Aller au contenu",
-    a11y_font_group: "Taille du texte",
-    language: "Langue",
-    views: "Vues",
-    search: "Recherche",
-    matrix_aria: "Matrice du Moodle Tool Guide"
-  },
-  es: {
-    title: "Guía de herramientas Moodle",
-    subtitle: "Encuentra la herramienta adecuada para tu objetivo didáctico",
-    guide_intro: "Este Moodle Tool Guide ofrece una visión general compacta y una posibilidad de comparar actividades y recursos en Moodle. Ayuda a elegir herramientas adecuadas según, por ejemplo, los objetivos didácticos o el tiempo disponible. Todas las herramientas están clasificadas según la taxonomía de objetivos de aprendizaje de Benjamin Bloom. Está dirigido a docentes, formadores y profesionales de la educación.",
-    bloom_intro: "La taxonomía de objetivos de aprendizaje de Benjamin Bloom ordena el aprendizaje en niveles de profundidad cognitiva. Ayuda a formular objetivos con claridad, hacer visibles los niveles de competencia y estructurar las unidades de aprendizaje de forma específica. Sigue siendo un modelo de referencia central en didáctica y educación.",
-    info_toolguide: "Información sobre el Tool Guide",
-    info_bloom: "¿Qué significa Bloom?",
-    matrix_goal_axis: "Qué quieres lograr (didácticamente)?",
-    matrix_tool_axis: "Qué puedes usar (técnicamente)?",
-    matrix_reading_show: "Leer matriz",
-    matrix_reading_hide: "Ocultar flechas",
-    matrix_reading_hint: "Muestra las direcciones de lectura: objetivos didácticos en horizontal, elección técnica en vertical.",
-    a11y_open_tool_details: "Abrir detalles de {name}",
-    nav_matrix: "Matriz",
-    nav_cards: "Tarjetas",
-    nav_wizard: "Asistente",
-    search_placeholder: "Buscar herramienta…",
-    compare_btn: "Comparar",
-    compare_new: "Iniciar nueva comparación",
-    filter_setup_all: "Esfuerzo de configuración: todos",
-    filter_support_all: "Esfuerzo de tutoría: todos",
-    filter_goal_default: "Bien adaptado para …",
-    filter_bloom_all: "🎓 Bloom: todos los niveles",
-    filter_bloom_from: "desde el nivel",
-    setup: "Configuración",
-    setup_help: "¿Cuánto esfuerzo cuesta crear y configurar esta actividad UNA VEZ?",
-    support: "Tutoría",
-    support_help: "¿Cuánto esfuerzo continuo se necesita DURANTE el uso – moderar, evaluar, responder?",
-    setup_einfach: "Fácil",
-    setup_mittel: "Medio",
-    setup_komplex: "Complejo",
-    support_gering: "Bajo",
-    support_mittel: "Medio",
-    support_hoch: "Alto",
-    activity: "Actividad",
-    bloom_short: "Bloom",
-    bloom_help: "¿Qué niveles cognitivos de la Taxonomía de Bloom cubre esta actividad? 1=Recordar, 6=Crear.",
-    suit_good: "Bien adaptado",
-    suit_partial: "Parcialmente adaptado",
-    suit_bad: "No adaptado",
-    empty_title: "No se encontraron actividades",
-    empty_text: "No hay ninguna actividad de Moodle que coincida con esta combinación. Relaja uno o varios filtros para ver sugerencias – o prueba el Asistente para una selección guiada.",
-    empty_reset: "Restablecer filtros",
-    wizard_step1: "Objetivo",
-    wizard_step2: "Configuración",
-    wizard_step3: "Acompañamiento",
-    wizard_step4: "Bloom",
-    wizard_q1: "¿Qué quieres lograr?",
-    wizard_q2: "¿Cuánto esfuerzo de configuración es aceptable?",
-    wizard_q3: "¿Cuánto esfuerzo de acompañamiento continuo es aceptable?",
-    wizard_results: "herramientas encontradas",
-    wizard_back: "Atrás",
-    wizard_restart: "Reiniciar",
-    wizard_skip: "Cualquiera",
-    wizard_skip_desc: "No importa",
-    overview: "Resumen",
-    suitability_header: "Idoneidad por objetivo didáctico",
-    docs_btn: "Documentación Moodle",
-    community_btn: "Más ideas en eledia.community",
-    in_compare: "✓ En comparación",
-    add_compare: "+ Comparar",
-    description: "Descripción",
-    repo_btn: "Código fuente en GitHub",
-    footer: "Basado en el Moodle Tool Guide · eLeDia · Idea: Joyce Seitzinger",
-    bloom_levels: ["Recordar", "Comprender", "Aplicar", "Analizar", "Evaluar", "Crear"],
-    bloom_descs: [
-      "Recordar hechos y conceptos básicos.",
-      "Explicar ideas o conceptos con tus propias palabras.",
-      "Usar información en nuevas situaciones.",
-      "Establecer conexiones entre ideas.",
-      "Justificar una postura basándose en el material.",
-      "Producir un trabajo nuevo u original."
-    ],
-    goals: {
-      info: { label: "Información y transferencia", q: "¿Es adecuado para transmitir información?" },
-      bewerten: { label: "Evaluar", q: "¿Permite medir conocimientos?" },
-      komm: { label: "Comunicación e interacción", q: "¿Puede usarse para comunicarse?" },
-      collab: { label: "Crear en colaboración", q: "¿Se puede crear contenido cooperativamente?" },
-      bloomG: { label: "Objetivos de Bloom", q: "¿Qué objetivos de aprendizaje se apoyan?" }
-    }
-  ,
-    wizard_step5: "Resultado"
-  ,
-    wizard_q4: "¿Nivel Bloom mínimo?"
-  ,
-    credit_original: "Concepto original"
-  ,
-    credit_translation: "Basado en una traducción de"
-  ,
-    credit_translators_extras: ", Susanne Gebauer y Gerald Hartwig"
-  ,
-    dialog_close: "Cerrar"
-  ,
-    credit_license: "Licencia"
-  ,
-    credit_eledia: "Adaptado por las y los expertos Moodle de eLeDia | eLearning im Dialog. Más saber Moodle en"
-  ,
-    wizard_breadcrumb: "Pasos del asistente"
-  ,
-    wizard_jump_to: "Volver al paso"
-  ,
-    a11y_font_larger: "Texto más grande"
-  ,
-    a11y_font_smaller: "Texto más pequeño"
-  ,
-    a11y_font_reset: "Tamaño normal"
-  ,
-    alt_eledia_logo: "eLeDia – eLearning im Dialog"
-  ,
-    alt_eledia_favicon: "Logo eLeDia"
-  ,
-    alt_moodle_partner: "Moodle Premium Certified Services Provider"
-  ,
-    alt_github: "Código fuente en GitHub"
-  ,
-    alt_cc_byncsa: "Licencia: Creative Commons Atribución – No comercial – Compartir igual 4.0 Internacional",
-    skip_to_content: "Saltar al contenido",
-    a11y_font_group: "Tamaño del texto",
-    language: "Idioma",
-    views: "Vistas",
-    search: "Buscar",
-    matrix_aria: "Matriz de Moodle Tool Guide"
-  }
-};
+const I18N = {};
+
+function setMoodleI18n(lang, strings) {
+  const normalized = strings || {};
+  const key = lang || "en";
+  I18N[key] = normalized;
+  I18N.en = I18N.en || normalized;
+}
+
+function getI18n(lang) {
+  return I18N[lang] || I18N.en || {};
+}
 
 
 // Moodle 5 activity purposes — official color palette from core.
@@ -689,24 +209,8 @@ const PURPOSE_COLORS = {
   content:           "#0099ad"
 };
 
-const PURPOSE_LABELS = {
-  de: {
-    administration:"Verwaltung", assessment:"Bewertung", collaboration:"Zusammenarbeit",
-    communication:"Kommunikation", interactivecontent:"Interaktive Inhalte", content:"Ressourcen"
-  },
-  en: {
-    administration:"Administration", assessment:"Assessment", collaboration:"Collaboration",
-    communication:"Communication", interactivecontent:"Interactive content", content:"Resources"
-  },
-  fr: {
-    administration:"Administration", assessment:"Évaluation", collaboration:"Collaboration",
-    communication:"Communication", interactivecontent:"Contenu interactif", content:"Ressources"
-  },
-  es: {
-    administration:"Administración", assessment:"Evaluación", collaboration:"Colaboración",
-    communication:"Comunicación", interactivecontent:"Contenido interactivo", content:"Recursos"
-  }
-};
+// Purpose labels are supplied by Moodle language strings.
+
 
 // Map every tool id to its Moodle activity purpose.
 const TOOL_PURPOSE = {
@@ -721,14 +225,14 @@ const TOOL_PURPOSE = {
 
 function purposeOf(tool) { return TOOL_PURPOSE[tool.id] || "content"; }
 function purposeColor(tool) { return PURPOSE_COLORS[purposeOf(tool)]; }
-function purposeLabel(tool, lang) { return (PURPOSE_LABELS[lang]||PURPOSE_LABELS.de)[purposeOf(tool)]; }
+function purposeLabel(tool, lang) { return (getI18n(lang).purpose_labels || {})[purposeOf(tool)] || purposeOf(tool); }
 
 const REPO_URL = "https://github.com/jmoskaliuk/local_eledia_moodletoolguide";
 const COMMUNITY_TOOLGUIDE_URL = "https://community.eledia.de/blocks/demologin/logindemo.php?course=toolguide";
 
 // Helper function to render text – component must call this with current lang
-const t = (lang, key) => I18N[lang][key] || key;
-const tg = (lang, key) => I18N[lang].goals[key] || {label:key, q:""};
+const t = (lang, key) => getI18n(lang)[key] || key;
+const tg = (lang, key) => (getI18n(lang).goals || {})[key] || {label:key, q:""};
 
 // ============================================================================
 // Visual helpers
@@ -870,8 +374,8 @@ function BloomHats({bloom, lang, size=14, label=""}) {
 
 function BloomBars({bloom, lang, size=14}) {
   const n = parseInt(bloom) || 0;
-  const levels = I18N[lang].bloom_levels;
-  const descs = I18N[lang].bloom_descs;
+  const levels = getI18n(lang).bloom_levels;
+  const descs = getI18n(lang).bloom_descs;
   // eLeDia gradient: dark blue → teal → green → yellow → orange (CI tones)
   const colors = ["#194866","#267372","#669933","#A5C387","#FCBC82","#F98012"];
   const barW = Math.round(size * 0.9);
@@ -1403,13 +907,13 @@ function WizardView({tools,onSelect,lang}) {
         React.createElement(InfoDisclosure,{label:t(lang,"info_bloom"),text:t(lang,"bloom_intro"),lang:lang,maxWidth:520})
       ),
       React.createElement("div",{style:{display:"flex",flexDirection:"column",alignItems:"center",gap:6}},
-        I18N[lang].bloom_levels.map((name,i)=>{
+        getI18n(lang).bloom_levels.map((name,i)=>{
           const lvl=i+1, w=140+(5-i)*30;
           const ciPalette = ["#194866","#267372","#669933","#A5C387","#FCBC82","#F98012"];
           const ciColor = ciPalette[i];
           const isActive = bloomMin===lvl;
           return React.createElement("button",{key:i,onClick:()=>{setBloomMin(lvl);setStep(4)},
-            title:I18N[lang].bloom_descs[i],
+            title:getI18n(lang).bloom_descs[i],
             style:{width:w,padding:"10px 0",borderRadius:6,border:isActive?"2px solid "+ciColor:"2px solid #E9E9E9",background:isActive?ciColor:ciColor+"22",color:isActive?"white":"#194866",cursor:"pointer",fontSize:13,fontWeight:600,transition:"all .15s"}
           },lvl+". "+name);
         }),
@@ -1697,7 +1201,7 @@ function App() {
         ),
         React.createElement("select",{value:filters.bloomMin||"","aria-label":t(lang,"bloom_short"),onChange:e=>setFilters(f=>({...f,bloomMin:parseInt(e.target.value)||0})),style:{padding:"6px 12px",borderRadius:8,border:"1px solid #E9E9E9",fontSize:12}},
           React.createElement("option",{value:""},t(lang,"filter_bloom_all")),
-          I18N[lang].bloom_levels.map((name,i)=>React.createElement("option",{key:i,value:i+1},t(lang,"filter_bloom_from")+" "+(i+1)+": "+name))
+          getI18n(lang).bloom_levels.map((name,i)=>React.createElement("option",{key:i,value:i+1},t(lang,"filter_bloom_from")+" "+(i+1)+": "+name))
         )
       )
     ),
