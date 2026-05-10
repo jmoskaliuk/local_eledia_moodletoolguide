@@ -54,10 +54,14 @@ final class hook_callbacks_test extends \advanced_testcase {
         $course = $generator->create_course();
         $user = $generator->create_user();
         $generator->enrol_user($user->id, $course->id, 'editingteacher');
+        $context = \context_course::instance($course->id);
+        $roles = get_archetype_roles('editingteacher');
+        $role = reset($roles);
+        role_change_permission($role->id, $context, 'local/toolguide:viewfab', CAP_ALLOW);
         $this->setUser($user);
 
         $PAGE = new \moodle_page();
-        $PAGE->set_context(\context_course::instance($course->id));
+        $PAGE->set_context($context);
         $PAGE->set_pagelayout('standard');
         $PAGE->set_url(new \moodle_url('/course/view.php'));
         $PAGE->set_course($course);

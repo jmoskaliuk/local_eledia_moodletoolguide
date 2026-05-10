@@ -22,11 +22,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Moodle Tool Guide';
 $string['fab_label'] = 'Moodle Tool Guide';
 $string['fab_title'] = 'Ouvrir le Moodle Tool Guide';
 $string['pagedesc'] = 'Trouvez la bonne activité Moodle pour votre objectif didactique.';
 $string['pagetitle'] = 'Moodle Tool Guide – Interactif';
+$string['pluginname'] = 'Moodle Tool Guide';
 $string['privacy:metadata'] = 'Le plugin Moodle Tool Guide ne stocke aucune donnée personnelle.';
 $string['settings_fab_position'] = 'Position du bouton flottant';
 $string['settings_fab_position_bottomleft'] = 'En bas à gauche';

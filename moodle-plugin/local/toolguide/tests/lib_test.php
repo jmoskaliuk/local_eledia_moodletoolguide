@@ -52,6 +52,12 @@ final class lib_test extends \advanced_testcase {
         $course = $generator->create_course();
         $user = $generator->create_user();
         $generator->enrol_user($user->id, $course->id, $archetype);
+        if ($archetype === 'editingteacher') {
+            $context = \context_course::instance($course->id);
+            $roles = get_archetype_roles($archetype);
+            $role = reset($roles);
+            role_change_permission($role->id, $context, 'local/toolguide:viewfab', CAP_ALLOW);
+        }
         $this->setUser($user);
 
         $PAGE = new \moodle_page();
