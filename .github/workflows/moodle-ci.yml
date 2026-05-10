@@ -98,43 +98,43 @@ jobs:
 
       - name: phplint
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phplint plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci phplint moodle/local/toolguide
 
       - name: phpmd
         if: ${{ !cancelled() }}
         continue-on-error: true   # WARN
-        run: moodle-plugin-ci phpmd plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci phpmd moodle/local/toolguide
 
       - name: phpcs
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpcs --max-warnings 0 plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci phpcs --max-warnings 0 moodle/local/toolguide
 
       - name: phpdoc
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpdoc --max-warnings 0 plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci phpdoc --max-warnings 0 moodle/local/toolguide
 
       - name: validate
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci validate plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci validate moodle/local/toolguide
 
       - name: savepoints
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci savepoints plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci savepoints moodle/local/toolguide
 
       - name: mustache
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci mustache plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci mustache moodle/local/toolguide
 
       - name: grunt
         if: ${{ !cancelled() }}
         continue-on-error: true   # WARN
-        run: moodle-plugin-ci grunt --max-lint-warnings 0 plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci grunt --max-lint-warnings 0 moodle/local/toolguide
 
       - name: phpunit
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpunit --fail-on-warning plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci phpunit --fail-on-warning moodle/local/toolguide
 
       # Behat is heavy; keep it on the 5.0 / pgsql cell only to save time.
       - name: behat
         if: ${{ !cancelled() && matrix.moodle-branch == 'MOODLE_500_STABLE' && matrix.db == 'pgsql' }}
-        run: moodle-plugin-ci behat --profile chrome plugin/moodle-plugin/local/toolguide
+        run: moodle-plugin-ci behat --profile chrome moodle/local/toolguide

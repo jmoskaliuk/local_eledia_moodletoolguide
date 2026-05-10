@@ -62,7 +62,7 @@ final class hook_callbacks_test extends \advanced_testcase {
         $PAGE->set_url(new \moodle_url('/course/view.php'));
         $PAGE->set_course($course);
 
-        $hook = new \core\hook\output\before_footer_html_generation($PAGE);
+        $hook = new \core\hook\output\before_footer_html_generation($PAGE->get_renderer('core'));
         hook_callbacks::before_footer_html_generation($hook);
 
         $html = $hook->get_output();
@@ -87,7 +87,7 @@ final class hook_callbacks_test extends \advanced_testcase {
         $PAGE->set_url(new \moodle_url('/course/view.php'));
         $PAGE->set_course($course);
 
-        $hook = new \core\hook\output\before_footer_html_generation($PAGE);
+        $hook = new \core\hook\output\before_footer_html_generation($PAGE->get_renderer('core'));
         hook_callbacks::before_footer_html_generation($hook);
 
         $this->assertSame(

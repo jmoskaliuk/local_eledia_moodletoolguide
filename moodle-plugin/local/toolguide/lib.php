@@ -114,7 +114,11 @@ function local_toolguide_before_footer() {
 
     // Capability check: honour the current page context so course roles such
     // as editingteacher can see the button on their course pages.
-    $context = $PAGE->context ?? \core\context\system::instance();
+    try {
+        $context = $PAGE->context;
+    } catch (\coding_exception $exception) {
+        $context = \core\context\system::instance();
+    }
     if (!has_capability('local/toolguide:viewfab', $context)) {
         return '';
     }
