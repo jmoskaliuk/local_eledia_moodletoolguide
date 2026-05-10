@@ -62,7 +62,7 @@ $initiallang = local_toolguide_get_locale_lang();
 
 // Mount the React app via the AMD module — proper Moodle pattern, no inline
 // <script> tags, RequireJS-cached, fully CSP-friendly.
-$PAGE->requires->js_call_amd('local_toolguide/toolguide', 'init', [$initiallang]);
+$PAGE->requires->js_call_amd('local_toolguide/toolguide', 'init', [$initiallang, local_toolguide_get_app_strings()]);
 
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_toolguide/main', []);
