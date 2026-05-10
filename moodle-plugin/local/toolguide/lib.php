@@ -82,7 +82,7 @@ function local_toolguide_before_footer() {
     if (during_initial_install()) {
         return '';
     }
-    if (defined('CLI_SCRIPT') && CLI_SCRIPT) {
+    if (defined('CLI_SCRIPT') && CLI_SCRIPT && !defined('PHPUNIT_TEST')) {
         return '';
     }
     if (defined('AJAX_SCRIPT') && AJAX_SCRIPT) {

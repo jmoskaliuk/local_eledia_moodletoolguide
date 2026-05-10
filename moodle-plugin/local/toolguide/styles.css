@@ -42,7 +42,7 @@
 }
 
 #toolguide-root ::selection {
-    background: #F98012;
+    background: #f98012;
     color: white;
 }
 
@@ -52,7 +52,7 @@
 }
 
 #toolguide-root ::-webkit-scrollbar-thumb {
-    background: #D9D9D9;
+    background: #d9d9d9;
     border-radius: 4px;
 }
 
@@ -61,7 +61,7 @@
 #toolguide-root [tabindex]:focus-visible,
 #toolguide-root select:focus-visible,
 #toolguide-root input:focus-visible {
-    outline: 3px solid #F98012;
+    outline: 3px solid #f98012;
     outline-offset: 2px;
 }
 
@@ -93,10 +93,10 @@ body.local-toolguide-page .page-header-headings {
 body.local-toolguide-page #page-header,
 body.local-toolguide-page .page-header,
 body.local-toolguide-page .pagelayout-report #page-header {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /* Boost auxiliary chrome that's irrelevant for this self-contained
@@ -106,7 +106,7 @@ body.local-toolguide-page .activity-header,
 body.local-toolguide-page .context-header-settings-menu,
 body.local-toolguide-page .page-context-header,
 body.local-toolguide-page nav.tertiary-navigation {
-    display: none !important;
+    display: none;
 }
 
 /* region-main (the box that holds [role=main]). */
@@ -114,8 +114,8 @@ body.local-toolguide-page #region-main-box,
 body.local-toolguide-page #region-main,
 body.local-toolguide-page .pagelayout-report #region-main,
 body.local-toolguide-page .pagelayout-report #region-main-box {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 /* The [role=main] inner element and any direct section/div. */
@@ -123,14 +123,14 @@ body.local-toolguide-page #region-main-box > section,
 body.local-toolguide-page #region-main > [role="main"],
 body.local-toolguide-page main[role="main"],
 body.local-toolguide-page main[role="main"] > div:first-child {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 /* The React mount point itself. */
 body.local-toolguide-page #toolguide-root {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 /* Reduced motion preference (WCAG 2.3.3). */
@@ -138,29 +138,29 @@ body.local-toolguide-page #toolguide-root {
     #toolguide-root *,
     #toolguide-root *::before,
     #toolguide-root *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+        animation-duration: 100ms;
+        animation-iteration-count: 1;
+        transition-duration: 100ms;
+        scroll-behavior: auto;
     }
 }
 
 /* Mobile tweaks. */
 @media (max-width: 640px) {
     #toolguide-root h1 {
-        font-size: 18px !important;
+        font-size: 18px;
     }
     #toolguide-root nav button {
-        padding: 6px 10px !important;
-        font-size: 12px !important;
+        padding: 6px 10px;
+        font-size: 12px;
     }
     #toolguide-root table th,
     #toolguide-root table td {
-        padding: 6px !important;
-        font-size: 11px !important;
+        padding: 6px;
+        font-size: 11px;
     }
     #toolguide-root .tg-grid-cards {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr;
     }
 }
 
@@ -185,8 +185,8 @@ a.local-toolguide-fab:visited {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: #F98012; /* eLeDia/Moodle orange */
-    color: #FFFFFF;
+    background: #f98012; /* eLeDia/Moodle orange */
+    color: #fff;
     text-decoration: none;
     box-shadow:
         0 4px 12px rgba(0, 0, 0, 0.25),
@@ -214,8 +214,8 @@ a.local-toolguide-fab--bottomleft:visited {
 
 a.local-toolguide-fab:hover,
 a.local-toolguide-fab:focus {
-    background: #FF8C1F;
-    color: #FFFFFF;
+    background: #ff8c1f;
+    color: #fff;
     text-decoration: none;
     transform: scale(1.08);
     box-shadow:
@@ -230,7 +230,7 @@ a.local-toolguide-fab:focus-visible {
 
 /*
  * Inline SVG icon (Lucide life-buoy). Inherits stroke from currentColor,
- * so the white fill comes for free via the link's `color: #FFFFFF`.
+ * so the white fill comes for free via the link's `color`.
  * No filter/invert hacks needed any more.
  */
 .local-toolguide-fab__icon {
@@ -244,7 +244,7 @@ a.local-toolguide-fab:focus-visible {
 
 /* Visually-hidden label for screen readers. */
 .local-toolguide-fab__label {
-    position: absolute !important;
+    position: absolute;
     width: 1px;
     height: 1px;
     padding: 0;
@@ -258,7 +258,7 @@ a.local-toolguide-fab:focus-visible {
 /* Do not print the FAB. */
 @media print {
     a.local-toolguide-fab {
-        display: none !important;
+        display: none;
     }
 }
 
@@ -303,7 +303,7 @@ a.local-toolguide-fab:focus-visible {
     a.local-toolguide-fab,
     a.local-toolguide-fab:link,
     a.local-toolguide-fab:visited {
-        border: 2px solid #FFFFFF;
+        border: 2px solid #fff;
         box-shadow: 0 0 0 2px #194866;
     }
 }
