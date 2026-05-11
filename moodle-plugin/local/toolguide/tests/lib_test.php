@@ -32,14 +32,13 @@ require_once($CFG->dirroot . '/local/toolguide/lib.php');
  * @covers     ::local_toolguide_extend_navigation
  */
 final class lib_test extends \advanced_testcase {
-
     /**
      * Build a $PAGE on a given course with a given pagelayout, and return
      * the affected user.
      *
      * @param string $pagelayout
      * @param string|null $url path used for $PAGE->url
-     * @param array $rolepermissions ['archetype' => 'editingteacher', …]
+     * @param string $archetype Role archetype used when enrolling the user.
      * @return \stdClass logged-in user
      */
     private function setup_page_for_user(
@@ -53,6 +52,12 @@ final class lib_test extends \advanced_testcase {
         $course = $generator->create_course();
         $user = $generator->create_user();
         $generator->enrol_user($user->id, $course->id, $archetype);
+        if ($archetype === 'editingteacher') {
+            $context = \context_course::instance($course->id);
+            $roles = get_archetype_roles($archetype);
+            $role = reset($roles);
+            role_change_permission($role->id, $context, 'local/toolguide:viewfab', CAP_ALLOW);
+        }
         $this->setUser($user);
 
         $PAGE = new \moodle_page();
@@ -128,6 +133,7 @@ final class lib_test extends \advanced_testcase {
     /**
      * Empty string on suppressed page layouts.
      *
+     * @param string $layout Page layout to test.
      * @dataProvider suppressed_pagelayouts_provider
      */
     public function test_returns_empty_on_suppressed_pagelayouts(string $layout): void {
@@ -173,7 +179,7 @@ final class lib_test extends \advanced_testcase {
         $this->assertStringContainsString('local-toolguide-fab__icon', $html);
         $this->assertStringContainsString('/local/toolguide/index.php', $html);
         $this->assertStringContainsString('aria-label=', $html);
-        // Lucide life-buoy markers — outer + inner circle plus the four spokes.
+        // Lucide life-buoy markers: outer and inner circle plus the four spokes.
         $this->assertStringContainsString('<svg', $html);
         $this->assertStringContainsString('<circle cx="12" cy="12" r="10"', $html);
         $this->assertStringContainsString('<circle cx="12" cy="12" r="4"', $html);
@@ -228,12 +234,14 @@ final class lib_test extends \advanced_testcase {
      * local_toolguide_get_locale_lang() maps current_language() to the four
      * supported app codes; anything unsupported falls back to 'en'.
      *
+     * @param string $forcedlocale Locale injected into the Moodle session.
+     * @param string $expected Expected app language code.
      * @dataProvider locale_lang_provider
      */
     public function test_get_locale_lang(string $forcedlocale, string $expected): void {
         $this->resetAfterTest();
 
-        // current_language() honours $SESSION->lang in tests.
+        // Current_language() honours $SESSION->lang in tests.
         global $SESSION;
         $SESSION->lang = $forcedlocale;
 
@@ -241,6 +249,8 @@ final class lib_test extends \advanced_testcase {
     }
 
     /**
+     * Locale mappings for the supported app languages.
+     *
      * @return array<string, array{string,string}>
      */
     public static function locale_lang_provider(): array {

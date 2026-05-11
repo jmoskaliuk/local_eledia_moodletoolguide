@@ -22,19 +22,17 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['fab_label'] = 'Moodle Tool Guide';
+$string['fab_title'] = 'Moodle Tool Guide öffnen';
+$string['pagedesc'] = 'Finden Sie die passende Moodle-Aktivität für Ihr didaktisches Ziel.';
+$string['pagetitle'] = 'Moodle Tool Guide – Interaktiv';
 $string['pluginname'] = 'Moodle Tool Guide';
+$string['privacy:metadata'] = 'Das Plugin Moodle Tool Guide speichert keine personenbezogenen Daten.';
+$string['settings_fab_position'] = 'Position der schwebenden Schaltfläche';
+$string['settings_fab_position_bottomleft'] = 'Unten links';
+$string['settings_fab_position_bottomright'] = 'Unten rechts';
+$string['settings_fab_position_desc'] = 'Wo die schwebende Tool-Guide-Schaltfläche auf jeder Seite verankert wird. Sichtbar nur für Personen mit der Berechtigung local/toolguide:viewfab.';
+$string['settings_pagetitle'] = 'Moodle Tool Guide';
 $string['toolguide'] = 'Tool Guide';
 $string['toolguide:view'] = 'Tool Guide anzeigen';
 $string['toolguide:viewfab'] = 'Schaltfläche „Tool Guide“ auf allen Seiten sehen';
-$string['pagetitle'] = 'Moodle Tool Guide – Interaktiv';
-$string['pagedesc'] = 'Finden Sie die passende Moodle-Aktivität für Ihr didaktisches Ziel.';
-$string['fab_title'] = 'Moodle Tool Guide öffnen';
-$string['fab_label'] = 'Moodle Tool Guide';
-$string['privacy:metadata'] = 'Das Plugin Moodle Tool Guide speichert keine personenbezogenen Daten.';
-
-// Site-Einstellungen (Site administration → Plugins → Lokale Plugins → Tool Guide).
-$string['settings_pagetitle'] = 'Moodle Tool Guide';
-$string['settings_fab_position'] = 'Position der schwebenden Schaltfläche';
-$string['settings_fab_position_desc'] = 'Wo die schwebende Tool-Guide-Schaltfläche auf jeder Seite verankert wird. Sichtbar nur für Personen mit der Berechtigung local/toolguide:viewfab.';
-$string['settings_fab_position_bottomright'] = 'Unten rechts';
-$string['settings_fab_position_bottomleft'] = 'Unten links';

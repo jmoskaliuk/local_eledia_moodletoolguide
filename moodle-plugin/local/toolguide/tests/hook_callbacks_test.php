@@ -16,8 +16,6 @@
 
 namespace local_toolguide;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Tests for the typed Moodle 4.4+ hook callback.
  *
@@ -33,7 +31,6 @@ defined('MOODLE_INTERNAL') || die();
  * @covers     \local_toolguide\hook_callbacks
  */
 final class hook_callbacks_test extends \advanced_testcase {
-
     /**
      * Skip the entire suite when running against Moodle < 4.4 (the new
      * hook system is not yet present then).
@@ -57,15 +54,19 @@ final class hook_callbacks_test extends \advanced_testcase {
         $course = $generator->create_course();
         $user = $generator->create_user();
         $generator->enrol_user($user->id, $course->id, 'editingteacher');
+        $context = \context_course::instance($course->id);
+        $roles = get_archetype_roles('editingteacher');
+        $role = reset($roles);
+        role_change_permission($role->id, $context, 'local/toolguide:viewfab', CAP_ALLOW);
         $this->setUser($user);
 
         $PAGE = new \moodle_page();
-        $PAGE->set_context(\context_course::instance($course->id));
+        $PAGE->set_context($context);
         $PAGE->set_pagelayout('standard');
         $PAGE->set_url(new \moodle_url('/course/view.php'));
         $PAGE->set_course($course);
 
-        $hook = new \core\hook\output\before_footer_html_generation($PAGE);
+        $hook = new \core\hook\output\before_footer_html_generation($PAGE->get_renderer('core'));
         hook_callbacks::before_footer_html_generation($hook);
 
         $html = $hook->get_output();
@@ -90,7 +91,7 @@ final class hook_callbacks_test extends \advanced_testcase {
         $PAGE->set_url(new \moodle_url('/course/view.php'));
         $PAGE->set_course($course);
 
-        $hook = new \core\hook\output\before_footer_html_generation($PAGE);
+        $hook = new \core\hook\output\before_footer_html_generation($PAGE->get_renderer('core'));
         hook_callbacks::before_footer_html_generation($hook);
 
         $this->assertSame(
