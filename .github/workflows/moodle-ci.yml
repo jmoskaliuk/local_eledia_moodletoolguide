@@ -95,6 +95,10 @@ jobs:
           IGNORE_PATHS: 'lib/'   # vendored React 18.3.1, MIT-licensed
         run: |
           moodle-plugin-ci install --plugin plugin/moodle-plugin/local/toolguide --db-host=127.0.0.1
+          if [ ! -d moodle/local/toolguide ]; then
+              mkdir -p moodle/local
+              cp -R plugin/moodle-plugin/local/toolguide moodle/local/toolguide
+          fi
 
       - name: phplint
         if: ${{ !cancelled() }}
