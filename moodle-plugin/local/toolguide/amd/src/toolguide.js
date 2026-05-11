@@ -16,7 +16,6 @@ define([], function() {
         window.__toolguideMoodleLang = initialLang || "en";
         window.__toolguideMoodleStrings = appStrings || {};
       }
-      setMoodleI18n(initialLang || "en", appStrings || {});
 
 const { useState, useMemo } = React;
 
@@ -187,6 +186,10 @@ const GOAL_SVG = {
 // i18n
 // ============================================================================
 const I18N = {};
+setMoodleI18n(
+  typeof window !== "undefined" ? window.__toolguideMoodleLang : "en",
+  typeof window !== "undefined" ? window.__toolguideMoodleStrings : {}
+);
 
 function setMoodleI18n(lang, strings) {
   const normalized = strings || {};

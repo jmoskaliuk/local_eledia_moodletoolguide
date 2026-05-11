@@ -159,6 +159,14 @@ app = app.replace(
 )
 app = app.replace('I18N[lang].bloom_levels', 'getI18n(lang).bloom_levels')
 app = app.replace('I18N[lang].bloom_descs', 'getI18n(lang).bloom_descs')
+app = app.replace(
+    'const I18N = {};',
+    'const I18N = {};\n'
+    'setMoodleI18n(\n'
+    '  typeof window !== "undefined" ? window.__toolguideMoodleLang : "en",\n'
+    '  typeof window !== "undefined" ? window.__toolguideMoodleStrings : {}\n'
+    ');'
+)
 
 # Wrap as a proper AMD module exposing init(initialLang).
 # This is what $PAGE->requires->js_call_amd('local_toolguide/toolguide',
@@ -181,7 +189,6 @@ out += '      if (typeof window !== "undefined") {\n'
 out += '        window.__toolguideMoodleLang = initialLang || "en";\n'
 out += '        window.__toolguideMoodleStrings = appStrings || {};\n'
 out += '      }\n'
-out += '      setMoodleI18n(initialLang || "en", appStrings || {});\n'
 out += '\n'
 out += app
 out += '\n'
