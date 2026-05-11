@@ -3,11 +3,12 @@
 define([], function() {
   "use strict";
   return {
-    init: function(initialLang, appStrings) {
+    init: function(initialLang) {
       if (typeof React === "undefined" || typeof ReactDOM === "undefined") {
         console.error("[local_toolguide] React/ReactDOM not loaded");
         return;
       }
+      var appStrings = typeof window !== "undefined" && window.local_toolguide_app_strings ? window.local_toolguide_app_strings : {};
       // Hand the Moodle locale to the React app via the global the
       // useState patch below reads. Using a global rather than a closure
       // variable so the existing patch in this script keeps working.
