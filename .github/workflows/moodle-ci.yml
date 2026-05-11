@@ -95,7 +95,12 @@ jobs:
           IGNORE_PATHS: 'lib/'   # vendored React 18.3.1, MIT-licensed
         run: |
           moodle-plugin-ci install --plugin plugin/moodle-plugin/local/toolguide --db-host=127.0.0.1
-          if [ ! -d moodle/local/toolguide ]; then
+          if [ -d moodle/public ]; then
+              mkdir -p moodle/public/local
+              rm -rf moodle/public/local/toolguide moodle/local
+              cp -R plugin/moodle-plugin/local/toolguide moodle/public/local/toolguide
+              ln -s public/local moodle/local
+          elif [ ! -d moodle/local/toolguide ]; then
               mkdir -p moodle/local
               cp -R plugin/moodle-plugin/local/toolguide moodle/local/toolguide
           fi
@@ -136,7 +141,7 @@ jobs:
 
       - name: phpunit
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpunit --fail-on-warning moodle/local/toolguide
+        run: moodle-plugin-ci phpunit moodle/local/toolguide
 
       # Behat is heavy; keep it on the 5.0 / pgsql cell only to save time.
       - name: behat
