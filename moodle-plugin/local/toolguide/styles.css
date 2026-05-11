@@ -82,12 +82,23 @@ body.local-toolguide-page .page-header-headings {
  * Tighten the empty space between Boost's page-header and the React app
  * now that we hide the H1.
  *
- * IMPORTANT: we ONLY touch the inner content layers (#page-header,
- * #region-main, [role=main], #toolguide-root). The outer wrappers
- * (#page, #page-wrapper, #page-content, #topofscroll) RESERVE the
- * vertical room for the fixed top navbar — zeroing them pushes the
- * Tool Guide app behind the navbar (regression seen in 1.1.38).
+ * IMPORTANT: #page keeps the vertical room for Boost's fixed top navbar.
+ * The content wrappers below may still add their own top gap; those are
+ * tightened so the Tool Guide header starts directly below the navbar.
  */
+
+/* Boost content wrappers above the page header. */
+body.local-toolguide-page #topofscroll,
+body.local-toolguide-page #page-content,
+body.local-toolguide-page .main-inner,
+body.local-toolguide-page #page.drawers .main-inner,
+body.local-toolguide-page .pagelayout-report #topofscroll,
+body.local-toolguide-page .pagelayout-report #page-content,
+body.local-toolguide-page .pagelayout-report .main-inner,
+body.local-toolguide-page .pagelayout-report #page.drawers .main-inner {
+    padding-top: 0;
+    margin-top: 0;
+}
 
 /* Page header band (heading + breadcrumb wrapper). */
 body.local-toolguide-page #page-header,
