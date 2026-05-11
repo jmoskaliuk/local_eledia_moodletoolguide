@@ -56,10 +56,10 @@ $PAGE->requires->js(new moodle_url('/local/toolguide/lib/react-dom.production.mi
 
 // Pull the current Moodle locale and translated app strings through to the React app.
 // The string bundle is too large for js_call_amd() arguments in debug mode, so it is
-// exposed as JS data and read by the AMD module from window.local_toolguide_app_strings.
+// exposed early as JS data and read by the AMD module from window.local_toolguide_app_strings.
 require_once(__DIR__ . '/lib.php');
 $initiallang = local_toolguide_get_locale_lang();
-$PAGE->requires->data_for_js('local_toolguide_app_strings', local_toolguide_get_app_strings());
+$PAGE->requires->data_for_js('local_toolguide_app_strings', local_toolguide_get_app_strings(), true);
 
 // Mount the React app via the AMD module — proper Moodle pattern, no inline
 // <script> tags, RequireJS-cached, fully CSP-friendly.
