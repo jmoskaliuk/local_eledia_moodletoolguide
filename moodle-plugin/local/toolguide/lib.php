@@ -95,8 +95,13 @@ function local_toolguide_before_footer() {
     }
 
     // Don't show the button on the Tool Guide page itself or the login/maintenance pages.
-    if (isset($PAGE->url)) {
+    $path = null;
+    try {
         $path = $PAGE->url->get_path();
+    } catch (\coding_exception $exception) {
+        $path = null;
+    }
+    if ($path !== null) {
         if (
             strpos($path, '/local/toolguide/') !== false ||
             strpos($path, '/login/') !== false ||
